@@ -1,15 +1,15 @@
 # Fdb version 3
-["bibtex tfg"] 1771329735 "tfg.aux" "tfg.bbl" "tfg" 1771329737
+["bibtex tfg"] 1771330441 "tfg.aux" "tfg.bbl" "tfg" 1771330479
   "/usr/share/texlive/texmf-dist/bibtex/bst/natbib/abbrvnat.bst" 1233624470 26532 66bed5cc59495faaa3f9ae9af9fa5e42 ""
   "referencias.bib" 1771319880 95171 52f722aa7733abb8b9ef8002fd1218e5 ""
-  "tfg.aux" 1771329677 25485 95d2923234b94474199dba7583de2d72 "pdflatex"
+  "tfg.aux" 1771330446 25848 126aef9aeed9d584a597b002eca14a07 "pdflatex"
   (generated)
   "tfg.bbl"
   "tfg.blg"
-["pdflatex"] 1771329737 "/home/ismael/Proyectos/Plantilla_LaTeX_para_TFG/tfg.tex" "tfg.pdf" "tfg" 1771329737
+["pdflatex"] 1771330479 "/home/ismael/Proyectos/Plantilla_LaTeX_para_TFG/tfg.tex" "tfg.pdf" "tfg" 1771330479
   "/etc/texmf/web2c/texmf.cnf" 1771324353 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/ismael/.texlive2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1771325804 1405655 be02b9d727ac9a12652619989d94d305 ""
-  "/home/ismael/Proyectos/Plantilla_LaTeX_para_TFG/tfg.tex" 1771329734 2230 080c4ba4dddc949214c76ebbb53ed7db ""
+  "/home/ismael/Proyectos/Plantilla_LaTeX_para_TFG/tfg.tex" 1771330476 2230 8e209abbab0472a53b75dd8ee04bcbf2 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/palatino/pplb8r.tfm" 1136768653 2532 9ad73cf4dd2173a847f2a5f5608e0b9a ""
@@ -331,13 +331,13 @@
   "resumen.tex" 1771329672 1362 2244bab26edc1feb4ef992beafc728f7 ""
   "tfg.acr" 0 -1 0 ""
   "tfg.aux" 0 -1 0 "pdflatex"
-  "tfg.bbl" 1771329735 633 75731bbd4d4aeaccee20f050039a7b47 "bibtex tfg"
-  "tfg.brf" 1771329737 180 0eca170579f0184572b605dc078d85c9 "pdflatex"
+  "tfg.bbl" 1771330441 633 75731bbd4d4aeaccee20f050039a7b47 "bibtex tfg"
+  "tfg.brf" 1771330479 180 0eca170579f0184572b605dc078d85c9 "pdflatex"
   "tfg.gls" 0 -1 0 ""
-  "tfg.glsdefs" 1771329737 13707 a5071b743fac9a46a79222af8ef392b4 "pdflatex"
+  "tfg.glsdefs" 1771330479 13707 a5071b743fac9a46a79222af8ef392b4 "pdflatex"
   "tfg.out" 0 -1 0 "pdflatex"
-  "tfg.tdo" 1771329737 424 cfec927501ed710aa8a13c9b219512dc "pdflatex"
-  "tfg.tex" 1771329734 2230 080c4ba4dddc949214c76ebbb53ed7db ""
+  "tfg.tdo" 1771330479 424 cfec927501ed710aa8a13c9b219512dc "pdflatex"
+  "tfg.tex" 1771330476 2230 8e209abbab0472a53b75dd8ee04bcbf2 ""
   "trinidad-TfG.sty" 1771319880 26194 0dd3db4ddc0648fdb4a5fc8576626630 ""
   (generated)
   "tfg.acn"
