@@ -1,4 +1,3 @@
-%!TEX root =  tfg.tex
 \chapter{Arranque}
 
 \begin{quotation}[Novelist]{Ernest Hemingway (1899--1961)}
@@ -6,13 +5,94 @@ The good parts of a book may be only something a writer is lucky enough to overh
 \end{quotation}
 
 \begin{abstract}
-Resumen de lo que va a ocurrir en el capítulo. ¿Cuál es el objetivo que tenemos con este capítulo?
+En este capítulo se definen los cimientos funcionales y técnicos del proyecto. Se detalla el alcance inicial del sistema mediante una lista de características priorizada y se describe la arquitectura de software diseñada, profundizando en la estrategia de organización en monorepositorio, el patrón de diseño por capas en el servidor y la gestión de estado híbrida para garantizar el rendimiento en tiempo real.
 \end{abstract}
 
 \section{Lista de características}
 
-Aplicar aquí la primera iteración de Feature Driven Development.
+Siguiendo la metodología de desarrollo iterativo, se ha definido un conjunto de características esenciales (\textit{features}) que constituyen el Producto Mínimo Viable (MVP) de \textit{King and Peasant}. Estas características se han agrupado por módulos funcionales:
 
-\section{Diseño arquitectónico}
+\begin{itemize}
+    \item \textbf{Gestión de Identidad y Usuarios:}
+    \begin{itemize}
+        \item Registro de nuevos usuarios con validación de credenciales.
+        \item Inicio de sesión seguro (\textit{Login}) mediante JWT y gestión de sesiones.
+        \item Perfil de usuario con visualización de avatar y estadísticas básicas.
+    \end{itemize}
+    
+    \item \textbf{Infraestructura de Salas (Lobby):}
+    \begin{itemize}
+        \item Creación de salas de juego públicas y privadas.
+        \item Listado de salas activas en tiempo real.
+        \item Capacidad de unirse a una sala existente mediante código o selección directa.
+    \end{itemize}
+    
+    \item \textbf{Motor de Juego (Core):}
+    \begin{itemize}
+        \item Inicialización de la partida: barajado y reparto de cartas.
+        \item Gestión de turnos: control de tiempos y validación de acciones permitidas por jugador.
+        \item Mecánicas de cartas: lógica de ataque, defensa y efectos especiales.
+        \item Sincronización de estado: actualización visual del tablero para todos los participantes simultáneamente.
+    \end{itemize}
+    
+    \item \textbf{Funcionalidades Sociales:}
+    \begin{itemize}
+        \item Chat de texto en tiempo real dentro de la sala de espera y durante la partida.
+        \item Sistema de lista de amigos con gestión de estados (conectado/desconectado) e invitaciones.
+    \end{itemize}
+\end{itemize}
+
+\section{Diseño arquitectónico y Organización}
 \label{sec:arquitectura}
-Descripción de los sistemas de producción, preproducción y pruebas.
+
+La arquitectura del sistema se ha diseñado siguiendo un patrón cliente-servidor desacoplado. Para gestionar la complejidad de dos bases de código interrelacionadas, se ha adoptado una estrategia de **Monorepo** (Monorepositorio) utilizando los \textit{Workspaces} de \texttt{npm}. 
+
+Esta estructura permite mantener tanto el código del cliente (`packages/client`) como el del servidor (`packages/server`) en un único repositorio, facilitando la orquestación de scripts de desarrollo, la gestión de dependencias comunes y el despliegue unificado mediante contenedores.
+
+\subsection{Arquitectura del Backend (Servidor)}
+El servidor, desarrollado en \textbf{Node.js} con \textbf{Express}, no es monolítico, sino que implementa una **Arquitectura por Capas** (\textit{Layered Architecture}) para garantizar la separación de responsabilidades y la escalabilidad.
+
+\begin{enumerate}
+    \item \textbf{Capa de Enrutamiento (Routes):} Define los puntos de entrada de la API REST (por ejemplo, `/api/lobby`, `/api/game`). Su única función es recibir la petición HTTP y delegarla al controlador adecuado.
+    
+    \item \textbf{Capa de Controladores (Controllers):} Gestiona la interacción con el cliente. Valida los datos de entrada, invoca a los servicios necesarios y formatea la respuesta JSON adecuada.
+    
+    \item \textbf{Capa de Servicios (Services):} Contiene la \textbf{lógica de negocio pura}. Es el núcleo del sistema.
+    \begin{itemize}
+        \item Por ejemplo, el servicio `FriendshipService.js` encapsula la lógica compleja para verificar relaciones bidireccionales o filtrar solicitudes pendientes, aislando esta complejidad de la capa HTTP.
+    \end{itemize}
+    
+    \item \textbf{Capa de Persistencia y Datos:} Se ha optado por un modelo híbrido para optimizar el rendimiento:
+    \begin{itemize}
+        \item \textbf{\textit{MariaDB} + \textit{Prisma ORM}:} Utilizada para datos persistentes (usuarios, historial). \textit{Prisma} permite interactuar con la base de datos mediante objetos tipados, previniendo errores de sintaxis SQL y facilitando las migraciones del esquema.
+        \item \textbf{\textit{Redis}:} Base de datos en memoria clave-valor. Es fundamental para almacenar el estado volátil de las partidas y las sesiones de usuario, garantizando una latencia mínima crítica para el juego.
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{Gestión de Tiempo Real (WebSockets)}
+Paralelamente a la API REST, el servidor gestiona conexiones persistentes mediante \texttt{socket.io}. Se ha implementado una estructura en memoria (`Map`) que vincula los IDs de usuario de la base de datos con sus conexiones de \textit{socket} activas. Esto permite funcionalidades avanzadas como enviar invitaciones privadas específicas o gestionar desconexiones abruptas (rendición automática) en tiempo real.
+
+\subsection{Arquitectura del Frontend (Cliente)}
+El cliente es una \textit{Single Page Application} (SPA) desarrollada con \textbf{React} y construida sobre \textbf{Vite} para maximizar la velocidad de desarrollo. A diferencia del servidor (JavaScript), el cliente está escrito íntegramente en \textbf{TypeScript}, lo que aporta robustez y seguridad de tipos en la manipulación del estado del juego.
+
+La organización del código cliente sigue principios de modularidad:
+\begin{itemize}
+    \item \textbf{Gestión de Estado Global (Context API):} Se utiliza un `AuthProvider` para encapsular la sesión del usuario y distribuirla a toda la aplicación sin necesidad de propagar propiedades manualmente (\textit{prop drilling}).
+    \item \textbf{Hooks Personalizados:} La lógica de negocio del cliente se extrae a \textit{hooks} propios (como `useUser` o `useAuth`), separando la lógica funcional de los componentes visuales (\texttt{.tsx}).
+    \item \textbf{Calidad de Código:} Se utiliza \textbf{Vitest} para la ejecución de pruebas unitarias de componentes y lógica, asegurando que la interfaz responde correctamente a los cambios de estado del juego.
+\end{itemize}
+
+\subsection{Infraestructura y Despliegue}
+
+La consistencia entre los entornos de desarrollo y producción se garantiza mediante la contenerización completa del sistema.
+
+\subsubsection{Entorno de Desarrollo (Local)}
+El entorno local está orquestado con \textbf{Docker Compose}, lo que permite a cualquier miembro del equipo levantar la infraestructura completa con un solo comando. El archivo `docker-compose.yml` coordina:
+\begin{itemize}
+    \item Un contenedor para \textbf{\textit{MariaDB}}.
+    \item Un contenedor para \textbf{\textit{Redis}}.
+    \item El contenedor del servidor (\textit{Node.js}) configurado con recarga en caliente (\textit{hot-reload}) para reflejar cambios inmediatos en el código.
+\end{itemize}
+
+\subsubsection{Entorno de Producción}
+Para el despliegue público, se utiliza un servicio en la nube (PaaS) que ejecuta los contenedores optimizados. La seguridad se refuerza mediante el uso de certificados SSL/TLS, cifrando tanto las peticiones HTTPS como el tráfico WSS (\textit{Secure WebSockets}), protegiendo así la integridad de las partidas y los datos de los usuarios.

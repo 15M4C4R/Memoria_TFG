@@ -2,21 +2,65 @@
 \chapter{Contexto}
 
 \begin{quotation}[Novelist]{Ernest Hemingway (1899--1961)}
-The good parts of a book may be only something a writer is lucky enough to overhear or it may be the wreck of his whole damn life -- and one is as good as the other.
+...
 \end{quotation}
 
 \begin{abstract}
-Resumen de lo que va a ocurrir en el capítulo. ¿Cuál es el objetivo que tenemos con este capítulo?
+Este capítulo establece el marco histórico y tecnológico en el que se desarrolla el proyecto. Se analiza la evolución de la industria del videojuego, desde la accesibilidad de los primeros juegos web hasta la hegemonía actual del mercado móvil y sus modelos de negocio cerrados. Finalmente, se presenta el estado del arte de la tecnología web moderna y el software libre como herramientas clave para recuperar la inmediatez y la experiencia de usuario perdida.
 \end{abstract}
 
-\section{El mundo del X (videojuego, e-commerce,...)}
+section{El mundo del videojuego como fenómeno social}
+\begin{comment}
+A menudo, cuando pensamos en videojuegos, visualizamos únicamente el producto final: la diversión en la pantalla. Sin embargo, detrás de cada píxel existe una de las industrias de ingeniería de software más complejas y lucrativas del mundo. Para ponerlo en perspectiva: el sector del videojuego genera actualmente más ingresos anuales que la industria del cine y la música juntas \cite{newzoo_2023}. Ya no estamos hablando de un nicho para aficionados, sino del motor cultural y económico del siglo XXI.
 
-Hay que ir poco a poco acotando el contexto donde se desarrolla el proyecto. No se debe sobreentender que el evaluador de la memoria sabe del tema. Escribid el texto para la abuela.
+El desarrollo de videojuegos ha evolucionado desde el trabajo de programadores solitarios en garajes hacia una industria de "superproducciones". Desarrollar un título moderno (conocido como "Triple A") implica equipos de cientos de personas coordinando lógica matemática, física simulada, inteligencia artificial y redes de telecomunicaciones, todo funcionando en perfecta sincronía 60 veces por segundo. Es un desafío técnico que combina la creatividad artística con la precisión de la ingeniería informática más exigente.
+\end{comment}
+A principios del siglo XXI, antes de la omnipresencia de los teléfonos inteligentes, el navegador web representaba la mayor plataforma de distribución de ocio interactivo del mundo. Existía una cultura vibrante en torno a los portales de juegos web (como \textit{Miniclip}, \textit{Newgrounds} o \textit{Kongregate}), que funcionaban bajo una premisa de "fricción cero": el usuario no necesitaba hardware potente, ni tarjetas de crédito, ni tiempos de descarga. Bastaba con una dirección URL para acceder a miles de experiencias creativas.
 
-\section{Subcontexto}
+Esta época definió la infancia y adolescencia de toda una generación. Los juegos se desarrollaban principalmente con \textit{Adobe Flash}, una tecnología que, pese a sus limitaciones de seguridad, democratizó la creación: pequeños equipos o programadores individuales podían publicar juegos que eran jugados por millones, priorizando la diversión y la creatividad sobre el modelo de negocio. Sin embargo, con el tiempo, la industria se ha desplazado hacia modelos más cerrados y complejos, donde la accesibilidad ha dado paso a la exclusividad. El cierre de Flash en 2020 marcó el fin de una era, dejando un legado nostálgico pero también un vacío tecnológico que este proyecto busca llenar.
 
-\section{Subsubcontexto}
+\section{La dicotomía tecnológica: Nativo vs. Web}
+\begin{comment}
+Dentro de este universo de desarrollo, históricamente ha existido una división clara. Por un lado, el desarrollo nativo (juegos que instalas en tu disco duro), que aprovecha toda la potencia del ordenador pero levanta muros al usuario: descargas lentas, instalaciones complejas y requisitos de hardware costosos.
+
+Por otro lado, existe el desarrollo web, el ''sub-contexto'' donde se ubica este proyecto. La premisa es la accesibilidad radical: si tienes un navegador, puedes jugar. Durante años, esta vía fue despreciada por considerarse técnicamente inferior. Sin embargo, el desarrollo web moderno ha alcanzado un punto de madurez donde la barrera entre una aplicación instalada y una página web es casi invisible. El reto ya no es "¿se puede hacer?", sino "¿cómo lo hacemos igual de rápido y robusto que los grandes?".
+\end{comment}
+Con la llegada del iPhone en 2007 y la popularización de Android, el hábito de consumo digital sufrió una transformación radical. El ordenador personal dejó de ser la puerta de entrada a la tecnología. Hoy en día, el **primer acceso** de una persona al mundo de los videojuegos ya no es un PC ni una consola, sino un teléfono móvil.
+
+Este cambio desplazó a la web. Las tiendas de aplicaciones (App Store, Google Play) impusieron un modelo de "Jardín Vallado" (\textit{Walled Garden}): entornos cerrados donde, para jugar, es obligatorio descargar, instalar y aceptar permisos. La inmediatez de la web se perdió en favor de la comodidad de tener el dispositivo siempre en el bolsillo. Sin embargo, esta comodidad tiene un costo: la fragmentación del mercado, la dependencia de plataformas y la pérdida de la magia de jugar sin barreras. Este proyecto se propone replicar esa experiencia de juego instantáneo, utilizando tecnologías web modernas que permiten ofrecer una experiencia fluida y accesible. 
+
+\section{El desafío de la sincronización en tiempo real}
+\begin{comment}
+
+Si acotamos aún más el problema, llegamos al núcleo de \textit{King and Peasant}: la **interacción multijugador**. Desarrollar un juego para una sola persona es complejo, pero conectar a varios jugadores en distintos lugares introduce un problema crítico: la latencia (el retardo).
+
+Imaginemos una partida de cartas física: cuando un jugador suelta una carta, el otro la ve instantáneamente. En el mundo digital, esa información debe viajar por cables de fibra óptica, cruzar servidores y llegar a la pantalla del rival en milisegundos. Si esa comunicación falla, la ilusión del juego se rompe. Aquí es donde entran en juego tecnologías como los **WebSockets**, que permiten mantener un "teléfono abierto" permanentemente entre todos los jugadores, a diferencia de las páginas web tradicionales que ''cuelgan la llamada'' tras cada interacción.
+\end{comment}
+Aunque el mercado móvil masificó el videojuego, también transformó su diseño. Al ser plataformas dominadas por el modelo \textit{Freemium} (juegos gratuitos con micropagos), gran parte de la industria actual no diseña juegos para ser ''divertidos'' o ''memorables'', sino para ser \textbf{rentables}.
+
+Las mecánicas de juego modernas a menudo se supeditan a la retención de usuarios y a la monetización agresiva: anuncios invasivos, tiempos de espera artificiales para obligar a pagar, y sistemas de ''cajas de botín'' (\textit{loot boxes}). La ingeniería de software en este sector se ha centrado más en optimizar métricas de ingresos que en la calidad de la interacción o la narrativa.
 
 \section{Estado del arte}
+\begin{comment}
+Actualmente, la industria se encuentra en una encrucijada tecnológica:
 
-Cómo se encuentra la industria hoy en día a nivel económico y tecnológico.
+\begin{itemize}
+    \item \textbf{Motores comerciales hegemónicos:} La gran mayoría del mercado está dominado por motores genéricos como \textit{Unity} o \textit{Unreal Engine}. Son herramientas potentísimas, pero suelen generar aplicaciones pesadas que requieren instalación, alejándose de la inmediatez.
+    \item \textbf{El renacimiento de la Web (Post-Flash):} Tras la muerte de la tecnología Flash en 2020 \cite{adobe_flash_eol}, hubo un vacío tecnológico. Hoy, ese vacío se está llenando con estándares abiertos. El uso de librerías como \textbf{React} (para interfaces reactivas) combinadas con servidores \textbf{Node.js}, ha permitido que el desarrollo web recupere el terreno perdido, permitiendo crear experiencias complejas sin obligar al usuario a instalar nada.
+    \item \textbf{La democratización del servidor:} Antiguamente, tener un servidor para un juego multijugador era costoso y difícil. Hoy, gracias a la nube y a arquitecturas ligeras (como la que usamos en este TFG), un pequeño equipo puede desplegar una infraestructura mundial capaz de conectar a jugadores de cualquier continente.
+\end{itemize}
+
+Este proyecto busca demostrar que, utilizando estas herramientas modernas, es posible ofrecer una experiencia de desarrollo profesional y una experiencia de usuario fluida, sin la pesadez de la industria tradicional.
+\end{comment}
+
+Frente a la hegemonía de los ecosistemas cerrados móviles y los motores propietarios descritos anteriormente, el estado actual de la tecnología web ofrece una alternativa madura y accesible. La industria del desarrollo web ha evolucionado hacia un ecosistema dominado por herramientas de \textbf{Software Libre} (Open Source) y estándares abiertos, lo que permite replicar la facilidad e inmediatez de la ''era dorada''de los juegos de navegador, pero con una arquitectura mucho más robusta.
+
+El proyecto \textit{King and Peasant} se fundamenta en este estado del arte tecnológico para demostrar que la web moderna es una plataforma de ejecución de alto rendimiento capaz de competir en experiencia de usuario. La propuesta técnica se apoya en dos pilares fundamentales de la ingeniería actual:
+
+\begin{itemize}
+    \item \textbf{Arquitectura Abierta vs. Tecnologías Propietarias:} En lugar de depender de motores comerciales que actúan como ''cajas negras'' y requieren licencias o hardware específico, el estado del arte actual permite construir sistemas complejos apoyándose íntegramente en el ecosistema Open Source. Esto garantiza una arquitectura transparente, modificable y sin barreras de entrada artificiales (muros de pago o instalaciones).
+    
+    \item \textbf{La potencia de la Web Moderna:} La estandarización de \textbf{HTML5} y, crucialmente, de los WebSockets, ha eliminado la necesidad de plugins obsoletos. Estas tecnologías permiten establecer canales de comunicación bidireccional persistentes en tiempo real, logrando una experiencia fluida y robusta sin obligar al usuario a instalar software privativo.
+\end{itemize}
+
+En definitiva, las herramientas disponibles hoy en día permiten recuperar la filosofía del ''entrar y jugar''a un solo clic, ejecutada no como un simple pasatiempo, sino bajo los estrictos estándares de calidad, seguridad y concurrencia de la ingeniería de software contemporánea.

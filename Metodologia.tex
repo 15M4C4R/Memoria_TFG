@@ -1,4 +1,3 @@
-%!TEX root =  tfg.tex
 \chapter{Metodología}
 
 \begin{quotation}[Novelist]{Ernest Hemingway (1899--1961)}
@@ -6,13 +5,65 @@ The good parts of a book may be only something a writer is lucky enough to overh
 \end{quotation}
 
 \begin{abstract}
-Resumen de lo que va a ocurrir en el capítulo. ¿Cuál es el objetivo que tenemos con este capítulo?
+En este capítulo se define el marco de trabajo y los procedimientos organizativos adoptados para la ejecución del proyecto. Se analiza la estructura del equipo de desarrollo y se realiza un estudio comparativo de distintas metodologías de ingeniería del software, justificando la elección de un enfoque ágil frente a modelos tradicionales. Finalmente, se detalla la adaptación de \textit{Scrum} a un equipo reducido para garantizar un desarrollo iterativo y eficiente.
 \end{abstract}
 
 \section{Estructura organizacional del proyecto}
 
-¿Se hace en grupo? En caso afirmativo, ¿cuál va a ser la responsabilidad de cada uno?
+El desarrollo de \textit{King and Peasant} ha sido llevado a cabo por un equipo de trabajo constituido por dos ingenieros. Dada la naturaleza reducida del grupo y la fuerte interdependencia entre los componentes del sistema (cliente y servidor), se optó por una **estructura horizontal y colaborativa**.
+
+En lugar de segregar rígidamente los roles (por ejemplo, un integrante dedicado exclusivamente al \textit{Frontend} y otro al \textit{Backend}), ambos miembros del equipo han actuado como desarrolladores \textit{Full Stack}. Esta decisión ha permitido:
+
+\begin{itemize}
+    \item \textbf{Flexibilidad operativa:} Ambos integrantes poseen una visión global de la arquitectura, lo que permite mitigar bloqueos si uno de los dos no está disponible o se encuentra atascado en una tarea compleja.
+    \item \textbf{Revisión de código cruzada:} Al conocer ambos la tecnología empleada en todas las capas, el proceso de validación (\textit{Code Review}) es más fluido y eficaz, reduciendo la introducción de deuda técnica.
+\end{itemize}
+
+La responsabilidad se ha gestionado mediante un reparto de tareas dinámico. Al inicio de cada ciclo de trabajo, se asignaban las funcionalidades específicas a implementar por cada miembro, asegurando un equilibrio en la carga de trabajo.
 
 \section{Metodología de desarrollo}
 
-Indicar en qué metodología nos basamos, explicarla brevemente y luego adaptarla a nuestras necesidades. Cada una de estas cuestiones debe ser una subsección.
+Para determinar el ciclo de vida más adecuado para este proyecto, se realizó un análisis previo de las metodologías de desarrollo de software más extendidas en la industria. A continuación, se exponen las alternativas evaluadas y la justificación de la elección final.
+
+\subsection{Análisis de alternativas}
+
+\subsubsection{Modelo en Cascada (\textit{Waterfall})}
+Este enfoque clásico propone una secuencia lineal de fases (Requisitos, Análisis, Diseño, Implementación, Pruebas y Mantenimiento), donde cada etapa debe finalizar antes de comenzar la siguiente.
+\begin{itemize}
+    \item \textbf{Motivo del descarte:} El desarrollo de un videojuego conlleva una gran incertidumbre en cuanto a la ``jugabilidad'' y la experiencia de usuario. El modelo en cascada es excesivamente rígido; si se detecta que una mecánica de juego no es divertida durante la fase de pruebas, el coste de volver atrás para rediseñarla es inasumible. Este proyecto requiera la capacidad de pivotar y ajustar requisitos sobre la marcha.
+\end{itemize}
+
+\subsubsection{Modelo en Espiral}
+Este modelo se centra en la evaluación y reducción de riesgos mediante iteraciones que combinan planificación y prototipado.
+\begin{itemize}
+    \item \textbf{Motivo del descarte:} Aunque soluciona la rigidez de la cascada, el modelo en espiral introduce una carga de gestión y documentación excesiva (\textit{overhead}) para un equipo de solo dos personas. El tiempo dedicado a evaluar riesgos formales restaría demasiado tiempo de implementación efectiva.
+\end{itemize}
+
+\subsection{Elección: Metodología Ágil (\textit{Scrum})}
+Tras descartar los modelos predictivos tradicionales, se optó por una metodología ágil basada en el marco de trabajo \textbf{\textit{Scrum}}. Este enfoque se basa en el desarrollo iterativo e incremental, donde el producto se construye poco a poco en ciclos cortos.
+
+La elección se fundamenta en:
+\begin{enumerate}
+    \item \textbf{Entrega temprana de valor:} Permite tener una visión mas clara del producto final desde las primeras semanas lo cual es vital para validar la arquitectura.
+    \item \textbf{Adaptabilidad:} Facilita la incorporación de cambios en las reglas del juego o la interfaz a medida que se prueban, sin desestabilizar todo el proyecto.
+\end{enumerate}
+
+\section{Adaptación al proyecto: El ciclo de vida}
+
+Aunque \textit{Scrum} define roles y ceremonias estrictas, en este proyecto se ha realizado una adaptación ligera (\textit{Scrum-but}) para maximizar la agilidad en un micro-equipo.
+
+\subsection{Sprints Semanales}
+El desarrollo se ha dividido en iteraciones temporales cortas o \textbf{\textit{Sprints}} con una duración de una semana. Esta cadencia, más rápida que los habituales 15 días de la industria, ha permitido un control muy preciso del progreso.
+\begin{itemize}
+    \item \textbf{\textit{Sprint Planning}:} Al inicio de la semana, el equipo selecciona las tareas del \textit{Product Backlog} (pila de producto) que se compromete a completar.
+    \item \textbf{Ejecución:} Desarrollo de las funcionalidades en paralelo.
+    \item \textbf{\textit{Sprint Review}:} Al finalizar la semana, se verifica que el código funciona y se integra en la rama principal del repositorio.
+\end{itemize}
+
+\subsection{Coordinación y Herramientas}
+Para soportar esta metodología, se han empleado herramientas estándar de la industria:
+\begin{itemize}
+    \item \textbf{Reuniones diarias (\textit{Daily Stand-up}):} Reuniones breves de 15 minutos para sincronizar el trabajo del día y detectar bloqueos.
+    \item \textbf{Tablero Kanban:} Se ha utilizado software de gestión (\textit{GitHub Projects}) para visualizar el estado de las tareas (``Pendiente'', ``En curso'', ``Terminado'').
+    \item \textbf{Control de Versiones:} Uso estricto de \textit{Git} para gestionar el código fuente, trabajando con ramas por funcionalidad (\textit{Feature Branches}) para evitar conflictos entre los dos desarrolladores.
+\end{itemize}

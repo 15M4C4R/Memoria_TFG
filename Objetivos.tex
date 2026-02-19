@@ -1,20 +1,43 @@
-%!TEX root =  tfg.tex
-\chapter{Contexto}
+\chapter{Objetivos}
 
 \begin{quotation}[Novelist]{Ernest Hemingway (1899--1961)}
 The good parts of a book may be only something a writer is lucky enough to overhear or it may be the wreck of his whole damn life -- and one is as good as the other.
 \end{quotation}
 
 \begin{abstract}
-Aqu\'i mal un breve resumen del capítulo.
+En este capítulo se detallan las razones que han impulsado la realización de este proyecto y las metas que se pretenden alcanzar. Se expone la motivación tecnológica y estética detrás de la elección de una arquitectura web para el desarrollo de un videojuego, así como el desglose de los objetivos técnicos, funcionales y de gestión necesarios para llevar a cabo el sistema \textit{King and Peasant}.
 \end{abstract}
 
 \section{Motivación}
-Esta sección se rellenará cuando tengamos un producto de mercado en lugar de un proyecto en el que haya un cliente específico. Deberá justificar brevemente el problema a resolver, escenario en el que se aplica, hipótesis de partida, público objetivo, etc.
+
+La motivación fundamental de este Trabajo Fin de Grado nace de un interés personal profundo por la industria del desarrollo de videojuegos. Inicialmente, se planteó la posibilidad de utilizar motores gráficos comerciales estándar como \textit{Unity} o \textit{Unreal Engine}. Sin embargo, tras un análisis de viabilidad, se detectó que la curva de aprendizaje de estas herramientas propietarias era incompatible con los plazos de ejecución del proyecto. Además, el uso de dichos motores abstrae gran parte de la lógica de bajo nivel, lo cual alejaba el proyecto de las competencias específicas de la Ingeniería del Software que deseábamos fortalecer.
+
+Por consiguiente, la decisión estratégica fue \textbf{abordar el desarrollo del videojuego desde una perspectiva \textit{Full Stack}}, utilizando tecnologías web estándar (como \textit{React} y \textit{Node.js}). Esta elección cumple una doble función:
+
+\begin{itemize}
+    \item \textbf{Viabilidad y Enfoque:} Al adaptar un juego de mesa con reglas predefinidas a un entorno digital, el esfuerzo se concentra en la implementación tecnológica y la arquitectura del sistema, en lugar de en el diseño de mecánicas de juego desde cero.
+    \item \textbf{Proyección Profesional:} Se emplean tecnologías de alta demanda en el mercado laboral actual, permitiendo consolidar los conocimientos adquiridos durante el grado en un entorno de producción real.
+\end{itemize}
+
+Finalmente, existe una fuerte motivación \textbf{estética y nostálgica}. Durante la fase de conceptualización, se buscó recuperar la esencia de los juegos de navegador de la década de los 2000: portales inmersivos donde la interfaz de usuario (UI) no era un simple menú, sino parte de la narrativa y la ambientación del juego. La motivación es, por tanto, fusionar la libertad y accesibilidad de la web moderna con una atmósfera visual envolvente que transporte al jugador al contexto medieval del juego.
 
 \section{Listado de objetivos}
 
+El objetivo principal de este proyecto es el diseño, implementación y despliegue de \textit{King and Peasant}, una plataforma web multijugador que digitaliza la experiencia de un juego de cartas estratégico. Para alcanzar esta meta global, se han definido los siguientes objetivos específicos:
+
 \begin{description}
-\item \textbf{Objetivo 1. Blabla} Detalles del objetivo 1.
-\item \textbf{Objetivo 2. Blabla} Detalles del objetivo 2.
+    \item \textbf{Objetivo 1. Desarrollo de la lógica de juego y sincronización en tiempo real.} \\
+    Implementar el motor de reglas del juego de mesa asegurando la integridad de la partida. Esto implica el uso de \textit{WebSockets} para garantizar una comunicación bidireccional instantánea entre el servidor y los clientes, asegurando que todos los jugadores perciban el mismo estado del tablero simultáneamente y sin latencia perceptible.
+
+    \item \textbf{Objetivo 2. Construcción de un ecosistema social persistente.} \\
+    Desarrollar un sistema de perfiles de usuario robusto que vaya más allá de la partida. Esto incluye el registro y autenticación segura de usuarios, gestión de listas de amigos, historial de partidas y estadísticas de rendimiento, fomentando la retención y la comunidad dentro de la plataforma.
+
+    \item \textbf{Objetivo 3. Diseño de una Experiencia de Usuario (UX/UI) inmersiva.} \\
+    Crear una interfaz gráfica que rompa con la estética estándar de las aplicaciones web corporativas (``Material Design''). El objetivo es lograr una ambientación visual y sonora coherente con la temática medieval del juego, integrando la interfaz de forma orgánica para potenciar la inmersión del jugador en el navegador.
+
+    \item \textbf{Objetivo 4. Gestión integral del ciclo de vida del proyecto.} \\
+    Al tratarse de un desarrollo colaborativo realizado por un equipo de dos personas, un objetivo transversal es la aplicación de metodologías ágiles y buenas prácticas de ingeniería. Esto abarca el control de versiones (\textit{Git}), la integración continua, el reparto de tareas mediante tableros \textit{Kanban} y la coordinación eficiente entre el \textit{Frontend} y el \textit{Backend}.
+
+    \item \textbf{Objetivo 5. Despliegue y accesibilidad.} \\
+    Asegurar que el resultado final sea accesible públicamente a través de internet, configurando un entorno de producción real que soporte la concurrencia de usuarios y demuestre la viabilidad técnica de la solución propuesta.
 \end{description}

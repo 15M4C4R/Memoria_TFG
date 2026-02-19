@@ -23,7 +23,7 @@
 \RequirePackage[thmmarks]{ntheorem}
 \RequirePackage{needspace} % to ensure that the lines in theorems are not alone in the head/bottom of a page
 \RequirePackage{datetime}
-\RequirePackage[pagebackref=true]{hyperref}
+\RequirePackage{hyperref}
 %\RequirePackage{etoolbox} % csdef and csuse
 
 %%
@@ -662,16 +662,16 @@ en la \university\\
 }
 
 % Pagebackref support. It adds references to the pages where bibliography is cited. In draft mode, it remarks if a bibentry has not been cited in the text.
-\renewcommand*{\backreflastsep}{, }
-\renewcommand*{\backreftwosep}{, }
-\renewcommand*{\backref}[1]{}
-\renewcommand*{\backrefalt}[4]{
-	\ifcase #1
-		\ifoptiondraft{\begin{color}{red}No citation\end{color}}{\relax}
-	\or (page #2).
-	\else (pages #2).
-	\fi
-}
+%\renewcommand*{\backreflastsep}{, }
+%\renewcommand*{\backreftwosep}{, }
+%\renewcommand*{\backref}[1]{}
+%\renewcommand*{\backrefalt}[4]{
+%	\ifcase #1
+%		\ifoptiondraft{\begin{color}{red}No citation\end{color}}{\relax}
+% \or (page #2).
+%	\else (pages #2).
+%	\fi
+%}
 
 %%
 %% Text frame to remark important information (\importantframe)
