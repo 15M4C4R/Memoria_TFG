@@ -1,9 +1,9 @@
-PWD /home/ismael/Proyectos/Plantilla_LaTeX_para_TFG
+PWD /home/ismael/Escritorio/Memoria_TFG
 INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /home/ismael/.texlive2021/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /home/ismael/Proyectos/Plantilla_LaTeX_para_TFG/tfg.tex
+INPUT /home/ismael/Escritorio/Memoria_TFG/tfg.tex
 OUTPUT tfg.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/book.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/book.cls

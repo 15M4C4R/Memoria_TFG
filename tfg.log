@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.2.17)  18 FEB 2026 21:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.2.20)  20 FEB 2026 12:11
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/ismael/Proyectos/Plantilla_LaTeX_para_TFG/tfg.tex
-(/home/ismael/Proyectos/Plantilla_LaTeX_para_TFG/tfg.tex
+**/home/ismael/Escritorio/Memoria_TFG/tfg.tex
+(/home/ismael/Escritorio/Memoria_TFG/tfg.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-01-21> (/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
 Document Class: book 2021/10/04 v1.4n Standard LaTeX document class
@@ -2174,10 +2174,6 @@ Overfull \hbox (2.52931pt too wide) in paragraph at lines 194--92
 []\T1/ppl/m/n/12 Use \Ta-ble-Sub-ti-tle{n,title} to add a sub-ti-tle as the head-er. n is the num-ber of columns|
  []
 
-
-Package glossaries Warning: Deprecated command \glossarystyle.
- I recommend you switch to \setglossarystyle unless you want to maintain backward compatibility on input line 95.
-
 No file tfg.gls.
 No file tfg.acr.
 LaTeX Info: Redefining \. on input line 97.
@@ -2205,12 +2201,12 @@ Package rerunfilecheck Info: File `tfg.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  37759 strings out of 480247
- 686027 string characters out of 5896151
+ 685991 string characters out of 5896151
  1188028 words of memory out of 5000000
  54708 multiletter control sequences out of 15000+600000
  562508 words of font info for 195 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 106i,20n,105p,1311b,2134s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 106i,20n,105p,1299b,2134s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/eurosym/feymr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/kpfonts/jkpssbsc8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/kpfonts/jkpssmn8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/kpfonts/jkpttbn8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/kpfonts/jkpttmn8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfchan/uzcmi8a.pfb>
 Output written on tfg.pdf (74 pages, 1296208 bytes).
 PDF statistics:
