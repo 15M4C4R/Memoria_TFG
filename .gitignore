@@ -1,0 +1,39 @@
+# Archivos principales de compilación de LaTeX
+*.aux
+*.bbl
+*.blg
+*.idx
+*.ind
+*.lof
+*.lot
+*.out
+*.toc
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
+
+# Archivos de logs y formato
+*.log
+*.ilg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(auto).gz
+*.synctex.gz(busy)
+*.pdfsync
+
+# Archivos de bibliografía (Biber / BibTeX)
+*.bcf
+*.run.xml
+
+# Entornos de desarrollo y editores (VS Code, TeXstudio, etc.)
+.vscode/
+*.swp
+*.bak
+*.sav
+*.tex.bak
+*.brf
