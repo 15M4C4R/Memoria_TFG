@@ -5,39 +5,60 @@ The good parts of a book may be only something a writer is lucky enough to overh
 \end{quotation}
 
 \begin{abstract}
-En este capítulo se detallan las razones que han impulsado la realización de este proyecto y las metas que se pretenden alcanzar. Se expone la motivación tecnológica y estética detrás de la elección de una arquitectura web para el desarrollo de un videojuego, así como el desglose de los objetivos técnicos, funcionales y de gestión necesarios para llevar a cabo el sistema \textit{King and Peasant}.
+Este capítulo establece el marco operativo y las metas fundamentales del TFG. En primer lugar, se delimita el alcance del proyecto, definiendo las responsabilidades técnicas asumidas y las restricciones funcionales del sistema. A continuación, se formula el objetivo general centrado en la adaptación digital de \textit{King and Peasant}, para finalmente desglosarlo en un conjunto de objetivos específicos técnicos, de diseño y metodológicos que servirán como hitos medibles a lo largo del ciclo de desarrollo.
 \end{abstract}
 
-\section{Motivación}
+Tras establecer el contexto histórico y la motivación del proyecto en el primer capítulo, resulta imprescindible trazar una hoja de ruta técnica clara. Este segundo capítulo tiene como propósito fundamental acotar la magnitud del desarrollo y definir con precisión las metas del trabajo. Para ello, se comenzará delimitando el alcance funcional del sistema, diferenciando las competencias estrictamente ligadas a la ingeniería de software de aquellos elementos descartados por viabilidad temporal. Posteriormente, se formulará el objetivo general que compone la digitalización de \textit{King and Peasant}, desglosándolo finalmente en una serie de hitos técnicos y metodológicos que guiarán las futuras fases de implementación y despliegue.
 
-La motivación fundamental de este Trabajo Fin de Grado nace de un interés personal profundo por la industria del desarrollo de videojuegos. Inicialmente, se planteó la posibilidad de utilizar motores gráficos comerciales estándar como \textit{Unity} o \textit{Unreal Engine}. Sin embargo, tras un análisis de viabilidad, se detectó que la curva de aprendizaje de estas herramientas propietarias era incompatible con los plazos de ejecución del proyecto. Además, el uso de dichos motores abstrae gran parte de la lógica de bajo nivel, lo cual alejaba el proyecto de las competencias específicas de la Ingeniería del Software que deseábamos fortalecer.
+\section{Definición y delimitación del alcance}
 
-Por consiguiente, la decisión estratégica fue \textbf{abordar el desarrollo del videojuego desde una perspectiva \textit{Full Stack}}, utilizando tecnologías web estándar (como \textit{React} y \textit{Node.js}). Esta elección cumple una doble función:
+La correcta delimitación del alcance es un factor crítico para asegurar la viabilidad del TFG. Dadas las limitaciones expuestas en el capítulo anterior, es necesario establecer ciertas fronteras en el desarrollo del proyecto. A continuación, se detallan los elementos que componen el alcance y aquellos que han sido explícitamente excluidos.
+
+\subsection{Dentro del alcance}
+
+El desarrollo abarca el ciclo de vida de la aplicación web, incluyendo:
 
 \begin{itemize}
-    \item \textbf{Viabilidad y Enfoque:} Al adaptar un juego de mesa con reglas predefinidas a un entorno digital, el esfuerzo se concentra en la implementación tecnológica y la arquitectura del sistema, en lugar de en el diseño de mecánicas de juego desde cero.
-    \item \textbf{Proyección Profesional:} Se emplean tecnologías de alta demanda en el mercado laboral actual, permitiendo consolidar los conocimientos adquiridos durante el grado en un entorno de producción real.
+    \item \textbf{Arquitectura de comunicación:} Implementación de un servidor capaz de gestionar sesiones concurrentes y comunicación en tiempo real mediante \textit{WebSockets}.
+    \item \textbf{Motor de reglas digital:} Traducción del reglamento de \textit{King and Peasant} a una lógica de negocio que valide automáticamente los estados de la partida.
+    \item \textbf{Gestión de usuarios:} Diseño de persistencia de datos para perfiles, amistades e histórico de partidas.
+    \item \textbf{Despliegue:} Contenedorización del entorno de producción mediante \textit{Docker} para garantizar su accesibilidad.
 \end{itemize}
 
-Finalmente, existe una fuerte motivación \textbf{estética y nostálgica}. Durante la fase de conceptualización, se buscó recuperar la esencia de los juegos de navegador de la década de los 2000: portales inmersivos donde la interfaz de usuario (UI) no era un simple menú, sino parte de la narrativa y la ambientación del juego. La motivación es, por tanto, fusionar la libertad y accesibilidad de la web moderna con una atmósfera visual envolvente que transporte al jugador al contexto medieval del juego.
+\subsection{Fuera del alcance}
 
-\section{Listado de objetivos}
+Para centrar los esfuerzos en la calidad técnica del software, quedan excluidos:
 
-El objetivo principal de este proyecto es el diseño, implementación y despliegue de \textit{King and Peasant}, una plataforma web multijugador que digitaliza la experiencia de un juego de cartas estratégico. Para alcanzar esta meta global, se han definido los siguientes objetivos específicos:
+\begin{itemize}
+    \item \textbf{Diseño original de mecánicas:} Se delega el balanceo y autoría del juego en el reglamento físico creado por nPipsGames.
+    \item \textbf{Desarrollo móvil nativo:} El sistema se limita al entorno web, sin contemplar aplicaciones específicas para iOS o Android.
+    \item \textbf{Monetización:} El producto se concibe como una herramienta de ocio gratuita, excluyendo pasarelas de pago o sistemas publicitarios.
+    \item \textbf{Sistema competitivo (\textit{Ranked}):} No se implementarán sistemas de emparejamiento basados en habilidad (\textit{matchmaking}) ni puntuaciones de clasificación global (tipo Elo).
+    \item \textbf{Economía virtual:} Queda excluida la creación de divisas internas (\textit{in-game currency}) y sistemas de progresión basados en la adquisición de bienes virtuales.
+    \item \textbf{Inteligencia Artificial (PvE):} El proyecto se centra estrictamente en la interacción jugador contra jugador (PvP), por lo que se descarta el desarrollo de agentes autónomos o \textit{bots} contra los que jugar en solitario.
+\end{itemize}
 
-\begin{description}
-    \item \textbf{Objetivo 1. Desarrollo de la lógica de juego y sincronización en tiempo real.} \\
-    Implementar el motor de reglas del juego de mesa asegurando la integridad de la partida. Esto implica el uso de \textit{WebSockets} para garantizar una comunicación bidireccional instantánea entre el servidor y los clientes, asegurando que todos los jugadores perciban el mismo estado del tablero simultáneamente y sin latencia perceptible.
+\section{Objetivo General}
+
+El objetivo central de este TFG es el diseño, implementación y despliegue de la versión digital del juego asimétrico \textit{King and Peasant} en una plataforma web multijugador. La meta final es ofrecer un ecosistema persistente que garantice la inmediatez de los juegos de navegador clásicos mediante el uso de tecnologías web modernas, una arquitectura cliente-servidor robusta y metodologías profesionales de desarrollo, asegurando una experiencia de usuario fluida, sincronizada y de alta disponibilidad.
+
+\section{Desglose de objetivos técnicos y metodológicos}
+
+Para alcanzar la meta global descrita anteriormente, el proyecto se desglosa en los siguientes objetivos específicos, los cuales actúan como hitos medibles del desarrollo:
+
+\begin{itemize}
+    \item\textbf{Objetivo 1. Desarrollo de la lógica de juego y sincronización en tiempo real.} \\
+    Implementar el motor de reglas del juego de mesa asegurando la integridad de la partida. Esto implica el uso de \textit{WebSockets} para garantizar una comunicación bidireccional instantánea entre el servidor y los clientes, de modo que todos los jugadores perciban el mismo estado del tablero simultáneamente y sin latencia perceptible.
 
     \item \textbf{Objetivo 2. Construcción de un ecosistema social persistente.} \\
     Desarrollar un sistema de perfiles de usuario robusto que vaya más allá de la partida. Esto incluye el registro y autenticación segura de usuarios, gestión de listas de amigos, historial de partidas y estadísticas de rendimiento, fomentando la retención y la comunidad dentro de la plataforma.
 
-    \item \textbf{Objetivo 3. Diseño de una Experiencia de Usuario (UX/UI) inmersiva.} \\
-    Crear una interfaz gráfica que rompa con la estética estándar de las aplicaciones web corporativas (``Material Design''). El objetivo es lograr una ambientación visual y sonora coherente con la temática medieval del juego, integrando la interfaz de forma orgánica para potenciar la inmersión del jugador en el navegador.
+    \item \textbf{Objetivo 3. Diseño de una Experiencia de Usuario (UX/UI) integral e intuitiva.} \\
+    Implementar una interfaz gráfica limpia y ergonómica que traslade fielmente la fluidez del juego de mesa original al entorno digital. Este diseño debe garantizar una navegación coherente y accesible no solo durante el transcurso de la partida en el tablero, sino en todo el ecosistema de la plataforma, abarcando la gestión de perfiles, la autenticación y la administración de salas de espera.
 
     \item \textbf{Objetivo 4. Gestión integral del ciclo de vida del proyecto.} \\
     Al tratarse de un desarrollo colaborativo realizado por un equipo de dos personas, un objetivo transversal es la aplicación de metodologías ágiles y buenas prácticas de ingeniería. Esto abarca el control de versiones (\textit{Git}), la integración continua, el reparto de tareas mediante tableros \textit{Kanban} y la coordinación eficiente entre el \textit{Frontend} y el \textit{Backend}.
 
     \item \textbf{Objetivo 5. Despliegue y accesibilidad.} \\
     Asegurar que el resultado final sea accesible públicamente a través de internet, configurando un entorno de producción real que soporte la concurrencia de usuarios y demuestre la viabilidad técnica de la solución propuesta.
-\end{description}
+\end{itemize}
