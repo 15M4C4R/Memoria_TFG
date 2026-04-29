@@ -10,60 +10,64 @@ En este capítulo se define el marco de trabajo y los procedimientos organizativ
 
 \section{Estructura organizacional del proyecto}
 
-El desarrollo de \textit{King and Peasant} ha sido llevado a cabo por un equipo de trabajo constituido por dos ingenieros. Dada la naturaleza reducida del grupo y la fuerte interdependencia entre los componentes del sistema (cliente y servidor), se optó por una **estructura horizontal y colaborativa**.
+El desarrollo de \textit{King and Peasant} ha sido llevado a cabo por un equipo de trabajo constituido por dos ingenieros. Dada la naturaleza reducida del grupo y la fuerte interdependencia técnica entre los componentes del sistema (cliente y servidor), se descartaron las jerarquías verticales en favor de una estructura horizontal y colaborativa.
 
-En lugar de segregar rígidamente los roles (por ejemplo, un integrante dedicado exclusivamente al \textit{Frontend} y otro al \textit{Backend}), ambos miembros del equipo han actuado como desarrolladores \textit{Full Stack}. Esta decisión ha permitido:
+En lugar de segregar rígidamente los roles, delegando la capa de \textit{Frontend} exclusivamente a un integrante y el  \textit{Backend} a otro, ambos miembros del equipo han asumido responsabilidades como desarrolladores \textit{Full Stack}. 
+
+Esta decisión arquitectónica a nivel de equipo ha reportado dos beneficios fundamentales para el ciclo de vida del proyecto:
 
 \begin{itemize}
-    \item \textbf{Flexibilidad operativa:} Ambos integrantes poseen una visión global de la arquitectura, lo que permite mitigar bloqueos si uno de los dos no está disponible o se encuentra atascado en una tarea compleja.
-    \item \textbf{Revisión de código cruzada:} Al conocer ambos la tecnología empleada en todas las capas, el proceso de validación (\textit{Code Review}) es más fluido y eficaz, reduciendo la introducción de deuda técnica.
+    \item \textbf{Flexibilidad operativa:} Ambos integrantes poseen una visión global y profunda de la arquitectura. Esto ha permitido mitigar cuellos de botella operativos; si un desarrollador no estaba disponible o se encontraba bloqueado en una tarea compleja, el otro poseía el contexto técnico necesario para asistir o continuar el desarrollo sin retrasos.
+    \item \textbf{Revisión de código cruzada:} Al conocer ambos la tecnología empleada en todas las capas del sistema, el proceso de validación por pares (\textit{Code Review}) ha resultado mucho más fluido y riguroso. Esta auditoría mutua constante ha sido clave para reducir la introducción de deuda técnica temprana.
 \end{itemize}
 
-La responsabilidad se ha gestionado mediante un reparto de tareas dinámico. Al inicio de cada ciclo de trabajo, se asignaban las funcionalidades específicas a implementar por cada miembro, asegurando un equilibrio en la carga de trabajo.
+A nivel de gestión diaria, la responsabilidad se distribuyó mediante un reparto de tareas dinámico. Al inicio de cada ciclo de trabajo, se evaluaba la complejidad de los requisitos y se asignaban las funcionalidades específicas, garantizando en todo momento un equilibrio equitativo en la carga de trabajo de ambos ingenieros.
 
 \section{Metodología de desarrollo}
 
-Para determinar el ciclo de vida más adecuado para este proyecto, se realizó un análisis previo de las metodologías de desarrollo de software más extendidas en la industria. A continuación, se exponen las alternativas evaluadas y la justificación de la elección final.
+Para determinar el modelo de ciclo de vida más adecuado para la naturaleza de este proyecto, se realizó un análisis previo de las metodologías de ingeniería del software más consolidadas en la industria. A continuación, se exponen las alternativas evaluadas y la justificación técnica de la elección final.
 
-\subsection{Análisis de alternativas}
+\subsection{Análisis de alternativas tradicionales}
 
 \subsubsection{Modelo en Cascada (\textit{Waterfall})}
-Este enfoque clásico propone una secuencia lineal de fases (Requisitos, Análisis, Diseño, Implementación, Pruebas y Mantenimiento), donde cada etapa debe finalizar antes de comenzar la siguiente.
-\begin{itemize}
-    \item \textbf{Motivo del descarte:} El desarrollo de un videojuego conlleva una gran incertidumbre en cuanto a la ``jugabilidad'' y la experiencia de usuario. El modelo en cascada es excesivamente rígido; si se detecta que una mecánica de juego no es divertida durante la fase de pruebas, el coste de volver atrás para rediseñarla es inasumible. Este proyecto requiera la capacidad de pivotar y ajustar requisitos sobre la marcha.
-\end{itemize}
+Este enfoque predictivo clásico propone una secuencia puramente lineal de fases (Requisitos, Análisis, Diseño, Implementación, Pruebas y Mantenimiento). Bajo este paradigma, cada etapa debe finalizarse antes de poder comenzar la siguiente.
+
+\textbf{Motivo del descarte:} El desarrollo de un videojuego conlleva una incertidumbre inherente respecto a la jugabilidad y la experiencia final del usuario. El modelo en cascada resulta excesivamente rígido ante esta realidad; si durante la fase de pruebas se detecta que una mecánica de juego presenta fallos de diseño o no resulta atractiva, el coste temporal de retroceder a la fase de análisis para rediseñarla resulta inasumible. Este proyecto requería de una estructura que permitiera pivotar y ajustar requisitos sobre la marcha basándose en el \textit{feedback} interactivo.
 
 \subsubsection{Modelo en Espiral}
-Este modelo se centra en la evaluación y reducción de riesgos mediante iteraciones que combinan planificación y prototipado.
-\begin{itemize}
-    \item \textbf{Motivo del descarte:} Aunque soluciona la rigidez de la cascada, el modelo en espiral introduce una carga de gestión y documentación excesiva (\textit{overhead}) para un equipo de solo dos personas. El tiempo dedicado a evaluar riesgos formales restaría demasiado tiempo de implementación efectiva.
-\end{itemize}
+Este modelo evolutivo se centra en la evaluación continua y la mitigación de riesgos mediante iteraciones concéntricas que combinan planificación, análisis de viabilidad y prototipado.
+
+\textbf{Motivo del descarte:} Aunque este paradigma soluciona la rigidez del modelo en cascada, el modelo en espiral introduce una carga de gestión burocrática y de documentación (\textit{overhead}) desproporcionada para un equipo compuesto por solo dos personas. El tiempo invertido en la evaluación formal de riesgos en cada iteración restaría demasiados recursos a la fase de implementación efectiva del código.
 
 \subsection{Elección: Metodología Ágil (\textit{Scrum})}
-Tras descartar los modelos predictivos tradicionales, se optó por una metodología ágil basada en el marco de trabajo \textbf{\textit{Scrum}}. Este enfoque se basa en el desarrollo iterativo e incremental, donde el producto se construye poco a poco en ciclos cortos.
+Tras descartar los modelos predictivos y evolutivos pesados, la organización del proyecto se decantó por la adopción de una metodología ágil fundamentada en el marco de trabajo \textit{Scrum}. Este enfoque abraza la incertidumbre mediante un desarrollo iterativo e incremental, donde el producto funcional se construye gradualmente en ciclos de tiempo encapsulados.
 
-La elección se fundamenta en:
+Esta elección metodológica se justifica por dos pilares clave del proyecto:
+
 \begin{enumerate}
-    \item \textbf{Entrega temprana de valor:} Permite tener una visión mas clara del producto final desde las primeras semanas lo cual es vital para validar la arquitectura.
-    \item \textbf{Adaptabilidad:} Facilita la incorporación de cambios en las reglas del juego o la interfaz a medida que se prueban, sin desestabilizar todo el proyecto.
+    \item \textbf{Entrega temprana de valor:} Trabajar mediante incrementos funcionales permite consolidar una visión clara del estado del producto desde las primeras semanas de desarrollo. Esto resulta vital en arquitecturas complejas, ya que permite validar técnicamente la integración entre el cliente y el servidor sin tener que esperar al final del proyecto.
+    \item \textbf{Adaptabilidad y tolerancia al cambio:} Facilita enormemente la comprobación de las reglas del juego, la reestructuración de la interfaz o la alteración de mecánicas tras las pruebas iniciales, todo ello sin desestabilizar la planificación global.
 \end{enumerate}
 
-\section{Adaptación al proyecto: El ciclo de vida}
+\section{Adaptación al proyecto: El ciclo de vida ágil}
 
-Aunque \textit{Scrum} define roles y ceremonias estrictas, en este proyecto se ha realizado una adaptación ligera (\textit{Scrum-but}) para maximizar la agilidad en un micro-equipo.
+Si bien el marco de trabajo \textit{Scrum} define roles (como el \textit{Scrum Master} o el \textit{Product Owner}) y herramientas diseñadas para equipos de mayor tamaño, en este proyecto se ha ejecutado una adaptación del modelo orientada a la eficiencia. Se ha prescindido de la rigidez burocrática para maximizar la agilidad de un micro-equipo colaborativo.
 
 \subsection{Sprints Semanales}
-El desarrollo se ha dividido en iteraciones temporales cortas o \textbf{\textit{Sprints}} con una duración de una semana. Esta cadencia, más rápida que los habituales 15 días de la industria, ha permitido un control muy preciso del progreso.
+El esfuerzo de desarrollo se ha dividido en iteraciones temporales cortas o \textit{Sprints} con una duración estricta de una semana. Esta cadencia temporal, notablemente más rápida que las iteraciones de quince días habituales en la industria, ha permitido un nivel de control granular y un seguimiento muy preciso del progreso frente al calendario académico.
+
+El ciclo de cada iteración se ha estructurado en tres eventos fundamentales:
 \begin{itemize}
-    \item \textbf{\textit{Sprint Planning}:} Al inicio de la semana, el equipo selecciona las tareas del \textit{Product Backlog} (pila de producto) que se compromete a completar.
-    \item \textbf{Ejecución:} Desarrollo de las funcionalidades en paralelo.
-    \item \textbf{\textit{Sprint Review}:} Al finalizar la semana, se verifica que el código funciona y se integra en la rama principal del repositorio.
+    \item \textbf{\textit{Sprint Planning} (Planificación):} Al inicio de la semana de trabajo, el equipo evalúa y selecciona las tareas prioritarias del \textit{Product Backlog} (pila de producto), estableciendo el objetivo técnico al que se comprometen para esa iteración.
+    \item \textbf{Ejecución en paralelo:} Desarrollo efectivo de las funcionalidades y mecánicas acordadas.
+    \item \textbf{\textit{Sprint Review} (Revisión e Integración):} Esta validación se lleva a cabo mediante un proceso de revisión cruzada (\textit{Peer Review}), donde cada desarrollador audita el código escrito por el otro antes de autorizar su integración definitiva en la rama principal del repositorio.
 \end{itemize}
 
-\subsection{Coordinación y Herramientas}
-Para soportar esta metodología, se han empleado herramientas estándar de la industria:
+\subsection{Coordinación y herramientas de gestión}
+Para soportar y dar viabilidad a esta metodología iterativa, el equipo ha empleado herramientas estándar de la industria, asegurando una comunicación constante y la trazabilidad del código:
+
 \begin{itemize}
-    \item \textbf{Reuniones diarias (\textit{Daily Stand-up}):} Reuniones breves de 15 minutos para sincronizar el trabajo del día y detectar bloqueos.
-    \item \textbf{Tablero Kanban:} Se ha utilizado software de gestión (\textit{GitHub Projects}) para visualizar el estado de las tareas (``Pendiente'', ``En curso'', ``Terminado'').
-    \item \textbf{Control de Versiones:} Uso estricto de \textit{Git} para gestionar el código fuente, trabajando con ramas por funcionalidad (\textit{Feature Branches}) para evitar conflictos entre los dos desarrolladores.
+    \item \textbf{Reuniones de sincronización (\textit{Daily Stand-up}):} Encuentros breves y altamente focalizados (no superiores a 15 minutos) diseñados para coordinar el trabajo de la jornada y, sobre todo, para identificar y mitigar posibles bloqueos técnicos entre ambos desarrolladores.
+    \item \textbf{Tablero \textit{Kanban}:} Para la gestión del flujo de trabajo se ha utilizado la herramienta \textit{GitHub Projects}. Este panel permite visualizar en tiempo real el estado evolutivo de las tareas mediante columnas de progreso (``Pendiente'', ``En curso'', ``En Revisión'', ``Terminado'').
+    \item \textbf{Estrategia de ramificación:} Uso estricto de \textit{Git} para gestionar el ciclo de vida del código fuente. Se ha adoptado una estrategia basada en la creación de ramas independientes por cada nueva funcionalidad (\textit{Feature Branches}), lo cual resulta imprescindible para que dos desarrolladores modifiquen la misma base de código sin generar conflictos críticos de integración.
 \end{itemize}
