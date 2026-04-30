@@ -1,12 +1,74 @@
-\chapter{Arranque}
+\chapter{Análisis y Diseño del Sistema}
 
 \begin{quotation}[Novelist]{Ernest Hemingway (1899--1961)}
 The good parts of a book may be only something a writer is lucky enough to overhear or it may be the wreck of his whole damn life -- and one is as good as the other.
 \end{quotation}
 
 \begin{abstract}
-En este capítulo se definen los cimientos funcionales y técnicos del proyecto. Se detalla el alcance inicial del sistema mediante una lista de características priorizada y se describe la arquitectura de software diseñada, profundizando en la estrategia de organización en monorepositorio, el patrón de diseño por capas en el servidor y la gestión de estado híbrida para garantizar el rendimiento en tiempo real.
+En este capítulo se definen los cimientos funcionales y técnicos del proyecto. En primer lugar, se establece el catálogo de requisitos funcionales y no funcionales, delimitando las fronteras del sistema. A continuación, se modela la interacción de los usuarios mediante diagramas de Casos de Uso y de Secuencia. Finalmente, se describe el diseño de la arquitectura de software y el modelo de datos diseñado para garantizar el rendimiento en tiempo real.
 \end{abstract}
+
+\section{Análisis de Requisitos}
+
+La fase de análisis tiene como objetivo definir el contrato del sistema, estableciendo de forma unívoca qué debe hacer la aplicación (requisitos funcionales) y bajo qué restricciones de calidad, rendimiento y seguridad debe operar (requisitos no funcionales).
+
+\subsection{Requisitos Funcionales y Actores}
+
+Para la definición del Producto Mínimo Viable (MVP) de \textit{King and Peasant}, se han identificado dos perfiles de interacción o \textbf{Actores} principales:
+\begin{itemize}
+    \item \textbf{Usuario No Autenticado (Invitado):} Entidad que interactúa con las capas públicas del sistema, con el único objetivo de registrarse o autenticarse.
+    \item \textbf{Jugador (Usuario Registrado):} Actor principal que posee una sesión activa y tiene acceso a la totalidad de las mecánicas del juego y módulos sociales.
+\end{itemize}
+
+Las características esenciales del sistema se estructuran en los siguientes módulos funcionales:
+\begin{enumerate}
+    \item \textbf{Gestión de Identidad:} Registro, inicio de sesión seguro y gestión del perfil del usuario (estadísticas e historial).
+    \item \textbf{Ecosistema Social:} Sistema de peticiones de amistad y chat en tiempo real.
+    \item \textbf{Infraestructura de \textit{Lobbies}:} Creación de salas de juego (públicas y privadas) y sistema de emparejamiento.
+    \item \textbf{Motor de Juego (\textit{Core}):} Lógica asimétrica de cartas, gestión de turnos, temporizadores y sincronización bidireccional del estado del tablero.
+\end{enumerate}
+
+\subsection{Requisitos No Funcionales (RNF)}
+
+Dada la naturaleza interactiva del proyecto, los requisitos no funcionales resultan críticos para la viabilidad del sistema. Se han definido las siguientes restricciones técnicas:
+
+\begin{itemize}
+    \item \textbf{RNF-ARQ (Arquitectura y Stack):} El cliente debe construirse como una \textit{Single Page Application} (SPA) con \textit{React} 18 y \textit{TypeScript}. El servidor utilizará \textit{Node.js} (Express) bajo una arquitectura modular. El código fuente se organizará estrictamente como un Monorepositorio mediante \textit{NPM Workspaces} para compartir dependencias entre cliente y servidor.
+    \item \textbf{RNF-REN (Rendimiento):} El sistema exige \textbf{baja latencia}. Las acciones de la partida deben procesarse en tiempo real utilizando el protocolo \textit{WebSockets} (\textit{Socket.io}) y apoyándose en \textit{Redis} para el estado volátil. Asimismo, todo el entorno debe estar contenedorizado con \textit{Docker} para garantizar un despliegue y escalabilidad ágiles.
+    \item \textbf{RNF-SEG (Seguridad):} La autenticación se basará en \textit{JSON Web Tokens} (JWT). Las credenciales se protegerán mediante algoritmos de \textit{hashing} unidireccional (\texttt{bcryptjs}) y se aplicarán políticas CORS estrictas. Los secretos del sistema se aislarán mediante variables de entorno (\texttt{.env}).
+    \item \textbf{RNF-FIA (Fiabilidad y QA):} Se requiere un flujo de Integración y Despliegue Continuo (CI/CD) automatizado. La calidad del código se garantizará mediante pruebas unitarias en el \textit{backend} (\textit{Jest}) y en los componentes del \textit{frontend} (\textit{Vitest}). 
+\end{itemize}
+
+\section{Modelado del Sistema}
+
+Para representar gráficamente las interacciones descritas en los requisitos, se ha utilizado el Lenguaje Unificado de Modelado (UML), estandarizando la comprensión de la arquitectura.
+
+\subsection{Diagrama de Casos de Uso}
+
+En la Figura \ref{fig:casos_uso} se detalla el comportamiento del sistema desde el punto de vista del usuario. Se observa cómo el \textit{Jugador} hereda la capacidad de acceder al ecosistema central tras superar los casos de uso del \textit{Invitado}. Destaca la modularidad del caso de uso principal (``Jugar Partida''), el cual incluye (\textit{<<include>>}) obligatoriamente la mecánica de jugar cartas, y se extiende (\textit{<<extend>>}) de forma opcional con acciones como el chat en vivo o la rendición voluntaria.
+
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=0.8\textwidth]{figures/casos_uso.svg}
+    \caption{Diagrama General de Casos de Uso del sistema.}
+    \label{fig:casos_uso}
+\end{figure}
+
+\subsection{Comportamiento Dinámico: Flujo de Ejecución}
+
+Dado que los casos de uso estáticos no muestran el orden cronológico de las operaciones, se ha elaborado un Diagrama de Secuencia (Figura \ref{fig:secuencia_juego}) que ilustra la travesía completa de un usuario: desde que no tiene cuenta hasta que juega una carta.
+
+El diagrama evidencia la transición entre el protocolo HTTP y el protocolo WebSockets. Mientras que el registro y la creación de la sala (\textit{Lobby}) se resuelven mediante peticiones REST tradicionales que persisten en \textit{MariaDB}, el inicio de la partida desencadena una actualización en la base de datos en memoria (\textit{Redis}). A partir de ese punto, acciones iterativas como enviar un mensaje o mover una carta se transmiten mediante eventos asíncronos (\textit{Broadcast}), logrando la latencia nula exigida en los requisitos no funcionales.
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=0.9\textwidth]{figures/secuencia.svg}
+    \caption{Diagrama de Secuencia: Registro, creación de sala y flujo de partida.}
+    \label{fig:secuencia_juego}
+\end{figure}
+
+---
 
 \section{Lista de características}
 
