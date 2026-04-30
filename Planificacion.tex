@@ -5,63 +5,115 @@ The good parts of a book may be only something a writer is lucky enough to overh
 \end{quotation}
 
 \begin{abstract}
-Resumen de lo que va a ocurrir en el capítulo. ¿Cuál es el objetivo que tenemos con este capítulo?
+En este capítulo se expone la planificación temporal del proyecto, estructurada mediante la metodología ágil definida previamente. Se detalla el cronograma de ejecución a través de hitos mensuales y \textit{Sprints} semanales, abarcando desde la configuración inicial de la arquitectura hasta el despliegue final del sistema. Asimismo, se documentan las desviaciones surgidas durante el ciclo de vida del desarrollo y se analizan las medidas correctivas adoptadas por el equipo para garantizar el cumplimiento de los plazos.
 \end{abstract}
 
 \section{Resumen temporal del proyecto}
+
+A nivel global, el proyecto abarca un periodo de desarrollo de cinco meses, desde la configuración inicial de la arquitectura hasta la redacción y entrega de la presente memoria técnica. En la Tabla \ref{tab:resumen_temporal} se exponen los parámetros temporales fundamentales.
 
 \begin{table*}[htb]
     \centering
     \begin{coolTable}{ll}{2}
 {Resumen del proyecto}
-    \textbf{Fecha de inicio}&02/02/2026\\ % Basado en el nodo "2 - 8" de Febrero del canvas
-    \textbf{Fecha de fin}&31/05/2026\\ % Basado en el nodo Mayo del canvas
-    \textbf{Periodicidad de las revisiones}&Semanal (Sprints)\\
-    \textbf{Carga de trabajo semanal}&XX horas\\ % Dato no disponible en el canvas
-    \textbf{Horas totales previstas}&XX horas\\ % Dato no disponible en el canvas
-    \textbf{Horas finales}&XX horas\\ % Dato no disponible en el canvas
+    \textbf{Fecha de inicio}&05/01/2026\\
+    \textbf{Fecha de fin}&15/05/2026\\ 
+    \textbf{Periodicidad de las revisiones}&1 semanas (Sprints)\\
+    \textbf{Carga de trabajo semanal}&12 horas\\
+    \textbf{Horas totales previstas}&300 horas\\
+    \textbf{Horas finales}&240 horas\\ 
     \end{coolTable}
     \caption{Tabla resumen de tiempos y planificación}
+    \label{tab:resumen_temporal}
 \end{table*}
 
 \section{Planificación inicial}
 
-Aquí un desglose de las iteraciones, comienzo y fin de cada una, basado en el calendario de desarrollo definido:
+Dada la adopción de un \textit{stack} tecnológico complejo y la interdependencia entre el cliente y el servidor, el calendario general se planteó como una hoja de ruta dividida en grandes hitos mensuales. Esta estructura permitió fijar objetivos claros para cada fase del ciclo de vida:
 
-\begin{table*}[htb]
+\begin{itemize}
+    \item \textbf{Enero - Arquitectura e Infraestructura:} Configuración inicial del repositorio, contenedorización de los servicios mediante \textit{Docker}, implementación del sistema de autenticación de usuarios y salas de espera (\textit{lobbies}), e inicialización del núcleo de la aplicación.
+    \item \textbf{Febrero - \textit{Core} del Juego:} Desarrollo íntegro de la lógica de la partida, diseño del tablero interactivo y aseguramiento de la sincronización bidireccional en tiempo real.
+    \item \textbf{Marzo - Reglas avanzadas y Seguridad:} Implementación de las mecánicas asimétricas complejas, pulido de la validación de estados en el \textit{backend} y blindaje de la seguridad de la plataforma.
+    \item \textbf{Abril - Funcionalidades extendidas y \textit{Testing}:} Integración de características periféricas (como sistemas de interacción social o estadísticas), ejecución exhaustiva de las baterías de pruebas automatizadas y aseguramiento de la calidad del código.
+    \item \textbf{Mayo - Despliegue y Cierre:} Finalización de la presente memoria técnica, despliegue final del sistema y preparación para la defensa académica.
+\end{itemize}
+
+La determinación de estas fechas no ha sido arbitraria, sino que responde a un análisis de la carga lectiva y los hitos del calendario académico de la \textit{Escuela Técnica Superior de Ingeniería Informática}. Se estableció un ritmo de trabajo sostenido y diario con el objetivo de compatibilizar el desarrollo del proyecto con el resto de asignaturas del cuarto curso. Esta cadencia diaria ha sido la herramienta principal para evitar la acumulación de tareas en periodos de exámenes, permitiendo que el avance del proyecto fuera independiente de las fluctuaciones de carga de trabajo de otras materias.
+
+\subsection{Cronograma de iteraciones (Nivel Micro)}
+
+Para materializar los hitos mensuales, el trabajo se fragmentó en \textit{Sprints} semanales. En la Tabla \ref{tab:cronograma_sprints} se detalla la planificación inicial extraída del tablero Kanban, mostrando los objetivos técnicos asignados a cada periodo. Cabe destacar que todas las iteraciones incluyen de forma implícita tareas de documentación continua y reuniones de \textit{Sprint Review \& Planning}.
+
+\begin{table}[H]
     \centering
-    \begin{coolTable}{ll}{2}
-{Resumen de iteraciones}
-    \textbf{Iteración Febrero}&02/02/26 a 28/02/26\\
-    \multicolumn{2}{l}{\footnotesize \textit{Tareas: Inicializar repositorio, Set Up Docker, Frontend/Backend, UML BD, Pantallas (Login, Registro, Inicio, Usuario).}} \\
-    \textbf{Iteración Marzo}&01/03/26 a 31/03/26\\
-    \multicolumn{2}{l}{\footnotesize \textit{Tareas: Pantalla de Sala y Listado, Lógica de Juego (Barajas, Cartas), Flujo de estados y turnos.}} \\
-    \textbf{Iteración Abril}&01/04/26 a 30/04/26\\
-    \multicolumn{2}{l}{\footnotesize \textit{Tareas: Sistema de Amistad, Chat en Partida, Continuación lógica de juego.}} \\
-    \textbf{Iteración Mayo}&01/05/26 a 31/05/26\\
-    \multicolumn{2}{l}{\footnotesize \textit{Tareas: Pantalla de Ganador, Refactorización, Pruebas finales, Finalizar memoria.}} \\
-    \end{coolTable}
-    \caption{Planificación temporal de iteraciones}
-\end{table*}
+    \renewcommand{\arraystretch}{1.3}
+    \small % Reducimos un poco el tamaño de fuente para que quepa bien
+    \begin{tabular}{|c|p{2.5cm}|p{10cm}|}
+        \hline
+        \textbf{Mes} & \textbf{Semana (Sprint)} & \textbf{Objetivos Técnicos Principales}  \\
+        \hline
+        \multirow{3}{*}{\textbf{Enero}} 
+        & 12 - 18 Ene & Inicialización de repositorio, Set Up Docker, Frontend/Backend y bases de datos. Diagramas UML. \\
+        \cline{2-3}
+        & 19 - 25 Ene & Set Up Despliegue Continuo, Tests, Metodología Git y Mock-ups UI. \\
+        \cline{2-3}
+        & 26 - 1 Feb & Desarrollo de Pantalla de Inicio y Login/Registro. \\
+        \hline
+        \multirow{4}{*}{\textbf{Febrero}} 
+        & 2 - 8 Feb & Pantalla de Listado de Salas. \\
+        \cline{2-3}
+        & 9 - 15 Feb & Pantalla de Usuario (Editar), Sistema de Amistad y Pantalla de Sala. \\
+        \cline{2-3}
+        & 16 - 22 Feb & Funcionalidad invitar usuario, Pantalla Partida Prueba y Chat de Partida. \\
+        \cline{2-3}
+        & 23 - 1 Mar & Sistema de Barajas/Cartas, Inspección de roles y Flujo de estados/turnos. \\
+        \hline
+        \multirow{4}{*}{\textbf{Marzo}} 
+        & 2 - 8 Mar & Accionar cartas, Temporizador, UI extra de partida y Acciones Simples. \\
+        \cline{2-3}
+        & 9 - 15 Mar & Set up inicio partida, Fin de Era/Partida y Condiciones finales. \\
+        \cline{2-3}
+        & 16 - 22 Mar & Implementación de Acciones Complejas 1. \\
+        \cline{2-3}
+        & 23 - 29 Mar & Implementación de Acciones Complejas 2 y Pantalla de Ganador. \\
+        \hline
+        \multirow{4}{*}{\textbf{Abril}} 
+        & 30 - 5 Abr & Mover cartas (\textit{Drag \& Drop}) y Animaciones de cartas. \\
+        \cline{2-3}
+        & 6 - 12 Abr & Test Lógica de Juego 1, Test Sala y Test Usuarios. \\
+        \cline{2-3}
+        & 13 - 19 Abr & Test Lógica de Juego 2, Rediseño estético final. \\
+        \cline{2-3}
+        & 20 - 3 May & Refactorización general y solución de errores (\textit{Bugfixing}). \\
+        \hline
+        \multirow{2}{*}{\textbf{Mayo}} 
+        & 4 - 10 May & Pruebas finales e integración completa. \\
+        \cline{2-3}
+        & 11 - 15 May & Finalización y revisión de la memoria técnica. \\
+        \hline
+    \end{tabular}
+    \caption{Cronograma inicial de tareas distribuidas por Sprints semanales.}
+    \label{tab:cronograma_sprints}
+\end{table}
 
-Explicar cómo se han decidido las fechas, interacción con fechas importantes y situaciones personales.
+\section{Gestión de desviaciones y medidas correctivas}
 
-\textbf{ESTE CAPÍTULO DEBE ESCRIBIRSE AL COMIENZO DEL PROYECTO}
+A pesar de la planificación inicial, el desarrollo de un proyecto de ingeniería está sujeto a imprevistos técnicos y personales. Siguiendo las directrices de una metodología ágil, el equipo ha demostrado capacidad de adaptación mediante la aplicación de medidas correctivas inmediatas ante las desviaciones ocurridas.
 
-\section{Informe de tiempos del proyecto}
+\subsection{Incidencia técnica: Fallo en el hardware de desarrollo}
 
-Lo mismo que el anterior pero con datos reales. Ver Tabla \ref{tab:InformeTiempos}.
+Durante el mes de febrero, coincidiendo con el desarrollo del \textit{core} del sistema, uno de los miembros del equipo sufrió una interrupción crítica debido a un fallo técnico en su estación de trabajo (problemas de almacenamiento que derivaron en la inoperatividad del sistema operativo). Esta incidencia supuso la pérdida de una semana de capacidad de desarrollo para dicho integrante.
 
-\begin{table*}[htb]
-    \centering
-    \begin{coolTable}{ll}{2}
-{Resumen de iteraciones (Real)}
-    \textbf{Iteración Febrero}&dd/mm/aa a dd/mm/aa\\
-    \textbf{Iteración Marzo}&dd/mm/aa a dd/mm/aa\\
-    \textbf{Iteración Abril}&dd/mm/aa a dd/mm/aa\\
-    \textbf{Iteración Mayo}&dd/mm/aa a dd/mm/aa\\
-    \end{coolTable}
-    \caption{Ejecución real del proyecto\label{tab:InformeTiempos}}
-\end{table*}
+Para mitigar el impacto en el cronograma global y evitar un retraso en la entrega del \textit{Sprint}, se aplicaron las siguientes medidas de contingencia:
 
-Justificar los retrasos de forma detallada aquí para cada una de las iteraciones. Explicar las razones.
+\begin{itemize}
+    \item \textbf{Redistribución dinámica de la carga:} El segundo integrante asumió las tareas críticas que se encontraban en la ruta principal de esa iteración, asegurando que el flujo de trabajo del servidor no se detuviera.
+    \item \textbf{Sincronización y continuidad:} Una vez restaurado el entorno de trabajo, el miembro afectado pudo retomar su actividad de forma inmediata sobre la base de código ya avanzada por su compañero. La estructura horizontal del equipo y el conocimiento \textit{Full Stack} compartido permitieron que esta transición fuera transparente y sin pérdida de contexto técnico.
+\end{itemize}
+
+Como resultado, la desviación temporal fue absorbida por el propio equipo sin afectar a la fecha de finalización del hito mensual, validando la eficacia de la estructura organizacional elegida.
+
+\subsection{Conciliación académica y personal}
+
+Otra desviación potencial fue la gestión del tiempo durante los picos de carga de trabajo académico. La medida correctiva aplicada fue la intensificación de las reuniones de sincronización (\textit{Daily Stand-ups}) para ajustar los objetivos del \textit{Sprint} de forma realista semana a semana. El compromiso con un flujo de trabajo constante ha permitido que, a pesar de las situaciones personales o de estudio, el proyecto no haya sufrido periodos de inactividad, manteniendo una entrega de valor continua desde el inicio del semestre.
