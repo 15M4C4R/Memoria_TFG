@@ -102,3 +102,359 @@ Descripción de las pruebas realizadas al software
 \section{Despliegue}
 
 Breve resumen de cómo se han desplegado los cambios en el sistema de producción.
+
+\section{Configuración del Entorno y Arquitectura Base}
+
+\textbf{Flujo de Interacción y Arquitectura} \\
+Esta fase establece la orquestación inicial del monorepositorio utilizando espacios de trabajo (\textit{npm workspaces}) para unificar el desarrollo del cliente (\textit{Vite/React}) y el servidor (\textit{Node.js/Express}). La arquitectura se basa en contenedores \textit{Docker}, permitiendo un despliegue aislado de los servicios de infraestructura (\textit{MariaDB} y \textit{Redis}) para garantizar la paridad de entornos locales y facilitar la futura integración continua.
+
+\textbf{Estructura de Directorios} \\
+\begin{verbatim}
+KingAndPeasant/
+|-- docker-compose.yml
+|-- packages/
+|   |-- client/
+|   |   |-- src/
+|   |   +-- package.json
+|   +-- server/
+|       |-- src/
+|       +-- package.json
++-- package.json
+\end{verbatim}
+
+\textbf{Snippets Estratégicos de Código} \\
+\begin{lstlisting}
+# docker-compose.yml
+version: '3.8'
+services: 
+  mariadb:
+    image: mariadb:10.11
+    # ... configuracion interna omitida para resumir el contenido
+  redis:
+    image: redis:7.0
+    # ... configuracion interna omitida
+\end{lstlisting}
+
+\subsection{Iteración 1: Configuración de Entornos y Metodología Base}
+
+\textbf{Objetivos de la Iteración} \\
+El objetivo primordial de esta primera iteración consistió en establecer los cimientos arquitectónicos e infraestructurales del proyecto \textit{King and Peasant}. Se buscó preparar un entorno de desarrollo robusto que garantizara la paridad entre los entornos de los distintos desarrolladores y sentar las bases de la metodología ágil que guiará el resto del ciclo de vida del software.
+
+\textbf{Desarrollo e Implementación} \\
+Durante este periodo, las tareas se dividieron entre la gestión organizativa del equipo completo y la orquestación técnica del sistema. A nivel de equipo, se inicializó el repositorio remoto bajo una estructura de monorepositorio y se definió el calendario inicial con la asignación de \textit{Sprints}. Adicionalmente, se redactó el documento de metodología en Markdown para estandarizar la creación de ramas, los \textit{commits} y el seguimiento de \textit{issues}, en cumplimiento con los estándares organizativos del proyecto.
+
+A nivel técnico, satisfaciendo el requisito de arquitectura (\textbf{RNF-ARQ}), se implementó la orquestación del sistema mediante \textit{Docker} y \textit{Docker Compose}. La creación de los archivos \texttt{Dockerfile} permitió el despliegue aislado de los entornos de ejecución base, asegurando una configuración sin conflictos de dependencias para el posterior desarrollo de la lógica de negocio.
+
+\textbf{Desviaciones y Retos Técnicos} \\
+Durante la orquestación inicial surgieron conflictos de red que impedían el arranque limpio de los servicios en los contenedores. El problema se solucionó unificando la red interna bajo un driver \textit{bridge} personalizado para visibilidad entre contenedores.
+
+\textbf{Estado de Cierre} \\
+La iteración concluyó satisfactoriamente tras alcanzar todos los hitos previstos. La infraestructura base y las políticas del repositorio quedaron operativas, eliminando cualquier fricción técnica inicial y permitiendo que el equipo comenzara el desarrollo de la capa de datos en los \textit{sprints} posteriores.
+
+\subsection{Iteración 2: Diseño de Interfaces y Orquestación de Datos}
+
+\textbf{Objetivos de la Iteración} \\
+El objetivo establecido para este ciclo, centrado en las responsabilidades individuales de infraestructura y diseño visual, fue sentar las bases de la identidad del proyecto \textit{King and Peasant} mediante la elaboración de \textit{mock-ups} detallados y la orquestación de las bases de datos en el entorno local.
+
+\textbf{Desarrollo e Implementación} \\
+El trabajo de este ciclo arrancó con la elaboración de los \textit{mock-ups} completos de las pantallas clave del ecosistema, incluyendo los flujos de autenticación (Login/Registro), las salas de espera (\textit{Lobbies}), el perfil del usuario y el tablero principal de la partida asimétrica. Esta labor proporcionó una visión estructural clara para el desarrollo en cliente.
+
+A nivel de infraestructura, y en cumplimiento del requisito de rendimiento (\textbf{RNF-REN}), se amplió la configuración de \textit{Docker Compose} para incluir el despliegue aislado de los servicios de \textit{MariaDB} (base de datos relacional encargada de la lógica de negocio) y \textit{Redis} (almacenamiento en memoria para eventos en tiempo real).
+
+\textbf{Desviaciones y Retos Técnicos} \\
+Al integrar el almacenamiento en memoria surgieron bloqueos temporales en la comunicación de los servicios locales. La solución fue corregir el mapeo de puertos exponiendo el 6379 hacia el \textit{localhost} en el \texttt{docker-compose.yml}, garantizando así la paridad de entornos.
+
+\textbf{Estado de Cierre} \\
+Tras resolver los conflictos de red entre contenedores, las tareas de orquestación de bases de datos y diseño visual se completaron satisfactoriamente y se integraron en la rama principal, dejando la plataforma preparada para iniciar la estructuración del ORM.
+
+\section{Autenticación y Modelado de Datos}
+
+\textbf{Flujo de Interacción y Arquitectura} \\
+El flujo de autenticación implementa el patrón de diseño \textit{Context API} en el \textit{frontend} para inyectar globalmente el estado de sesión del usuario. A nivel de \textit{backend}, se utiliza \textit{Prisma ORM} como intermediario transaccional con la base de datos relacional. Las peticiones a rutas protegidas se validan mediante \textit{middlewares} que decodifican \textit{JSON Web Tokens (JWT)}, logrando una arquitectura de seguridad robusta y desacoplada.
+
+\textbf{Estructura de Directorios} \\
+\begin{verbatim}
+packages/
+|-- client/src/
+|   +-- context/
+|       +-- AuthContext.ts
++-- server/
+    |-- prisma/
+    |   +-- schema.prisma
+    +-- src/controllers/
+        +-- auth.controller.ts
+\end{verbatim}
+
+\textbf{Snippets Estratégicos de Código} \\
+\begin{lstlisting}[language=Java]
+// packages/client/src/context/AuthContext.ts
+interface AuthContextType {
+  user: User | null;
+  isLogin: boolean;
+  login: (userData: User) => void;
+  // ... logica interna omitida para resumir el contenido
+  socket: Socket | null;
+}
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+// packages/server/prisma/schema.prisma
+model User {
+  idUser   Int      @id @default(autoincrement())
+  name     String   @unique
+  email    String   @unique
+  password String
+  // ... resto de campos relacionales omitidos
+}
+\end{lstlisting}
+
+\subsection{Iteración 3: Modelado Estructural y Flujo de Negocio}
+
+\textbf{Objetivos de la Iteración} \\
+El objetivo principal asignado para esta iteración en el proyecto \textit{King and Peasant} se centró en la conceptualización teórica y técnica del dominio de datos, así como en el modelado formal del flujo que gobernaría la asimetría de las partidas.
+
+\textbf{Desarrollo e Implementación} \\
+La implementación de esta etapa se articuló en torno al diseño de la arquitectura de la información. Se elaboró el modelo Entidad-Relación y el diagrama UML correspondiente a la base de datos relacional. En cumplimiento con el requisito de arquitectura (\textbf{RNF-ARQ}), este diseño conceptual se trasladó al entorno de desarrollo escribiendo los esquemas iniciales mediante \textit{Prisma ORM}, ejecutando migraciones sobre el despliegue aislado de \textit{MariaDB}. De forma paralela, se modelaron los estados de la partida, los turnos intercalados y las mecánicas asimétricas mediante diagramas de flujo.
+
+\textbf{Estado de Cierre} \\
+Los objetivos de modelado de datos y flujos lógicos se alcanzaron con éxito, sin registrarse desviaciones temporales ni bloqueos técnicos, dejando la arquitectura de persistencia lista para soportar la futura autenticación.
+
+\subsection{Iteración 4: Autenticación y Seguridad}
+
+\textbf{Objetivos de la Iteración} \\
+El objetivo primordial asignado consistió en implementar la capa de seguridad del ecosistema, abordando el registro de nuevos usuarios y el control de acceso a la plataforma mediante credenciales.
+
+\textbf{Desarrollo e Implementación} \\
+En esta fase se abordó la construcción de las vistas operativas de inicio de sesión (\textit{Login}) y registro (\textit{Register}). Dando cumplimiento al requisito de seguridad (\textbf{RNF-SEG}), la lógica de negocio del servidor fue ampliada para generar, firmar e interpretar \textit{JSON Web Tokens} (JWT), garantizando así que el estado de sesión se gestione de forma segura junto al encriptado unidireccional de contraseñas.
+
+\textbf{Desviaciones y Retos Técnicos} \\
+Durante la integración de la seguridad surgieron dificultades con la validación de tokens y el ciclo de vida de la sesión. Se resolvió implementando un Contexto Global de Autenticación (\textit{AuthContext}) en \textit{React}, inyectando y gestionando el token JWT mediante el patrón de Proveedor de Estado para proteger las rutas privadas de forma centralizada.
+
+\textbf{Estado de Cierre} \\
+A pesar del esfuerzo adicional invertido en la reestructuración del enrutamiento y la depuración del manejo de tokens, los objetivos de seguridad y registro se cumplieron satisfactoriamente e integraron en la rama principal.
+
+\subsection{Iteración 5: Gestión de Perfiles y Cuentas de Usuario}
+
+\textbf{Objetivos de la Iteración} \\
+El objetivo principal para este ciclo en \textit{King and Peasant} consistió en finalizar la capa de gestión de cuentas, dotando al sistema de una zona privada para la edición de datos y visualización de estadísticas, consolidando así el flujo previo a las partidas.
+
+\textbf{Desarrollo e Implementación} \\
+Durante esta semana se procedió a maquetar la interfaz privada que expone las estadísticas de juego y el formulario de edición de perfil. A nivel de servidor, se desarrolló la \textit{lógica de negocio} encargada de procesar, validar y persistir las actualizaciones en la base de datos relacional. Dando cumplimiento al requisito de seguridad (\textbf{RNF-SEG}), todas las modificaciones se orquestaron garantizando la integridad de la sesión activa mediante validación estricta.
+
+\textbf{Desviaciones y Retos Técnicos} \\
+La integración de esta funcionalidad se vio obstaculizada por incidencias lógicas en el diseño inicial de las rutas del servidor. La solución fue separar las responsabilidades de los controladores, aislando la validación de esquemas de la lógica de persistencia en \textit{MariaDB}.
+
+\textbf{Estado de Cierre} \\
+Tras resolver los cuellos de botella en la lógica de controladores, los objetivos relativos a la gestión de usuarios se alcanzaron satisfactoriamente. La funcionalidad quedó operativa, cerrando los flujos previos al juego.
+
+\section{Interacciones Sociales y Comunicación Bidireccional}
+
+\textbf{Flujo de Interacción y Arquitectura} \\
+Para resolver la latencia en la interacción social (sistema de amigos y futuras mecánicas de partida), se sustituye el modelo tradicional de \textit{HTTP Polling} por una conexión persistente bidireccional basada en el protocolo \textit{WebSockets} utilizando \textit{Socket.io}. La arquitectura se modela mediante un \textit{Socket Manager} en el servidor, implementado bajo un patrón \textit{Singleton}, que gestiona la emisión de eventos (\textit{Broadcast}) a salas específicas y propaga notificaciones en tiempo real a los clientes conectados.
+
+\textbf{Estructura de Directorios} \\
+\begin{verbatim}
+packages/server/src/
+|-- controllers/
+|   +-- friendship.controller.ts
++-- sockets/
+    +-- socketManager.ts
+\end{verbatim}
+
+\textbf{Snippets Estratégicos de Código} \\
+\begin{lstlisting}[language=Java]
+// packages/server/src/sockets/socketManager.ts
+class SocketManager {
+  // ... configuracion interna omitida para resumir el contenido
+  public emitToUser(userId: string, event: string, data: any): void {
+      // ... logica de emision de eventos omitida
+  }
+}
+\end{lstlisting}
+
+\subsection{Iteración 6: Interacciones Sociales y Comunicación en Tiempo Real}
+
+\textbf{Objetivos de la Iteración} \\
+El objetivo establecido para este ciclo en el proyecto \textit{King and Peasant} fue implementar el componente social del ecosistema, diseñando un sistema de amistades entre usuarios e introduciendo la base técnica para la comunicación bidireccional necesaria en la futura partida.
+
+\textbf{Desarrollo e Implementación} \\
+El núcleo de ingeniería de esta iteración se destinó a desarrollar la lógica completa para gestionar las relaciones de usuarios. Se modelaron las entidades de amistad en la base de datos relacional y se desarrollaron los \textit{endpoints} necesarios para enviar, aceptar y rechazar solicitudes. Para la visualización, se renderizó el \textit{Dashboard} de amigos en el cliente. Paralelamente, y en cumplimiento del requisito de rendimiento (\textbf{RNF-REN}), se abordó una carga técnica considerable implementando \textit{WebSockets} (\textit{Socket.io}) en el servidor, sentando la base de la \textit{lógica de negocio} asíncrona. Esta capa de comunicación permitió dotar al sistema de amistad de notificaciones en tiempo real, garantizando su fiabilidad (\textbf{RNF-FIA}) dentro del \textit{despliegue aislado}.
+
+\textbf{Profundización Técnica: Sincronización en Tiempo Real mediante WebSockets} \\
+La integración de una comunicación bidireccional exigió superar el paradigma tradicional de peticiones HTTP, requiriendo un canal persistente y de baja latencia. El principal desafío computacional consistió en mantener una única fuente de verdad (\textit{Single Source of Truth}) sincronizada entre la persistencia en base de datos y la vista efímera del cliente. Para resolverlo, el algoritmo de emisión de eventos operó bajo las siguientes directrices:
+\begin{itemize}
+    \item Se establece un mapa en memoria en el servidor que vincula el identificador del usuario (\texttt{userId}) con su \texttt{socket.id} de sesión.
+    \item Tras completarse con éxito una transacción atómica en \textit{MariaDB} (ej. aceptar una solicitud), el controlador notifica internamente al gestor de \textit{Sockets}.
+    \item El \textit{Socket Manager} recupera el cliente activo y emite un evento tipado (\textit{Broadcast} dirigido) enviando el nuevo estado del \textit{Dashboard}, forzando a la vista \textit{React} a re-renderizarse de forma reactiva sin necesidad de sondeo (\textit{Polling}).
+\end{itemize}
+
+\textbf{Desviaciones y Retos Técnicos} \\
+La introducción de los \textit{WebSockets} generó retos técnicos en la capa de comunicación, detectándose dificultades persistentes para establecer una conexión bidireccional estable. La incidencia se resolvió gestionando el ciclo de vida de la conexión mediante retornos de limpieza (\textit{cleanup}) en los \textit{hooks} de \textit{React}, forzando la desconexión explícita para evitar fugas de memoria o múltiples instancias por usuario.
+
+\textbf{Estado de Cierre} \\
+A pesar de la complejidad que supuso orquestar los \textit{Sockets} en el \textit{frontend}, el sistema de amistad quedó plenamente funcional con notificaciones asíncronas integradas en la rama principal. El ciclo concluyó exitosamente, dejando el motor de comunicación listo para iniciar el flujo principal de la partida.
+
+\section{Arquitectura del Motor de Juego Asimétrico}
+
+\textbf{Flujo de Interacción y Arquitectura} \\
+El núcleo funcional del proyecto delega el estado asimétrico de las partidas a un servicio especializado (\textit{Game Service}) que interactúa con la base de datos en memoria \textit{Redis} para minimizar la latencia. El intercambio de información entre servidor y cliente se rige por Objetos de Transferencia de Datos (\textit{DTO}), filtrando atributos confidenciales antes de emitir actualizaciones por \textit{WebSockets}. Las mecánicas asíncronas, como \textit{Pending Actions}, pausan y retoman el hilo de ejecución mediante identificadores únicos.
+
+\textbf{Estructura de Directorios} \\
+\begin{verbatim}
+packages/
+|-- client/src/pages/game/
+|   +-- components/
+|       +-- GameService.tsx
++-- server/src/
+    |-- services/
+    |   +-- GameService.js
+    +-- controllers/
+        +-- GameController.js
+\end{verbatim}
+
+\textbf{Snippets Estratégicos de Código} \\
+\begin{lstlisting}[language=Java]
+// packages/server/src/services/GameService.js
+class GameService {
+  async playActionCard(gameId, userId, cardId) {
+    // ... logica interna de validacion y estado en Redis omitida
+  }
+  
+  async resolvePendingAction(gameId, userId, targetId) {
+    // ... logica de resolucion transaccional omitida
+  }
+}
+\end{lstlisting}
+
+\subsection{Iteración 7: Documentación, Planificación y QA}
+
+\textbf{Objetivos de la Iteración} \\
+El objetivo inicial de la iteración consistía en comenzar el desarrollo técnico del motor de juego y el chat en partida. Sin embargo, el equipo decidió estratégicamente pivotar los esfuerzos hacia la gestión del proyecto para cumplir con los estándares académicos de \textit{King and Peasant}.
+
+\textbf{Desarrollo e Implementación} \\
+Durante este periodo, las tareas técnicas se bloquearon temporalmente, dedicando el esfuerzo completo del equipo a la redacción y consolidación de la documentación de ingeniería del software. Se elaboró la Estructura de Desglose del Trabajo (EDT), la gestión de requisitos y el cronograma del proyecto. Asimismo, y dando cumplimiento al requisito de fiabilidad (\textbf{RNF-FIA}), se definió el Plan de Gestión de la Calidad (QA), estableciendo la estrategia integral de pruebas estáticas, unitarias y de integración que acompañarían a la \textit{lógica de negocio} en el futuro.
+
+\textbf{Desviaciones y Retos Técnicos} \\
+Esta iteración representó en sí misma una desviación significativa respecto a la hoja de ruta técnica. La necesidad de documentar exhaustivamente el alcance funcional y arquitectónico del sistema supuso pausar la escritura de código para asegurar la viabilidad teórica del proyecto. Como resultado, las tareas originales relativas al modelo de datos de las cartas y a la comunicación bidireccional fueron trasladadas en su totalidad a los siguientes \textit{sprints}.
+
+\textbf{Estado de Cierre} \\
+Los objetivos de documentación se completaron y validaron con éxito. El equipo generó todos los artefactos de gestión necesarios, estableciendo un marco de trabajo robusto y permitiendo retomar el desarrollo de la \textit{lógica de negocio} en la siguiente semana.
+
+\subsection{Iteración 8: Refactorización y Estado Inicial de Partida}
+
+\textbf{Objetivos de la Iteración} \\
+El objetivo de este \textit{sprint} en \textit{King and Peasant} fue realizar una reestructuración profunda de la base de código existente para mejorar su legibilidad y preparar la arquitectura para el complejo motor de juego, abordando también la configuración del estado inicial de la partida.
+
+\textbf{Desarrollo e Implementación} \\
+La prioridad técnica de este \textit{sprint} consistió en la limpieza y reorganización del \textit{frontend}. Dando cumplimiento al requisito de mantenibilidad (\textbf{RNF-MAN}), se unificó la nomenclatura de los componentes, se reestructuraron las carpetas de las vistas y se aislaron elementos reutilizables para reducir la deuda técnica. A nivel de orquestación de datos y arquitectura (\textbf{RNF-ARQ}), se modelaron en la base de datos las entidades iniciales de las cartas (modelos y \textit{seeders}) y se definieron los Objetos de Transferencia de Datos (DTO) necesarios para aislar la \textit{lógica de negocio} y enviar un estado de juego seguro al cliente.
+
+\textbf{Desviaciones y Retos Técnicos} \\
+El proceso de refactorización reveló brechas en el filtrado de datos, las cuales exponían información que debía permanecer oculta debido a la asimetría del juego (ej. \textit{Rival town dto}). La solución fue implementar una función adaptadora (\textit{mapper}) estricta antes de la serialización JSON para purgar las propiedades privadas del rival.
+
+\textbf{Estado de Cierre} \\
+La iteración concluyó con una base de código notablemente más robusta y organizada. Las refactorizaciones y la configuración del estado inicial de juego se fusionaron en la rama principal, mitigando la deuda técnica acumulada y dejando el terreno arquitectónico preparado para la implementación funcional del sistema de cartas.
+
+\subsection{Iteración 9: Desarrollo del Motor de Juego y Cartas de Acción}
+
+\textbf{Objetivos de la Iteración} \\
+El objetivo establecido para este ciclo consistió en seguir completando el motor del juego de \textit{King and Peasant}, centrándose específicamente en la implementación funcional de las cartas de acción y el complejo sistema de acciones pendientes (\textit{Pending Actions}) para manejar la interactividad asimétrica de la partida.
+
+\textbf{Desarrollo e Implementación} \\
+En esta fase, el trabajo se dedicó a dotar de \textit{lógica de negocio} al núcleo del juego. En el servidor, se construyeron los servicios (\textit{Game Service}) y controladores (\textit{Game Controller}) encargados de procesar, validar y resolver el uso de las cartas de ambas facciones, validando continuamente la capacidad asimétrica del tablero (\textbf{RN-02}) y procesando de forma automática el cierre de turno según el bando (\textbf{RN-04}). Dando cumplimiento al requisito de arquitectura (\textbf{RNF-ARQ}), esta lógica se integró mediante la orquestación del estado en memoria y la persistencia relacional, manteniendo la \textit{paridad de entornos} entre el desarrollo local y el \textit{despliegue aislado}. En el cliente, se desarrollaron las interfaces para interactuar con la mano del jugador, los modales dinámicos para explorar la pila de descartes y el diccionario visual de acciones pendientes.
+
+\textbf{Profundización Técnica: Resolución de Acciones Pendientes (Pending Actions)} \\
+La asimetría del juego requiere mecánicas que pausan el flujo natural del turno, obligando a un jugador a tomar decisiones interactivas antes de que la partida pueda continuar. El problema computacional residía en congelar el estado del motor de forma segura en un entorno \textit{Stateless} como HTTP, delegando el contexto temporal a \textit{Redis}. El sistema de cola de acciones (\textit{Pending Actions}) se diseñó así:
+\begin{itemize}
+    \item Al detectarse una carta que requiere interactividad diferida, el motor genera un objeto \texttt{pendingAction} en \textit{Redis} indicando el tipo de acción y el jugador que tiene el foco.
+    \item El turno global queda bloqueado algorítmicamente; cualquier petición de acción que no coincida con el \texttt{pendingAction} activo es rechazada automáticamente mediante el lanzamiento de excepciones.
+    \item Cuando el cliente envía la resolución a través del controlador, un despachador dinámico invoca la función específica requerida, aplica las alteraciones de estado, purga la acción pendiente y reactiva el ciclo de vida del turno.
+\end{itemize}
+
+\textbf{Desviaciones y Retos Técnicos} \\
+Durante la implementación surgieron complicaciones al sincronizar las mecánicas asíncronas del servidor con la interfaz visual. Al integrar reglas de negocio estrictas (\textbf{RN-03}) y evaluar acciones de impacto inmediato, se originaron bloqueos en la selección de cartas y fallos de renderizado. El obstáculo se superó aplicando un control de flujo riguroso en \textit{React}, aislando la resolución de las promesas asíncronas del ciclo de vida de los modales.
+
+\textbf{Estado de Cierre} \\
+Tras depurar los conflictos de estado entre cliente y servidor, el motor de juego integró con éxito la funcionalidad completa de las cartas de acción y el sistema de turnos asíncronos. Se alcanzó un hito crítico en la jugabilidad del sistema, permitiendo a los jugadores interactuar con la mesa y dejando el terreno preparado para perfilar las condiciones de victoria en el futuro.
+
+\subsection{Iteración 10: Condiciones de Victoria y Resolución de Partida}
+
+\textbf{Objetivos de la Iteración} \\
+El objetivo de este ciclo en \textit{King and Peasant} fue definir la finalización algorítmica de las partidas, estableciendo las condiciones de victoria asimétricas de cada facción y puliendo mecánicas clave de final de juego como el espionaje o infiltración.
+
+\textbf{Desarrollo e Implementación} \\
+El avance principal de este bloque supuso codificar la \textit{lógica de negocio} para comprobar de forma asíncrona la victoria del Rey (usando guardias) o del Campesino (exponiendo al asesino o mediante revueltas). Dando cumplimiento al requisito de arquitectura (\textbf{RNF-ARQ}) y garantizando la atomicidad de victoria (\textbf{RN-05}), la resolución transaccional de las partidas se orquestó asegurando que la base de datos relacional reflejara permanentemente el cambio de estado de manera atómica, bloqueando y limpiando la pila de acciones, y coordinándolo con la caché en memoria. En cliente, se implementaron modales dinámicos para interactuar y procesar el resultado de la partida.
+
+\textbf{Profundización Técnica: Verificación Algorítmica de la Victoria Asimétrica} \\
+La complejidad de este hito radicaba en la multiplicidad de vías de victoria simultáneas. Validar si la partida ha concluido exige procesar estados combinados del tablero tras cada movimiento, evitando rigurosamente condiciones de carrera donde ambos jugadores pudiesen ser declarados ganadores en la misma fracción de segundo. El flujo de validación se estructuró de la siguiente forma:
+\begin{itemize}
+    \item Al finalizar cualquier mutación de estado en \textit{Redis} (ya sea por jugar una carta o vaciar un mazo), se invoca un interceptor central de validación.
+    \item El algoritmo evalúa de forma paralela las condiciones absolutas del Campesino (presencia del Asesino, masa de rebeldes) frente a las condiciones del Rey (límites de guardias, robo de mazo condicionado).
+    \item Si una aserción retorna un estado ganador válido, el motor consolida el estado final en \textit{MariaDB} dentro de una misma transacción de \textit{Prisma}, enviando seguidamente un código de interrupción a los \textit{WebSockets} que destruye el hilo de memoria y renderiza los modales de cierre definitivos en los clientes.
+\end{itemize}
+
+\textbf{Desviaciones y Retos Técnicos} \\
+Durante la transición de finalización de juego se detectaron errores críticos por problemas de concurrencia; en particular, un fallo del servidor (Error 500) al actualizar el estado final y destruir el hilo de la partida. La solución fue encapsular la actualización del usuario y la destrucción del hilo de Redis dentro de un bloque transaccional atómico \textit{try/catch} con \textit{await}.
+
+\textbf{Estado de Cierre} \\
+Las condiciones de victoria y mecánicas finales se estabilizaron con éxito. Todos los componentes se integraron y validaron en la rama \textit{trunk}, permitiendo que el motor asimétrico determinara a un ganador válido de forma autónoma y robusta.
+
+\section{Aseguramiento de Calidad y Pulido Final}
+
+\textbf{Flujo de Interacción y Arquitectura} \\
+La estrategia de validación final adopta un enfoque orientado al aseguramiento de la calidad mediante pruebas de integración automáticas. A nivel de infraestructura, se utiliza el motor \textit{Jest} para instanciar el \textit{Game Service} y los servicios de usuarios junto con bases de datos aisladas en memoria. Esto permite simular con precisión el flujo asimétrico de la partida, certificando la invariabilidad algorítmica de las condiciones de victoria y mitigando la aparición de regresiones indeseadas tras refactorizaciones de última hora.
+
+\textbf{Estructura de Directorios} \\
+\begin{verbatim}
+packages/
++-- server/
+    +-- tests/
+        |-- gameService.test.mjs
+        +-- user.test.mjs
+\end{verbatim}
+
+\textbf{Snippets Estratégicos de Código} \\
+\begin{lstlisting}[language=Java]
+// packages/server/tests/gameService.test.mjs
+describe("Game Engine Integration Tests", () => {
+  it("should process Revolt action and verify win conditions correctly", async () => {
+     // ... logica interna de aserciones y simulacion omitida
+  });
+});
+\end{lstlisting}
+
+\subsection{Iteración 11: Sistema de Notificaciones y Aseguramiento de Calidad}
+
+\textbf{Objetivos de la Iteración} \\
+El propósito de esta iteración fue proveer \textit{feedback} global e inmediato al jugador mediante un sistema reactivo de modales, así como blindar la capa de datos de usuarios introduciendo pruebas automáticas.
+
+\textbf{Desarrollo e Implementación} \\
+En el \textit{frontend}, se diseñó un sistema de notificaciones globales (\textit{Announcement Modals}) orquestado para informar a los clientes ante eventos asíncronos, tales como la desconexión abrupta de \textit{Lobbies} o la finalización repentina de una partida. En paralelo, y en estricto cumplimiento del requisito de fiabilidad (\textbf{RNF-FIA}), se invirtió esfuerzo técnico en el módulo de usuarios del servidor, escribiendo una batería de pruebas y blindando la \textit{lógica de negocio} con validaciones estrictas y comprobaciones de integridad, protegiendo así la persistencia de datos.
+
+\textbf{Desviaciones y Retos Técnicos} \\
+El proceso de automatización sacó a relucir fragilidades en el modelo previo de validación de usuarios. La solución fue aislar dependencias inyectando simulacros de la base de datos (\textit{mocking}), garantizando que las aserciones se resolvieran de forma determinista y predecible bajo el entorno del \textit{despliegue aislado}.
+
+\textbf{Estado de Cierre} \\
+Los modales de notificación enriquecieron drásticamente la interfaz del cliente y la validación de usuarios fortaleció la estabilidad del servidor. Todos los cambios se consolidaron en la rama principal sin mayores incidencias, logrando el objetivo previsto.
+
+\subsection{Iteración 12: Pruebas de Integración y Pulido Final del Motor}
+
+\textbf{Objetivos de la Iteración} \\
+El último hito de desarrollo se centró en consolidar y asegurar de forma definitiva la \textit{lógica de negocio} del motor asimétrico mediante pruebas de integración, así como generar la documentación estructural final del sistema.
+
+\textbf{Desarrollo e Implementación} \\
+Dando cumplimiento al requisito de fiabilidad y mantenibilidad (\textbf{RNF-FIA}, \textbf{RNF-MAN}), se orquestó una \textit{suite} de pruebas de software exhaustiva destinada específicamente a los servicios del motor del juego (\textit{gameService}). Esto garantizó la consistencia matemática de las mecánicas principales, verificando empíricamente comportamientos críticos como el correcto reseteo de la estructura en Eras (\textbf{RN-01}). En el frente documental, y basándose en el requisito de arquitectura (\textbf{RNF-ARQ}), se actualizaron y compilaron los diagramas UML finales (Casos de Uso y Secuencia), asegurando que reflejaran fielmente el flujo bidireccional desarrollado y validado durante todo el ciclo.
+
+\textbf{Profundización Técnica: Mecanismo de Despliegue en Cascada (Revolt y Strike)} \\
+Las pruebas automatizadas sometieron a estrés la resiliencia del motor ante acciones de cadena transaccional complejas, como la mecánica \textit{Revolt}, la cual exige propagar impactos de forma concurrente sobre los diferentes sectores del tablero asimétrico. El motor no podía simplemente mutar el array de entidades, ya que debía ponderar los cálculos de defensa sin corromper el estado general de la jugada. La solución algorítmica adoptada para esta topología en cascada constó de tres fases:
+\begin{itemize}
+    \item En lugar de alterar las cartas directamente durante el cálculo, el servicio genera un mapa temporal de \textit{targets} que procesa y acumula las variables defensivas pasivas.
+    \item El impacto ofensivo o defensivo derivado de cartas letales (como \textit{Strike}) se resuelve aislando las mutaciones de poder o resistencia en un \textit{buffer} transaccional, evaluando las interdependencias del tablero.
+    \item Si, y solo si, la totalidad de los cómputos de resolución de área concluyen sin levantar excepciones, el \textit{buffer} en memoria reemplaza atómicamente a la representación vigente del jugador en \textit{Redis}, garantizando coherencia absoluta ante caídas inesperadas del flujo.
+\end{itemize}
+
+\textbf{Desviaciones y Retos Técnicos} \\
+Al ejecutar las pruebas de integración, el sistema reveló discrepancias en el estado en memoria frente a la resolución teórica. Se detectó un fallo lógico grave en la mecánica \textit{Revolt} y la acción \textit{Strike} que impedía procesar correctamente a las entidades desplegadas. La solución fue aplicar la técnica de clonación profunda (\textit{deep copy}) del estado de las cartas para evitar la mutación accidental de referencias en memoria durante el cálculo de defensas.
+
+\textbf{Estado de Cierre} \\
+Tras solventar las fricciones mecánicas y lograr una tasa de éxito íntegra en los entornos de prueba, el motor del juego y la documentación técnica quedaron culminados. Esta última iteración cerró exitosamente el ciclo de implementación en el repositorio, entregando un producto robusto y preparado para su evaluación académica.

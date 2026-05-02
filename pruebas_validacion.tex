@@ -1,0 +1,132 @@
+\chapter{Pruebas y Validación del Sistema}
+
+En este capítulo se describe la estrategia de verificación adoptada para asegurar la calidad y el correcto funcionamiento de la plataforma \textit{King and Peasants}. Se detalla el diseño de las pruebas siguiendo una arquitectura de pirámide, la validación de los componentes de interfaz, la integridad de la API y el motor de lógica asimétrica, así como el flujo de integración continua que garantiza la estabilidad en cada despliegue.
+
+\section{Estrategia de Pruebas y Entorno}
+
+Se ha diseñado una estrategia de pruebas integral que abarca desde la lógica de negocio más granular hasta el comportamiento de la interfaz de usuario. El stack tecnológico de pruebas se divide según la naturaleza de cada paquete:
+
+\begin{itemize}
+    \item \textbf{Cliente (Frontend):} Se utiliza \textbf{Vitest} como motor de ejecución de pruebas por su integración nativa con Vite, junto con \textbf{React Testing Library (RTL)} para la validación de componentes basada en el comportamiento del usuario.
+    \item \textbf{Servidor (Backend):} Se emplea \textbf{Jest} para la ejecución de pruebas unitarias y de integración, complementado con \textbf{Supertest} para la realización de peticiones HTTP sintéticas contra los \textit{endpoints} de la API.
+\end{itemize}
+
+La pirámide de pruebas implementada asegura que la base del sistema esté cubierta por pruebas unitarias rápidas y ligeras, mientras que las capas superiores validan la integración de servicios (API y base de datos) y la interactividad de la interfaz.
+
+\subsection{Validación del Cliente (Frontend)}
+
+La validación del frontend se centra en dos pilares: la correcta renderización de componentes y la gestión del estado global mediante la \textit{Context API}.
+
+\subsubsection{Pruebas de Componentes y Vistas}
+
+Se evalúa el montaje del árbol DOM virtual y la captura de eventos. Por ejemplo, en la vista de inicio de sesión (\texttt{Login.tsx}), se verifica que los campos de entrada capturen la información y que el flujo de navegación se active ante una respuesta exitosa del servidor. El siguiente fragmento ilustra cómo se utiliza \texttt{user-event} para simular la interacción:
+
+\begin{lstlisting}[language=Java, caption={Prueba unitaria del componente de Login}]
+test('hace login y navega a home cuando la API responde OK', async () => {
+    const fetchMock = vi.mocked(fetch);
+    fetchMock.mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        userId: 1, name: 'John', email: 'john@test.com', authToken: 'token-123'
+      }),
+    } as Response);
+
+    render(<MemoryRouter><Login /></MemoryRouter>);
+
+    await userEvent.type(screen.getByPlaceholderText('Email'), 'john@test.com');
+    await userEvent.type(screen.getByPlaceholderText('Password'), 'secret');
+    await userEvent.click(screen.getByRole('button', { name: 'Login' }));
+
+    await waitFor(() => {
+      expect(mockLogin).toHaveBeenCalledWith({
+        id: 1, name: 'John', email: 'john@test.com', authToken: 'token-123'
+      });
+      expect(mockNavigate).toHaveBeenCalledWith('/');
+    });
+});
+\end{lstlisting}
+
+\subsubsection{Pruebas de Estado (Context API)}
+
+Se valida la lógica de persistencia y protección de rutas en el \texttt{AuthProvider}. Se comprueba que, tras un inicio de sesión exitoso, el estado de la aplicación se actualice, se almacene el token en el \textit{local storage} y se inicialice la conexión por \textit{sockets} para la comunicación en tiempo real.
+
+\subsection{Validación del Servidor (Backend)}
+
+El backend se valida mediante pruebas de integración que aseguran la consistencia de los datos y el cumplimiento de las restricciones de seguridad.
+
+\subsubsection{Pruebas de Integración de API (Endpoints)}
+
+Se utiliza \texttt{Supertest} para validar que los controladores responden con los códigos de estado HTTP adecuados (200 OK, 400 Bad Request, 401 Unauthorized, etc.). Se pone especial énfasis en la validación de esquemas de entrada, asegurando que el sistema rechace peticiones con datos malformados.
+
+\begin{lstlisting}[language=Java, caption={Validación de endpoints con Supertest}]
+test('POST /api/auth/register devuelve 400 con payload invalido', async () => {
+    const app = buildApp();
+    const response = await request(app)
+      .post('/api/auth/register')
+      .send({ name: 'ab', email: 'bad-email', password: 'short' });
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Validation error');
+    expect(response.body.errors).toEqual(expect.arrayContaining([
+        expect.objectContaining({ message: 'Name must be at least 3 characters' }),
+        expect.objectContaining({ message: 'Email must be a valid email address' })
+      ]));
+});
+\end{lstlisting}
+
+\subsubsection{Pruebas Transaccionales y de Servicios}
+
+Se aíslan los servicios de lógica de usuario (\texttt{UserService}) y gestión de salas (\texttt{LobbyService}), mockeando la capa de persistencia (Prisma) cuando es necesario o utilizando bases de datos de prueba para asegurar que las mutaciones cumplen el modelo relacional definido.
+
+\subsection{Validación del Motor Asimétrico (Game Service)}
+
+Esta sección representa el núcleo técnico más complejo. El servicio \texttt{GameService} gestiona el estado atómico de las partidas almacenado en Redis y aplica las reglas asimétricas del juego.
+
+\subsubsection{Metodología de Validación}
+
+Se emplea el patrón \textbf{Arrange-Act-Assert} (Preparar-Actuar-Verificar):
+\begin{enumerate}
+    \item \textbf{Arrange:} Se prepara un estado de partida en memoria (mock de Redis) con una configuración específica de cartas en mano, pueblo y mazo.
+    \item \textbf{Act:} Se ejecuta una acción de juego (jugar carta, resolver habilidad).
+    \item \textbf{Assert:} Se comprueba que el nuevo estado devuelto cumple con las Reglas de Negocio (RN), incluyendo el cambio de turno y la visibilidad selectiva de las cartas (lo que un jugador puede ver frente a lo que el otro desconoce).
+\end{enumerate}
+
+\subsubsection{Verificación de Mecánicas Complejas}
+
+Un ejemplo crítico es la validación de la condición de victoria mediante el \texttt{Guardian} revelando al \texttt{Assassin} en el mazo. Esta prueba asegura que la lógica de fin de partida se dispare correctamente y se actualicen los registros en la base de datos relacional de forma atómica.
+
+\begin{lstlisting}[language=Java, caption={Prueba de lógica asimétrica de victoria}]
+test('Guardian revela al Assassin en el mazo y cierra la partida', async () => {
+    const guardian = makeCard({ uid: 'g1', templateId: 7, typeKing: 'Guard' });
+    const assassin = makeCard({ uid: 'a1', templateId: 16, typePeasant: 'Rebel' });
+
+    await saveState('game-1', createState({
+      turn: 'king', deck: [assassin],
+      players: { king: { town: [guardian] } },
+    }));
+
+    const result = await gameService.resolvePendingAction('game-1', 1, {
+      targetUid: 'a1',
+    });
+
+    expect(result).toEqual({
+      isGameOver: true,
+      winnerId: 1,
+      reason: 'ASSASSIN_EXPOSED',
+    });
+    expect(prismaMock.game.create).toHaveBeenCalledTimes(1);
+});
+\end{lstlisting}
+
+\section{Integración Continua y Despliegue (CI/CD)}
+
+Para garantizar que ningún cambio en el código degrade la calidad del sistema, se ha implementado un flujo de integración continua utilizando \textbf{GitHub Actions}. El pipeline definido en \texttt{CD\_Deploy.yml} actúa como una barrera de seguridad (\textit{Quality Gate}).
+
+Cada vez que se realiza un \textit{push} a las ramas \texttt{main} o \texttt{trunk}, se dispara automáticamente un \textit{job} de pruebas que realiza las siguientes acciones:
+\begin{enumerate}
+    \item Preparación del entorno con Node.js 20.
+    \item Instalación de dependencias de todos los paquetes.
+    \item Ejecución de la suite completa de pruebas (\texttt{npm run test}).
+\end{enumerate}
+
+Si alguna aserción falla, el pipeline se detiene inmediatamente, bloqueando el despliegue automático hacia Render. Esto asegura que solo las versiones de código que superan satisfactoriamente todas las pruebas de validación lleguen a los entornos de pre-producción y producción, protegiendo así la integridad de la rama principal.

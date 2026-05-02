@@ -5,12 +5,12 @@ The good parts of a book may be only something a writer is lucky enough to overh
 \end{quotation}
 
 \begin{abstract}
-En este capítulo se definen los cimientos funcionales y técnicos del proyecto. En primer lugar, se establece el catálogo de requisitos funcionales y no funcionales, delimitando las fronteras del sistema. A continuación, se modela la interacción de los usuarios mediante diagramas de Casos de Uso y de Secuencia. Finalmente, se describe el diseño de la arquitectura de software y el modelo de datos diseñado para garantizar el rendimiento en tiempo real.
+En este capítulo se definen el alcance funcional y técnico del sistema. En primer lugar, se establece el catálogo de requisitos funcionales y no funcionales, delimitando las fronteras del sistema. A continuación, se modela la interacción de los usuarios mediante diagramas de Casos de Uso y de Secuencia. Finalmente, se describe el diseño de la arquitectura de software y el modelo de datos diseñado para garantizar el rendimiento en tiempo real.
 \end{abstract}
 
 \section{Análisis de Requisitos}
 
-La fase de análisis tiene como objetivo definir el contrato del sistema, estableciendo de forma unívoca qué debe hacer la aplicación (requisitos funcionales) y bajo qué restricciones de calidad, rendimiento y seguridad debe operar (requisitos no funcionales).
+La fase de análisis tiene como objetivo definir el contrato del sistema, estableciendo qué debe hacer la aplicación (requisitos funcionales) y bajo qué restricciones de calidad, rendimiento y seguridad debe operar (requisitos no funcionales).
 
 \subsection{Requisitos Funcionales y Actores}
 
@@ -22,10 +22,10 @@ Para la definición del Producto Mínimo Viable (MVP) de \textit{King and Peasan
 
 Las características esenciales del sistema se estructuran en los siguientes módulos funcionales:
 \begin{enumerate}
-    \item \textbf{Gestión de Identidad:} Registro, inicio de sesión seguro y gestión del perfil del usuario (estadísticas e historial).
-    \item \textbf{Ecosistema Social:} Sistema de peticiones de amistad y chat en tiempo real.
-    \item \textbf{Infraestructura de \textit{Lobbies}:} Creación de salas de juego (públicas y privadas) y sistema de emparejamiento.
-    \item \textbf{Motor de Juego (\textit{Core}):} Lógica asimétrica de cartas, gestión de turnos, temporizadores y sincronización bidireccional del estado del tablero.
+    \item \textbf{Gestión de Identidad:} Registro, inicio de sesión seguro y gestión del perfil del usuario.
+    \item \textbf{Ecosistema Social:} Sistema de peticiones de amistad y chat en tiempo real dentro de una partida.
+    \item \textbf{Infraestructura de \textit{Lobbies}:} Creación de salas de juego (públicas y privadas).
+    \item \textbf{Motor de Juego (\textit{Core}):} Lógica asimétrica de cartas, gestión de turnos y sincronización bidireccional del estado del tablero.
 \end{enumerate}
 
 \subsection{Requisitos No Funcionales (RNF)}
@@ -33,10 +33,31 @@ Las características esenciales del sistema se estructuran en los siguientes mó
 Dada la naturaleza interactiva del proyecto, los requisitos no funcionales resultan críticos para la viabilidad del sistema. Se han definido las siguientes restricciones técnicas:
 
 \begin{itemize}
-    \item \textbf{RNF-ARQ (Arquitectura y Stack):} El cliente debe construirse como una \textit{Single Page Application} (SPA) con \textit{React} 18 y \textit{TypeScript}. El servidor utilizará \textit{Node.js} (Express) bajo una arquitectura modular. El código fuente se organizará estrictamente como un Monorepositorio mediante \textit{NPM Workspaces} para compartir dependencias entre cliente y servidor.
-    \item \textbf{RNF-REN (Rendimiento):} El sistema exige \textbf{baja latencia}. Las acciones de la partida deben procesarse en tiempo real utilizando el protocolo \textit{WebSockets} (\textit{Socket.io}) y apoyándose en \textit{Redis} para el estado volátil. Asimismo, todo el entorno debe estar contenedorizado con \textit{Docker} para garantizar un despliegue y escalabilidad ágiles.
-    \item \textbf{RNF-SEG (Seguridad):} La autenticación se basará en \textit{JSON Web Tokens} (JWT). Las credenciales se protegerán mediante algoritmos de \textit{hashing} unidireccional (\texttt{bcryptjs}) y se aplicarán políticas CORS estrictas. Los secretos del sistema se aislarán mediante variables de entorno (\texttt{.env}).
-    \item \textbf{RNF-FIA (Fiabilidad y QA):} Se requiere un flujo de Integración y Despliegue Continuo (CI/CD) automatizado. La calidad del código se garantizará mediante pruebas unitarias en el \textit{backend} (\textit{Jest}) y en los componentes del \textit{frontend} (\textit{Vitest}). 
+    \item \textbf{Arquitectura y Stack:} El cliente debe construirse como una \textit{Single Page Application} (SPA) con \textit{React} 18 y \textit{TypeScript}. El servidor utilizará \textit{Node.js} (Express) bajo una arquitectura modular. El código fuente se organizará estrictamente como un Monorepositorio mediante \textit{npm workspaces} para compartir dependencias entre cliente y servidor.
+    \item \textbf{Rendimiento:} El sistema exige \textbf{baja latencia}. Las acciones de la partida deben procesarse en tiempo real utilizando el protocolo \textit{WebSockets} (\textit{Socket.io}) y apoyándose en \textit{Redis} para el estado volátil. Asimismo, todo el entorno debe estar contenedorizado con \textit{Docker} para garantizar un despliegue y escalabilidad ágiles.
+    \item \textbf{Seguridad:} La autenticación se basará en \textit{JSON Web Tokens} (JWT). Las credenciales se protegerán mediante algoritmos de \textit{hashing} unidireccional (\texttt{bcryptjs}) y se aplicarán políticas CORS estrictas. Los secretos del sistema se aislarán mediante variables de entorno (\texttt{.env}).
+    \item \textbf{Fiabilidad y QA:} Se requiere un flujo de Integración y Despliegue Continuo (CI/CD) automatizado mediante \textit{GitHub Actions}. La calidad del código se garantizará con pruebas unitarias en el \textit{backend} (\textit{Jest}) y en el \textit{frontend} (\textit{Vitest}), realizando despliegues automáticos en entornos de \textit{Staging} y Producción.
+\end{itemize}
+
+\subsection{Reglas de Negocio y Restricciones del Dominio}
+
+Para comprender el contexto funcional completo de los requisitos previamente descritos, se recomienda consultar el manual íntegro del juego en el Anexo correspondiente[cite: 5, 6]. \textit{King and Peasant} es un juego asimétrico [cite: 7] cuyas mecánicas imponen un conjunto de reglas de negocio estrictas. A continuación, se detalla cómo estas reglas condicionan la arquitectura y el comportamiento del servidor:
+
+\begin{itemize}
+    \item \textbf{RN-01 (Estructura de la Partida en Eras):} La resolución del juego no se basa en una única ronda, sino que está dividida en ``Eras'', proclamándose vencedor global el jugador que consiga ganar 2 Eras[cite: 10, 11, 58, 60]. 
+    \textit{Restricción Arquitectónica:} El sistema debe gestionar un metacontrolador de estado que contabilice las victorias acumuladas y orqueste el reseteo completo del tablero, mazos y manos (Setup) al finalizar una Era, sin necesidad de destruir y recrear la sala de juego (\textit{Lobby})[cite: 59].
+    
+    \item \textbf{RN-02 (Capacidad de Tablero Asimétrica):} Las reglas dictan que el Rey tiene una restricción física en la zona de juego (\textit{Town}) de un máximo de 3 cartas de Guardia [cite: 64, 76], mientras que el Campesino puede desplegar un número ilimitado de Rebeldes[cite: 76].
+    \textit{Restricción Arquitectónica:} Los validadores de entrada del servidor deben aplicar lógicas asimétricas dependiendo de la facción del emisor antes de procesar un evento de despliegue en la base de datos en memoria.
+    
+    \item \textbf{RN-03 (Restricción Espacial de Infiltración):} El Campesino posee mecánicas críticas de infiltración en el mazo con cartas como el Señuelo o el Asesino. El reglamento exige que la carta objetivo se encuentre obligatoriamente desplegada boca abajo en el \textit{Town} para poder efectuar esta acción[cite: 73, 74].
+    \textit{Restricción Arquitectónica:} El motor de reglas (\textit{Game Service}) debe rechazar cualquier petición de infiltración que provenga de la mano del jugador o si la carta ya ha sido revelada públicamente[cite: 74], garantizando la seguridad del estado frente a peticiones maliciosas del cliente.
+    
+    \item \textbf{RN-04 (Cierre de Turno y Flujo Asimétrico):} El flujo de turno es radicalmente distinto entre actores: el Rey finaliza obligatoriamente su turno robando una carta [cite: 70], mientras que para el Campesino robar es una acción voluntaria más de su repertorio[cite: 48, 92].
+    \textit{Restricción Arquitectónica:} El controlador de estado debe ser capaz de inyectar acciones automáticas en la pila de resolución del Rey, a la vez que mantiene un sistema de interrupción manual (espera de \textit{payload}) para el Campesino.
+    
+    \item \textbf{RN-05 (Atomicidad de las Condiciones de Victoria):} Las condiciones para ganar son asimétricas; por ejemplo, el Rey vence si se vacía el mazo o el Asesino es descartado [cite: 50, 51, 52], mientras que el Campesino gana si el Rey roba al Asesino[cite: 53, 54].
+    \textit{Restricción Arquitectónica:} El servidor está obligado a invocar un servicio de auditoría tras cada modificación individual del estado (\textit{listener} atómico), interrumpiendo cualquier evento encolado si se dispara el \textit{trigger} de victoria de una facción.
 \end{itemize}
 
 \section{Modelado del Sistema}
@@ -45,12 +66,11 @@ Para representar gráficamente las interacciones descritas en los requisitos, se
 
 \subsection{Diagrama de Casos de Uso}
 
-En la Figura \ref{fig:casos_uso} se detalla el comportamiento del sistema desde el punto de vista del usuario. Se observa cómo el \textit{Jugador} hereda la capacidad de acceder al ecosistema central tras superar los casos de uso del \textit{Invitado}. Destaca la modularidad del caso de uso principal (``Jugar Partida''), el cual incluye (\textit{<<include>>}) obligatoriamente la mecánica de jugar cartas, y se extiende (\textit{<<extend>>}) de forma opcional con acciones como el chat en vivo o la rendición voluntaria.
-
+En la Figura \ref{fig:casos_uso} se detalla el comportamiento del sistema desde el punto de vista del usuario. Se observa cómo el \textit{Jugador} tiene la capacidad de acceder al ecosistema central dado que tiene una sesión activa. Destaca la modularidad del caso de uso principal (``Jugar Partida''), el cual incluye (\textit{<<include>>}) obligatoriamente la mecánica de jugar cartas, y se extiende (\textit{<<extend>>}) de forma opcional con acciones como el chat en vivo o la rendición voluntaria.
 
 \begin{figure}[H]
     \centering
-    \includesvg[width=0.8\textwidth]{figures/casos_uso.svg}
+    \includegraphics[width=0.8\textwidth]{figures/casos_uso.png}
     \caption{Diagrama General de Casos de Uso del sistema.}
     \label{fig:casos_uso}
 \end{figure}
@@ -63,98 +83,107 @@ El diagrama evidencia la transición entre el protocolo HTTP y el protocolo WebS
 
 \begin{figure}[H]
     \centering
-    \includesvg[width=0.9\textwidth]{figures/secuencia.svg}
+    \includegraphics[width=0.9\textwidth]{figures/secuencia.png}
     \caption{Diagrama de Secuencia: Registro, creación de sala y flujo de partida.}
     \label{fig:secuencia_juego}
 \end{figure}
 
----
-
-\section{Lista de características}
-
-Siguiendo la metodología de desarrollo iterativo, se ha definido un conjunto de características esenciales (\textit{features}) que constituyen el Producto Mínimo Viable (MVP) de \textit{King and Peasant}. Estas características se han agrupado por módulos funcionales:
-
-\begin{itemize}
-    \item \textbf{Gestión de Identidad y Usuarios:}
-    \begin{itemize}
-        \item Registro de nuevos usuarios con validación de credenciales.
-        \item Inicio de sesión seguro (\textit{Login}) mediante JWT y gestión de sesiones.
-        \item Perfil de usuario con visualización de avatar y estadísticas básicas.
-    \end{itemize}
-    
-    \item \textbf{Infraestructura de Salas (Lobby):}
-    \begin{itemize}
-        \item Creación de salas de juego públicas y privadas.
-        \item Listado de salas activas en tiempo real.
-        \item Capacidad de unirse a una sala existente mediante código o selección directa.
-    \end{itemize}
-    
-    \item \textbf{Motor de Juego (Core):}
-    \begin{itemize}
-        \item Inicialización de la partida: barajado y reparto de cartas.
-        \item Gestión de turnos: control de tiempos y validación de acciones permitidas por jugador.
-        \item Mecánicas de cartas: lógica de ataque, defensa y efectos especiales.
-        \item Sincronización de estado: actualización visual del tablero para todos los participantes simultáneamente.
-    \end{itemize}
-    
-    \item \textbf{Funcionalidades Sociales:}
-    \begin{itemize}
-        \item Chat de texto en tiempo real dentro de la sala de espera y durante la partida.
-        \item Sistema de lista de amigos con gestión de estados (conectado/desconectado) e invitaciones.
-    \end{itemize}
-\end{itemize}
-
-\section{Diseño arquitectónico y Organización}
+\section{Diseño de la Arquitectura y el Sistema}
 \label{sec:arquitectura}
 
-La arquitectura del sistema se ha diseñado siguiendo un patrón cliente-servidor desacoplado. Para gestionar la complejidad de dos bases de código interrelacionadas, se ha adoptado una estrategia de **Monorepo** (Monorepositorio) utilizando los \textit{Workspaces} de \texttt{npm}. 
+El diseño de la arquitectura del sistema constituye el nucleo estructural del proyecto. En este apartado se describe la estructura global adoptada, los patrones de diseño aplicados en cada subsistema y la justificación técnica de las decisiones tomadas frente a otras alternativas arquitectónicas disponibles.
 
-Esta estructura permite mantener tanto el código del cliente (`packages/client`) como el del servidor (`packages/server`) en un único repositorio, facilitando la orquestación de scripts de desarrollo, la gestión de dependencias comunes y el despliegue unificado mediante contenedores.
+En la Figura \ref{fig:arquitectura} se ilustra el esquema general del sistema, basado en un modelo cliente-servidor fuertemente desacoplado pero integrado bajo un mismo flujo de desarrollo.
 
-\subsection{Arquitectura del Backend (Servidor)}
-El servidor, desarrollado en \textbf{Node.js} con \textbf{Express}, no es monolítico, sino que implementa una **Arquitectura por Capas** (\textit{Layered Architecture}) para garantizar la separación de responsabilidades y la escalabilidad.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/arquitectura.png}
+    \caption{Diagrama de Arquitectura global del sistema y flujos de comunicación.}
+    \label{fig:arquitectura}
+\end{figure}
+
+\subsection{Estrategia Organizativa: Monorepositorio}
+  
+En lugar de segregar el cliente y el servidor en repositorios de control de versiones independientes (polirepositorio), se tomó la decisión arquitectónica de utilizar un \textbf{Monorepositorio} gestionado de forma nativa mediante \textit{npm workspaces}. 
+
+Esta alternativa se eligió principalmente por su capacidad para unificar y simplificar la gestión del ciclo de vida del desarrollo. Al agrupar los módulos de \textit{client} y \textit{server} en un único entorno, se facilita la configuración de la infraestructura local (bases de datos en Docker) y se centraliza la orquestación de comandos. Esto permite que procesos como la instalación de dependencias, la ejecución de pruebas (\textit{testing}) y el despliegue local de toda la pila tecnológica (Frontend, Backend, MariaDB y Redis) se realicen con un solo comando desde el directorio raíz, reduciendo la fricción en el entorno de desarrollo y en los flujos de Integración Continua (CI/CD).
+
+\subsection{Arquitectura del Servidor (Backend)}
+
+El servidor se ha diseñado huyendo del patrón de monolito tradicional, apostando por una \textbf{Arquitectura por Capas} (\textit{Layered Architecture}) estricta. Esta decisión fomenta el principio de responsabilidad única y facilita la creación de pruebas unitarias al aislar el enrutamiento de la lógica funcional. El flujo se divide en:
 
 \begin{enumerate}
-    \item \textbf{Capa de Enrutamiento (Routes):} Define los puntos de entrada de la API REST (por ejemplo, `/api/lobby`, `/api/game`). Su única función es recibir la petición HTTP y delegarla al controlador adecuado.
-    
-    \item \textbf{Capa de Controladores (Controllers):} Gestiona la interacción con el cliente. Valida los datos de entrada, invoca a los servicios necesarios y formatea la respuesta JSON adecuada.
-    
-    \item \textbf{Capa de Servicios (Services):} Contiene la \textbf{lógica de negocio pura}. Es el núcleo del sistema.
-    \begin{itemize}
-        \item Por ejemplo, el servicio `FriendshipService.js` encapsula la lógica compleja para verificar relaciones bidireccionales o filtrar solicitudes pendientes, aislando esta complejidad de la capa HTTP.
-    \end{itemize}
-    
-    \item \textbf{Capa de Persistencia y Datos:} Se ha optado por un modelo híbrido para optimizar el rendimiento:
-    \begin{itemize}
-        \item \textbf{\textit{MariaDB} + \textit{Prisma ORM}:} Utilizada para datos persistentes (usuarios, historial). \textit{Prisma} permite interactuar con la base de datos mediante objetos tipados, previniendo errores de sintaxis SQL y facilitando las migraciones del esquema.
-        \item \textbf{\textit{Redis}:} Base de datos en memoria clave-valor. Es fundamental para almacenar el estado volátil de las partidas y las sesiones de usuario, garantizando una latencia mínima crítica para el juego.
-    \end{itemize}
+    \item \textbf{Capa de Enrutamiento:} Define los \textit{endpoints} HTTP.
+    \item \textbf{Capa de Controladores:} Procesa y sanea las peticiones.
+    \item \textbf{Capa de Servicios:} Encapsula toda la lógica de negocio compleja de forma agnóstica a la red.
 \end{enumerate}
 
-\paragraph{Gestión de Tiempo Real (WebSockets)}
-Paralelamente a la API REST, el servidor gestiona conexiones persistentes mediante \texttt{socket.io}. Se ha implementado una estructura en memoria (`Map`) que vincula los IDs de usuario de la base de datos con sus conexiones de \textit{socket} activas. Esto permite funcionalidades avanzadas como enviar invitaciones privadas específicas o gestionar desconexiones abruptas (rendición automática) en tiempo real.
+\paragraph{Paradigma de Comunicación Bidireccional:}
+Para el ecosistema de juego, se descartaron alternativas arquitectónicas como \textit{Short Polling} o \textit{Server-Sent Events} (SSE). El \textit{Polling} tradicional generaría una sobrecarga HTTP inasumible y latencia en un juego por turnos. Por ello, se justificó el uso exclusivo de \textbf{WebSockets} (\textit{Socket.io}), estableciendo un canal persistente, bidireccional y de muy baja latencia, crítico para sincronizar eventos como el robo de cartas o las notificaciones del chat en milisegundos.
 
-\subsection{Arquitectura del Frontend (Cliente)}
-El cliente es una \textit{Single Page Application} (SPA) desarrollada con \textbf{React} y construida sobre \textbf{Vite} para maximizar la velocidad de desarrollo. A diferencia del servidor (JavaScript), el cliente está escrito íntegramente en \textbf{TypeScript}, lo que aporta robustez y seguridad de tipos en la manipulación del estado del juego.
+\subsection{Arquitectura del Cliente (Frontend)}
 
-La organización del código cliente sigue principios de modularidad:
+El cliente se ha modelado como una \textit{Single Page Application} (SPA) desarrollada en \textit{React}. En lugar de acoplar la lógica de negocio a la capa de vista, se ha optado por una arquitectura de componentes funcionales apoyada en \textbf{Custom Hooks}. 
+
+Para la propagación del estado de sesión y de la partida, se descartó el envío manual de propiedades en cascada (\textit{prop drilling}), adoptando el patrón \textbf{Context API}. Esto permite mantener un árbol de componentes limpio y optimizado, donde cada nodo accede únicamente a los datos que necesita, mejorando la mantenibilidad a largo plazo.
+
+\subsection{Arquitectura de Persistencia Híbrida}
+\label{subsec:modelo_datos}
+
+Para la persistencia de la información del sistema se ha diseñado un modelo de datos relacional robusto, gestionado a través de \textit{Prisma ORM}. Este modelo soporta la lógica de negocio subyacente, garantizando la integridad referencial y facilitando las consultas complejas. 
+
+El esquema de la base de datos (\textit{MariaDB}) gravita en torno a cinco entidades principales y sus relaciones, tal y como se ilustra en el diagrama Entidad-Relación (Figura \ref{fig:modelo_er}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/ER.png}
+    \caption{Diagrama Entidad-Relación del sistema.}
+    \label{fig:modelo_er}
+\end{figure}
+
+\subsubsection{Entidades Principales}
+
 \begin{itemize}
-    \item \textbf{Gestión de Estado Global (Context API):} Se utiliza un `AuthProvider` para encapsular la sesión del usuario y distribuirla a toda la aplicación sin necesidad de propagar propiedades manualmente (\textit{prop drilling}).
-    \item \textbf{Hooks Personalizados:} La lógica de negocio del cliente se extrae a \textit{hooks} propios (como `useUser` o `useAuth`), separando la lógica funcional de los componentes visuales (\texttt{.tsx}).
-    \item \textbf{Calidad de Código:} Se utiliza \textbf{Vitest} para la ejecución de pruebas unitarias de componentes y lógica, asegurando que la interfaz responde correctamente a los cambios de estado del juego.
+    \item \textbf{Usuario (\textit{User}):} Es la entidad central del ecosistema. Además de almacenar las credenciales de acceso (correo y contraseña protegida), centraliza las estadísticas globales del jugador en la plataforma, manteniendo un conteo actualizado de partidas jugadas, victorias y derrotas. Actúa como nodo relacional para el resto de entidades del sistema.
+    
+    \item \textbf{Amistad (\textit{Friendship}):} Modela la red social del juego. En lugar de utilizar una relación binaria simple de existencia, se ha diseñado con un patrón de estado mediante el enumerado \texttt{FriendshipStatus} (\textit{ACCEPTED, PENDING, DENIED}). Esto permite mantener un control transaccional sobre quién envió la petición (\textit{Sender}) y quién la recibió (\textit{Receiver}), habilitando la gestión asíncrona de invitaciones.
+    
+    \item \textbf{Sala (\textit{Lobby}):} Aunque la concurrencia y el estado en tiempo real de las salas se delega en la base de datos en memoria (\textit{Redis}) por motivos de latencia, esta entidad define la estructura persistente de la sala. Almacena metadatos críticos como el nivel de privacidad (\textit{PUBLIC/PRIVATE}), el estado actual (\textit{WAITING/ONGOING}) y la confirmación de preparación (\textit{Ready}) de los dos jugadores vinculados.
+    
+    \item \textbf{Carta (\textit{Card}):} Define los elementos jugables del sistema. Resulta destacable el enfoque de diseño asimétrico aplicado a esta entidad. Para optimizar el esquema y evitar la duplicidad de tablas entre las dos facciones del juego (Rey y Campesino), se ha optado por un modelo unificado. Cada registro contiene simultáneamente los atributos (nombre, tipo y descripción) de su variante como Rey y su variante como Campesino, centralizando la configuración de los mazos.
+    
+    \item \textbf{Partida (\textit{Game}):} Constituye el registro histórico del sistema. Relaciona a dos usuarios como oponentes y registra de forma inmutable el identificador del ganador, así como las marcas de tiempo de inicio y fin. 
 \end{itemize}
 
-\subsection{Infraestructura y Despliegue}
+\subsubsection{Estado en Memoria (Redis) y Estructura del \textit{GameState}}
 
-La consistencia entre los entornos de desarrollo y producción se garantiza mediante la contenerización completa del sistema.
+Mientras que \textit{MariaDB} gestiona los datos inmutables y a largo plazo, el núcleo de la partida en vivo reside en \textit{Redis}. El estado del juego (\textit{gameState}) es un objeto JSON complejo que actúa como la única fuente de verdad (\textit{Single Source of Truth}) durante el transcurso de una partida.
 
-\subsubsection{Entorno de Desarrollo (Local)}
-El entorno local está orquestado con \textbf{Docker Compose}, lo que permite a cualquier miembro del equipo levantar la infraestructura completa con un solo comando. El archivo `docker-compose.yml` coordina:
+Este objeto almacena propiedades persistentes durante el encuentro (como el turno actual, la era, las puntuaciones y los mazos) y \textbf{atributos volátiles u opcionales} que modelan la lógica interna del servidor:
 \begin{itemize}
-    \item Un contenedor para \textbf{\textit{MariaDB}}.
-    \item Un contenedor para \textbf{\textit{Redis}}.
-    \item El contenedor del servidor (\textit{Node.js}) configurado con recarga en caliente (\textit{hot-reload}) para reflejar cambios inmediatos en el código.
+    \item \texttt{pendingAction}: Objeto temporal que pausa el flujo principal de la partida cuando el sistema requiere una decisión asíncrona de un jugador (por ejemplo, seleccionar un objetivo tras jugar una carta de efecto).
+    \item Pila de resolución (\texttt{queuedKingMobilize} y \texttt{queuedPeasantDispatch}): Estructuras que permiten encadenar y resolver múltiples acciones secuenciales de forma ordenada.
+    \item \texttt{seenByKing}: Bandera booleana (\textit{flag}) introducida por mecánicas específicas de espionaje, que permite asimetría en la visibilidad de una misma carta.
+    \item \texttt{lastEvent}: Etiqueta temporal utilizada por el motor interno para procesar condiciones de victoria o cambios de fase, la cual se purga antes de emitir cualquier estado.
 \end{itemize}
 
-\subsubsection{Entorno de Producción}
-Para el despliegue público, se utiliza un servicio en la nube (PaaS) que ejecuta los contenedores optimizados. La seguridad se refuerza mediante el uso de certificados SSL/TLS, cifrando tanto las peticiones HTTPS como el tráfico WSS (\textit{Secure WebSockets}), protegiendo así la integridad de las partidas y los datos de los usuarios.
+\subsubsection{Seguridad y Patrón de Transferencia de Datos (DTO)}
+
+Transmitir el \textit{gameState} crudo a los clientes supondría una vulnerabilidad crítica, ya que un jugador podría inspeccionar el tráfico de \textit{WebSockets} mediante las herramientas de desarrollador del navegador y descubrir las cartas ocultas de su oponente.
+
+Para mitigar este riesgo desde el diseño de la arquitectura, se ha implementado el patrón \textbf{Data Transfer Object (DTO)}. El backend nunca expone el estado original de \textit{Redis}. En su lugar, el servicio de juego clona el estado y ejecuta una función de transformación que genera dos vistas asimétricas: \texttt{dtoKing} y \texttt{dtoPeasant} (Figura \ref{fig:dto_pattern}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/dto_flujo.png}
+    \caption{Arquitectura de seguridad y filtrado de estado mediante el patrón DTO.}
+    \label{fig:dto_pattern}
+\end{figure}
+
+Las reglas de filtrado aplicadas por el servidor son estrictas:
+\begin{enumerate}
+    \item \textbf{Mazo Global (\textit{Deck}):} Cualquier carta no revelada (\texttt{isRevealed: false}) es censurada, transmitiendo al cliente únicamente su identificador único (\texttt{uid}).
+    \item \textbf{Censura Asimétrica:} El DTO del Rey recibe la mano y la ciudad del Campesino censurados, a menos que la carta haya sido revelada públicamente o interceptada (\texttt{seenByKing: true}). De forma recíproca, el DTO del Campesino recibe los datos del Rey completamente censurados si no cumplen las condiciones de visibilidad.
+\end{enumerate}
+
+Esta capa de transformación garantiza la integridad competitiva del sistema, asegurando que el cliente de React solo procese y renderice la información a la que tiene acceso legítimo.
