@@ -1,4 +1,3 @@
-%!TEX root =  tfg.tex
 \chapter{Manual de usuario}
 
 \begin{quotation}[Novelist]{Ernest Hemingway (1899--1961)}
@@ -9,6 +8,206 @@ The good parts of a book may be only something a writer is lucky enough to overh
 Resumen de lo que va a ocurrir en el capítulo. ¿Cuál es el objetivo que tenemos con este capítulo?
 \end{abstract}
 
-\section{Sección libre}
+\section{Índice}
 
-Estructurar en función del proyecto.
+\begin{enumerate}
+    \item Pantalla Inicial
+    \item Registro/Inicio de Sesión
+    \item Amistad
+    \item Listado de Salas
+    \item Salas
+    \item Partida
+\end{enumerate}
+
+\section{Pantalla Inicial}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{figures/manual/Pantalla Inicio.png}
+\caption{Pantalla Inicio}
+\label{fig:Manual01}
+\end{center}
+\end{figure}
+
+Al entrar en la aplicación nos encontramos con la pantalla de inicio. Desde esta accedermos a las distintas duncionalidades de la aplicación.
+
+Pero antes de comenzar a probar la app, debemos iniciar sesión o registrarnos. Para ello accederemos a la pantalla de Registro / Inicio de Sesión desde los botones de la cabecera de la pantalla que se encuentran a la derecha.
+
+\section{Registro/Inicio de Sesión}
+
+Para registrarnos debemos introducir un nombre, un correo válido y una contraseña segura.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{figures/manual/Registro.png}
+\caption{Pantalla de Registro}
+\label{fig:Manual02}
+\end{center}
+\end{figure}
+
+Una vez registrados podemos iniciar sesión introduciendo nuestro correo y nuestra contraseña.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{figures/manual/Login.png}
+\caption{Pantalla de Inicio de Sesión}
+\label{fig:Manual03}
+\end{center}
+\end{figure}
+
+\section{Amistad}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{figures/manual/Amistad.png}
+\caption{Pantalla de Amistad}
+\label{fig:Manual10}
+\end{center}
+\end{figure}
+
+Desde aquí podemos, buscar usuarios por su nombre, así como mandarles una invitación de amistad.
+
+En la parte derecha de la pantalla podemos ver los amigos que tenemos.
+
+\section{Listado de Salas}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{figures/manual/Listado de Salas.png}
+\caption{Pantalla de Listado de Salas}
+\label{fig:Manual04}
+\end{center}
+\end{figure}
+
+Ahora desde la página de inicio podemos acceder a la pantalla de Listado de Salas. Desde esta pantalla se puede observar una lista de todas las salas creadas. Podemos ver quién es el creador y el estado de la sala.
+
+Desde aquí podemos realizar lo siguiente:
+
+\subsection{Crear Sala}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{figures/manual/Crear Sala.png}
+\caption{Pantalla de Listado de Salas: Crear Sala}
+\label{fig:Manual05}
+\end{center}
+\end{figure}
+
+Si pulsamos el botón de Crear Sala podremos crear una sala añadiendo un nombre a esta y especificando si esta es pública o privada.
+
+\subsection{Unirse a una Sala:}
+
+Si no estamos dentro de ninguna sala podremos unirnos a salas públicas que no estén llenas.
+
+\subsection{Volver a la sala:}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{figures/manual/Volver a Sala.png}
+\caption{Pantalla de Listado de Salas: Volver a la Sala}
+\label{fig:Manual06}
+\end{center}
+\end{figure}
+
+Si ya estamos en una sala, aparecerá un recuadro con un botón que no redirigirá a esta. 
+
+\section{Sala}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{figures/manual/Sala.png}
+\caption{Pantalla de Sala}
+\label{fig:Manual07}
+\end{center}
+\end{figure}
+
+Una vez nos encontramos en la sala, debemos marcar el botón de listo para comenzar a jugar. Una vez los dos jugadores en la sala estén listos, el jugador líder podrá iniciar la partida pulsando el botón de Comenzar Partida.
+
+Por otro lado, si pulsamos el botón de aabndonar sala, saldremos de esta y se nos redirigirá al Listado de Salas.
+
+En caso de que salgamos de esta pantalla accidentalmente, desde la pantalla de Listado de Salas no podremos reconectar durante intervalo de 5 segundos desde que salimos de esta pantalla.
+
+\section{Partida}
+
+\subsection{Interfaz del Juego}
+\begin{description}
+    \item \textbf{Tu Área:}
+
+    \begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=\textwidth]{figures/manual/Partida Tu Mano.png}
+    \caption{Pantalla de Partida: Tu Área}
+    \label{fig:Manual08}
+    \end{center}
+    \end{figure}
+
+    En la parte inferior verás las cartas que tienes en tu mano. Un poco más arriba se encuentra tu pueblo. Desde aquí seleccionarás qué cartas jugar.
+
+    \item \textbf{Área del Rival:}
+
+    \begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=\textwidth]{figures/manual/Partida Mano Rival.png}
+    \caption{Pantalla de Partida: Área del Rival}
+    \label{fig:Manual09}
+    \end{center}
+    \end{figure}
+
+    En la parte superior verás las cartas en la mano de tu rival, estas estarán boca abajo. Un poco más abajo, se encuentra el pueblo rival, con las cartas que este ha colocado, si estas están reveladas aparecerán boca arriba.
+
+    \item \textbf{Mazo:}
+
+    Desde donde se roban las cartas. Puedes pulsar en él para interactuar según lo permitan las reglas.
+
+    \item \textbf{Pila de Descartes:}
+
+    Donde van las cartas usadas. Puedes hacer clic para inspeccionar las cartas descartadas.
+
+    \item \textbf{Chat:}
+    A un lado de la pantalla tendrás un chat en vivo para hablar con tu oponente mientras jugáis.
+\end{description}
+
+\subsection{Acciones de Turno}
+
+Durante tu turno, podrás realizar diversas acciones dependiendo de tu rol (Rey, Campesino):
+
+\begin{description}
+
+    \item \textbf{Robar Carta:}
+
+    Robar una carta del mazo.
+
+    \item \textbf{Colocar Carta en Pueblo:}
+
+    Selecciona una carta de tipo \texttt{Guard} o \texttt{Rebel} para colocar en el pueblo.
+
+    \item \textbf{Jugar Carta en el Pueblo:}
+
+    Selecciona una carta del pueblo para jugar su acción. En caso de que tu rol sea el de Campesino, solo puedes jugar cartas no reveladas.
+
+    Si la carta se puede infiltrar, deberás seleccionarla y elegir la posición del mazo donde quieres infiltrar la carta.
+
+    \item \textbf{Jugar Acción:}
+
+    Si la carta es de tipo \texttt{ACTION}, esta se juega desde la mano sin necesidad de colocarla en el pueblo.
+
+    \item \textbf{Pasar Turno:}
+
+    Pasar al turno rival sin realizar ninguna acción.
+
+    \item \textbf{Condenar Rebelde:}
+
+    Si tu rol es el rey, tienes la posibilidad de condenar a un rebelde no revelado, ya sea pulsando sobre una carta del pueblo rival o pulsando el botón de \texttt{Condenar Carta del Mazo}, este último condenaría la carta de más arriba del mazo. 
+
+    \texttt{CUIDADO: Esta acción termina en victoria o derrota en función de si la carta seleccionada era el Asesino }
+
+    \item \textbf{Acciones Pendientes:}
+
+    Algunas cartas jugadas por el rival requerirán una respuesta tuya (por ejemplo, seleccionar una carta). La pantalla te pedirá que elijas cómo reaccionar antes de continuar.
+\end{description}
+
+\section{Fin de la Era y Fin de la Partida}
+
+Cuando se cumplan las condiciones de victoria de alguno de los roles, aparecerá una pantalla anunciando el ganador, un resumen rápido y deberás pulsar el botón para continuar con la siguiente ronda/era.
+
+Cuando un jugador a ganado dos eras, se acaba la partida y se te redirije a la sala.
