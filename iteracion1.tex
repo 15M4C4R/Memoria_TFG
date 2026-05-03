@@ -53,7 +53,7 @@ A nivel técnico, satisfaciendo el requisito de arquitectura (\textbf{RNF-ARQ}),
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    scale=0.8, transform shape,
+    scale=0.7, transform shape,
     node distance=2.5cm,
     service/.style={rectangle, draw=ThemeColor1, fill=ThemeColor2, thick, minimum width=3cm, minimum height=1.2cm, align=center, rounded corners},
     infra/.style={cylinder, draw=ThemeColor1, fill=ThemeColor2, thick, minimum width=2cm, minimum height=1.5cm, shape border rotate=90, align=center},
@@ -305,16 +305,16 @@ const resolvePendingAction = async (gameId, userId, targetData) => {
 \subsection{Iteración 7: Documentación, Planificación y QA}
 
 \textbf{Objetivos de la Iteración} \\
-El objetivo inicial de la iteración consistía en comenzar el desarrollo técnico del motor de juego y el chat en partida. Sin embargo, el equipo decidió estratégicamente pivotar los esfuerzos hacia la gestión del proyecto para cumplir con los estándares académicos de \textit{King and Peasant}.
+El objetivo inicial de la iteración consistía en comenzar el desarrollo técnico del motor de juego y el chat en partida. Sin embargo, ante el rápido crecimiento del proyecto, el equipo decidió estratégicamente pivotar los esfuerzos hacia una auditoría profunda del código existente, evaluando las funcionalidades implementadas hasta la fecha para identificar y catalogar la deuda técnica acumulada.
 
 \textbf{Desarrollo e Implementación} \\
-Durante este periodo, las tareas técnicas se bloquearon temporalmente, dedicando el esfuerzo completo del equipo a la redacción y consolidación de la documentación de ingeniería del software. Se elaboró la Estructura de Desglose del Trabajo (EDT), la gestión de requisitos y el cronograma del proyecto. Asimismo, y dando cumplimiento al requisito de fiabilidad (\textbf{RNF-FIA}), se definió el Plan de Gestión de la Calidad (QA), estableciendo la estrategia integral de pruebas estáticas, unitarias y de integración que acompañarían a la \textit{lógica de negocio} en el futuro.
+Durante este periodo, el desarrollo de nuevas características (\textit{features}) se congeló temporalmente. El equipo dedicó su esfuerzo íntegro a la revisión de la arquitectura del ecosistema, analizando la gestión del \textit{frontend} (\textit{React}) y el nivel de acoplamiento en la incipiente lógica de comunicación por \textit{WebSockets}. Dando cumplimiento al requisito de mantenibilidad (\textbf{RNF-MAN}), se evaluaron los flujos de datos entre cliente y servidor, detectando problemas de escalabilidad visual y riesgos de sobreexposición de datos sensibles en red que podrían comprometer la futura implementación de la asimetría del juego.
 
 \textbf{Desviaciones y Retos Técnicos} \\
-Esta iteración representó en sí misma una desviación significativa respecto a la hoja de ruta técnica. La necesidad de documentar exhaustivamente el alcance funcional y arquitectónico del sistema supuso pausar la escritura de código para asegurar la viabilidad teórica del proyecto. Como resultado, las tareas originales relativas al modelo de datos de las cartas y a la comunicación bidireccional fueron trasladadas en su totalidad a los siguientes \textit{sprints}.
+Esta iteración representó un punto de inflexión crítico en la gestión del proyecto. La necesidad de priorizar la resolución de la deuda técnica y el saneamiento del núcleo del sistema obligó a posponer las tareas de desarrollo originalmente previstas para este bloque. Este arrastre de tareas hacia los siguientes \textit{sprints} saturó la planificación final, obligando al equipo a reevaluar la pila de producto (\textit{Product Backlog}). Como consecuencia, el equipo asumió el riesgo consciente de que aquellas tareas de menor prioridad arquitectónica, centradas puramente en el pulido visual y la experiencia de usuario, probablemente no lograrían entrar en los tiempos de entrega si la refactorización se alargaba.
 
 \textbf{Estado de Cierre} \\
-Los objetivos de documentación se completaron y validaron con éxito. El equipo generó todos los artefactos de gestión necesarios, estableciendo un marco de trabajo robusto y permitiendo retomar el desarrollo de la \textit{lógica de negocio} en la siguiente semana.
+La fase de auditoría concluyó con éxito, proporcionando al equipo un mapa claro de las deficiencias arquitectónicas y un inventario detallado de la deuda técnica a subsanar. Este profundo análisis justificó un cambio de prioridad absoluto, sentando las bases y estableciendo los requerimientos para que la iteración posterior se enfocase exclusivamente en una reestructuración y refactorización masiva del código.
 
 \subsection{Iteración 8: Refactorización y Estado Inicial de Partida}
 
@@ -427,7 +427,7 @@ A lo largo de este \textit{sprint}, los esfuerzos se centraron en traducir la l�
 El reto computacional en la capa de vista consistió en lidiar con interrupciones del flujo en tiempo real. Puesto que las acciones pendientes pausan el curso normal del turno obligando al rival a responder, el cliente debe congelar la interfaz general e inyectar un componente modal específico sin perder el contexto previo.
 La solución arquitectónica en \textit{React} se diseñó del siguiente modo:
 \begin{itemize}
-    \item Se implementó un diccionario dinámico de componentes en el archivo \texttt{pendingActionsUI.tsx}, que mapea claves de acción (\textit{keys}) provenientes del servidor con sus respectivos \textit{Modals}.
+    \item Se implementó un diccionario dinámico en el archivo \texttt{pendingActionsUI.tsx} para mapear las claves de acción (\textit{keys}) del servidor con sus respectivos \textit{Modals}.
     \item Cuando el \textit{Socket.io} notifica un estado que incluye un objeto \texttt{pendingAction}, el componente principal de la partida (\textit{Game}) evalúa qué jugador tiene el foco.
     \item Si el foco recae en el jugador local, la vista invoca el componente correspondiente a través del diccionario, forzando la decisión del usuario y bloqueando algorítmicamente el resto de interacciones (\textit{force play}) hasta que el controlador del servidor resuelva la promesa asíncrona.
 \end{itemize}
@@ -529,7 +529,7 @@ La inclusión de estos modales de anuncio enriqueció de forma sustancial la int
 \subsection{Iteración 16: Automatización de Pruebas y Validación Integral del Sistema}
 
 \textbf{Objetivos de la Iteración} \\
-El último hito de desarrollo se centró en asegurar de forma definitiva la calidad del software construido mediante la automatización de pruebas. El esfuerzo técnico buscó blindar tanto la \textit{lógica de negocio} del motor asimétrico como la integridad del módulo de usuarios y las interfaces del cliente, garantizando la fiabilidad (\textbf{RNF-FIA}) del producto antes de su cierre.
+Durante esta iteración el equipo de desarrollo se centró en asegurar de forma definitiva la calidad del software construido mediante la automatización de pruebas. El esfuerzo técnico buscó blindar tanto la \textit{lógica de negocio} del motor asimétrico como la integridad del módulo de usuarios y las interfaces del cliente, garantizando la fiabilidad (\textbf{RNF-FIA}) del producto.
 
 \textbf{Desarrollo e Implementación} \\
 A lo largo de esta semana se orquestó una \textit{suite} de pruebas exhaustiva que abarcó todo el \textit{stack} tecnológico. En el \textit{backend}, se implementaron validadores estrictos mediante \textit{middlewares} para las rutas del usuario (\texttt{userValidators.js}) y se desarrollaron extensas pruebas de integración tanto para el módulo de cuentas (\texttt{userRoutes.test.mjs}) como para el motor del juego (\texttt{gameService.test.mjs}, superando las dos mil líneas de aserciones). En el \textit{frontend}, se blindaron los flujos críticos mediante pruebas de componentes en \textit{React} (como \texttt{Login.test.tsx} o \texttt{Profile.test.tsx}), verificando el comportamiento del proveedor de estado frente a la vista.
@@ -547,4 +547,18 @@ La refactorización algorítmica para estabilizar estas acciones garantizó la i
 Al ejecutar las pruebas de integración del \textit{GameService}, el sistema reportó discrepancias graves en el estado en memoria. En concreto, los \textit{tests} evidenciaron que la carta \textit{Strike} no aplicaba correctamente la letalidad programada y que \textit{Revolt} no despachaba la cantidad esperada de tropas. Estos hallazgos detuvieron temporalmente el progreso de la \textit{suite} automatizada, requiriendo reescribir parte de la lógica en los \textit{pendingActions} de los bandos. Se iteró sobre estas funciones hasta que el 100\% de los \textit{tests} se resolvieron en verde.
 
 \textbf{Estado de Cierre} \\
-Tras solventar las fricciones mecánicas y alcanzar una tasa de éxito íntegra en los entornos de prueba (\textit{frontend} y \textit{backend}), el proyecto quedó enteramente estabilizado. Esta última iteración cerró de forma exitosa el ciclo de implementación técnica en el repositorio, entregando un producto robusto, validado empíricamente y listo para su defensa.
+Tras solventar las fricciones mecánicas y alcanzar una tasa de éxito íntegra en los entornos de prueba (\textit{frontend} y \textit{backend}), el proyecto mejoró significativamente su estabilidad. El cierre de esta iteración permitió consolidar la robustez técnica del sistema mediante una verificación empírica de sus componentes, garantizando que la lógica de negocio operase de forma fiable y determinista. Con el núcleo del software validado, el repositorio alcanzó el grado de madurez necesario para afrontar con garantías las fases finales de consolidación documental y despliegue.
+
+\subsection{Iteración 17: Redacción Técnica y Consolidación Documental}
+
+\textbf{Objetivos de la Iteración} \
+El objetivo primordial de este ciclo consistió en intensificar la producción de la memoria del proyecto para adelantar la carga de trabajo documental. Esta decisión estratégica buscó liberar ancho de banda en las iteraciones finales, permitiendo afrontar las fases finales con una mayor libertad de acción y menor presión administrativa en los últimos compases del desarrollo.
+
+\textbf{Desarrollo e Implementación} \
+Durante este periodo, el esfuerzo del equipo se desvió del desarrollo de software hacia la síntesis y formalización de la información técnica. Se procedió a redactar los capítulos de implementación más densos, justificando las decisiones de diseño y estructurando los artefactos visuales (diagramas, tablas de análisis y memorandos) generados en \textit{sprints} previos. Se realizó un trabajo exhaustivo sobre el proyecto \textit{LaTeX} para unificar el estilo narrativo, eliminar textos de relleno y corregir errores de maquetación (\textit{Overfull hboxes}), asegurando que la memoria técnica fuera un reflejo fiel y profesional de la ingeniería aplicada en el código.
+
+\textbf{Desviaciones y Retos Técnicos} \
+Al tratarse de una iteración centrada en la gestión de la información, no se registraron bloqueos en la lógica de servidor o cliente. No obstante, el reto principal radicó en la transición del flujo de trabajo de programación a la redacción académica, lo que exigió un cambio de contexto significativo para mantener la precisión técnica. El desafío se superó mediante revisiones constantes del código fuente mientras se redactaba, garantizando que cada párrafo mantuviera la coherencia con la implementación real de \textit{King and Peasant}.
+
+\textbf{Estado de Cierre} \
+La iteración concluyó satisfactoriamente con un avance sustancial en el manuscrito. Se logró completar la estructura principal de los capítulos técnicos, cumpliendo con el objetivo de despejar el cronograma y permitiendo que las iteraciones restantes se centren exclusivamente en el pulido final, la corrección de errores residuales y la validación integral del sistema.

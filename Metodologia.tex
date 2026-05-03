@@ -32,7 +32,7 @@ Para determinar el modelo de ciclo de vida más adecuado para la naturaleza de e
 \subsubsection{Modelo en Cascada (\textit{Waterfall})}
 Este enfoque predictivo clásico propone una secuencia puramente lineal de fases (Requisitos, Análisis, Diseño, Implementación, Pruebas y Mantenimiento). Bajo este paradigma, cada etapa debe finalizarse antes de poder comenzar la siguiente.
 
-\textbf{Motivo del descarte:} El desarrollo de un videojuego conlleva una incertidumbre inherente respecto a la jugabilidad y la experiencia final del usuario. El modelo en cascada resulta excesivamente rígido ante esta realidad; si durante la fase de pruebas se detecta que una mecánica de juego presenta fallos de diseño o no resulta atractiva, el coste temporal de retroceder a la fase de análisis para rediseñarla resulta inasumible. Este proyecto requería de una estructura que permitiera pivotar y ajustar requisitos sobre la marcha basándose en el \textit{feedback} interactivo.
+\textbf{Motivo del descarte:} El desarrollo de un videojuego conlleva una incertidumbre inherente respecto a la jugabilidad y la experiencia final del usuario. El modelo en cascada resulta excesivamente rígido ante esta realidad; si durante la fase de pruebas se detecta que una mecánica de juego presenta fallos de diseño, el coste temporal de retroceder a la fase de análisis para rediseñarla resulta inasumible. Este proyecto requería de una estructura que permitiera pivotar y ajustar requisitos sobre la marcha basándose en el \textit{feedback} interactivo.
 
 \subsubsection{Modelo en Espiral}
 Este modelo evolutivo se centra en la evaluación continua y la mitigación de riesgos mediante iteraciones concéntricas que combinan planificación, análisis de viabilidad y prototipado.
@@ -54,11 +54,11 @@ Esta elección metodológica se justifica por dos pilares clave del proyecto:
 Si bien el marco de trabajo \textit{Scrum} define roles (como el \textit{Scrum Master} o el \textit{Product Owner}) y herramientas diseñadas para equipos de mayor tamaño, en este proyecto se ha ejecutado una adaptación del modelo orientada a la eficiencia. Se ha prescindido de la rigidez burocrática para maximizar la agilidad de un micro-equipo colaborativo.
 
 \subsection{Sprints Semanales}
-El esfuerzo de desarrollo se ha dividido en iteraciones temporales cortas o \textit{Sprints} con una duración estricta de una semana. Esta cadencia temporal, notablemente más rápida que las iteraciones de quince días habituales en la industria, ha permitido un nivel de control granular y un seguimiento muy preciso del progreso frente al calendario académico.
+El esfuerzo de desarrollo se ha dividido en iteraciones temporales cortas o \textit{Sprints} con una duración estricta de una semana. Esta cadencia temporal, notablemente más rápida que las iteraciones de quince días habituales en la industria, ha permitido un nivel de control granular y un seguimiento preciso del progreso frente al calendario académico.
 
 El ciclo de cada iteración se ha estructurado en tres eventos fundamentales:
 \begin{itemize}
-    \item \textbf{\textit{Sprint Planning} (Planificación):} Al inicio de la semana de trabajo, el equipo evalúa y selecciona las tareas prioritarias del \textit{Product Backlog} (pila de producto), estableciendo el objetivo técnico al que se comprometen para esa iteración.
+    \item \textbf{\textit{Sprint Planning} (Planificación):} Al inicio de la semana de trabajo, el equipo evalúa y selecciona las tareas a realizar de la planificación inicial, estableciendo el objetivo técnico al que se comprometen para esa iteración.
     \item \textbf{Ejecución en paralelo:} Desarrollo efectivo de las funcionalidades y mecánicas acordadas.
     \item \textbf{\textit{Sprint Review} (Revisión e Integración):} Esta validación se lleva a cabo mediante un proceso de revisión cruzada (\textit{Peer Review}), donde cada desarrollador audita el código escrito por el otro antes de autorizar su integración definitiva en la rama principal del repositorio.
 \end{itemize}

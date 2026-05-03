@@ -21,7 +21,7 @@ A nivel global, el proyecto abarca un periodo de desarrollo de cinco meses, desd
     \textbf{Periodicidad de las revisiones}&1 semanas (Sprints)\\
     \textbf{Carga de trabajo semanal}&12 horas\\
     \textbf{Horas totales previstas}&300 horas\\
-    \textbf{Horas finales}&240 horas\\ 
+    \textbf{Horas finales}&XXX horas\\ 
     \end{coolTable}
     \caption{Tabla resumen de tiempos y planificación}
     \label{tab:resumen_temporal}
@@ -34,8 +34,8 @@ Dada la adopción de un \textit{stack} tecnológico complejo y la interdependenc
 \begin{itemize}
     \item \textbf{Enero - Arquitectura e Infraestructura:} Configuración inicial del repositorio, contenedorización de los servicios mediante \textit{Docker}, implementación del sistema de autenticación de usuarios y salas de espera (\textit{lobbies}), e inicialización del núcleo de la aplicación.
     \item \textbf{Febrero - \textit{Core} del Juego:} Desarrollo íntegro de la lógica de la partida, diseño del tablero interactivo y aseguramiento de la sincronización bidireccional en tiempo real.
-    \item \textbf{Marzo - Reglas avanzadas y Seguridad:} Implementación de las mecánicas asimétricas complejas, pulido de la validación de estados en el \textit{backend} y blindaje de la seguridad de la plataforma.
-    \item \textbf{Abril - Funcionalidades extendidas y \textit{Testing}:} Integración de características periféricas (como sistemas de interacción social o estadísticas), ejecución exhaustiva de las baterías de pruebas automatizadas y aseguramiento de la calidad del código.
+    \item \textbf{Marzo - Reglas avanzadas y Refactorización:} Implementación de las mecánicas asimétricas complejas, pulido de la validación de estados en el \textit{backend} y blindaje de la seguridad de la plataforma.
+    \item \textbf{Abril - Aseguramiento de la calidad:} Además de la integración de las baterías de pruebas automatizadas, el esfuerzo técnico se centrará en refinar la experiencia de juego mediante un proceso exhaustivo de búsqueda, depuración y corrección de errores (\textit{bugs}), garantizando así la estabilidad del producto final.
     \item \textbf{Mayo - Despliegue y Cierre:} Finalización de la presente memoria técnica, despliegue final del sistema y preparación para la defensa académica.
 \end{itemize}
 
@@ -53,39 +53,42 @@ Para materializar los hitos mensuales, el trabajo se fragmentó en \textit{Sprin
         \hline
         \textbf{Mes} & \textbf{Semana (Sprint)} & \textbf{Objetivos Técnicos Principales}  \\
         \hline
-        \multirow{3}{*}{\textbf{Enero}} 
-        & 12 - 18 Ene & Inicialización de repositorio, Set Up Docker, Frontend/Backend y bases de datos. Diagramas UML. \\
+        \multirow{4}{*}{\textbf{Enero}} 
+        & 5 - 11 Ene & Inicialización de repositorio, Set Up Docker, Frontend/Backend y bases de datos. Diagramas UML. \\
+        & 12 - 18 Ene & Set Up Despliegue Continuo, Tests, Metodología Git y Mock-ups UI. \\
         \cline{2-3}
-        & 19 - 25 Ene & Set Up Despliegue Continuo, Tests, Metodología Git y Mock-ups UI. \\
+        & 19 - 25 Ene & Desarrollo de Pantalla de Inicio  \\
         \cline{2-3}
-        & 26 - 1 Feb & Desarrollo de Pantalla de Inicio y Login/Registro. \\
+        & 26 - 1 Feb & Desarrollo de Pantalla de Login/Registro y Listado de Salas. \\
         \hline
         \multirow{4}{*}{\textbf{Febrero}} 
-        & 2 - 8 Feb & Pantalla de Listado de Salas. \\
+        & 2 - 8 Feb &  Pantalla de Usuario (Editar) y Sala \\
         \cline{2-3}
-        & 9 - 15 Feb & Pantalla de Usuario (Editar), Sistema de Amistad y Pantalla de Sala. \\
+        & 9 - 15 Feb &, Sistema de Amistad y funcionalidades avanzadas  de Salas. \\
         \cline{2-3}
-        & 16 - 22 Feb & Funcionalidad invitar usuario, Pantalla Partida Prueba y Chat de Partida. \\
+        & 16 - 22 Feb & Pantalla Partida Prueba y Chat de Partida. \\
         \cline{2-3}
         & 23 - 1 Mar & Sistema de Barajas/Cartas, Inspección de roles y Flujo de estados/turnos. \\
         \hline
         \multirow{4}{*}{\textbf{Marzo}} 
-        & 2 - 8 Mar & Accionar cartas, Temporizador, UI extra de partida y Acciones Simples. \\
+        & 2 - 8 Mar & Set up Inicio de Partida y Acciones Simples. \\
         \cline{2-3}
-        & 9 - 15 Mar & Set up inicio partida, Fin de Era/Partida y Condiciones finales. \\
+        & 9 - 15 Mar & Fin de Era/Partida y Condiciones finales. \\
         \cline{2-3}
-        & 16 - 22 Mar & Implementación de Acciones Complejas 1. \\
+        & 16 - 22 Mar & Accionar cartas y UI extra de partida. \\
         \cline{2-3}
-        & 23 - 29 Mar & Implementación de Acciones Complejas 2 y Pantalla de Ganador. \\
+        & 23 - 29 Mar & Implementación de Acciones Complejas 1. \\
         \hline
-        \multirow{4}{*}{\textbf{Abril}} 
-        & 30 - 5 Abr & Mover cartas (\textit{Drag \& Drop}) y Animaciones de cartas. \\
+        \multirow{5}{*}{\textbf{Abril}} 
+        & 30 - 5 Abr & Implementación de Acciones Complejas 2 y Pantalla de Ganador. \\
         \cline{2-3}
-        & 6 - 12 Abr & Test Lógica de Juego 1, Test Sala y Test Usuarios. \\
+        & 6 - 12 Abr & Mover cartas (\textit{Drag \& Drop}) y Animaciones de cartas. \\
         \cline{2-3}
-        & 13 - 19 Abr & Test Lógica de Juego 2, Rediseño estético final. \\
+        & 13 - 19 Abr & Test Lógica de Juego 1 y Test Sala. \\
         \cline{2-3}
-        & 20 - 3 May & Refactorización general y solución de errores (\textit{Bugfixing}). \\
+        & 20 - 26 May & Test Lógica de Juego 2, Test Usuarios Rediseño estético final. \\
+        \cline{2-3}
+        & 27 - 3 May & Refactorización general y solución de errores (\textit{Bugfixing}). \\
         \hline
         \multirow{2}{*}{\textbf{Mayo}} 
         & 4 - 10 May & Pruebas finales e integración completa. \\

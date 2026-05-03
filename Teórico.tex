@@ -10,9 +10,7 @@ En este capítulo presenta el estado del arte y el marco tecnológico que susten
 
 \section{Análisis de soluciones existentes y estado del arte}
 
-En la actualidad existen dos acercamientos a la hora de digitalizar un juego de mesa contemporáneo como lo es \textit{King and Peasant}. Por un lado, tenemos el ejemplo de \textit{Tabletop Simulator} (véase la Figura \ref{fig:tabletop}), que se basa en un entorno de simulación física operando como un "cajón de arena" (\textit{sandbox}) \cite{woods_eurogames}. El cumplimiento de las reglas se delega íntegramente a los usuarios, careciendo de una validación lógica que incrementa la carga cognitiva del usuario y ralentiza el flujo de la partida.
-
-Por otro lado, se encuentra \textit{Board Game Arena} (véase la Figura \ref{fig:bga}), que está basado en un motor de validación de estados. En este modelo el cumplimiento de las reglas y las transiciones de estado se delegan al sistema, actuando así como un árbitro imparcial dentro de la partida garantizando la integridad de las mecánicas \cite{elias_characteristics}. El presente TFG se alinea con este segundo enfoque, ya que lo que se busca es crear un motor de reglas estricto que ofrezca una experiencia de juego automatizada, accesible desde el navegador y libre de la fricción que suponen los simuladores tridimensionales
+En la actualidad existen dos acercamientos a la hora de digitalizar un juego de mesa contemporáneo como lo es \textit{King and Peasant}. Por un lado, tenemos el ejemplo de \textit{Tabletop Simulator} (véase la Figura \ref{fig:tabletop}), que se basa en un entorno de simulación física operando como un ''cajón de aren'' (\textit{sandbox}) \cite{woods_eurogames}. El cumplimiento de las reglas se delega íntegramente a los usuarios, careciendo de una validación lógica que incrementa la carga cognitiva del usuario y ralentiza el flujo de la partida.
 
 \begin{figure}[H]
     \centering
@@ -20,6 +18,8 @@ Por otro lado, se encuentra \textit{Board Game Arena} (véase la Figura \ref{fig
     \caption{Interfaz de \textit{Tabletop Simulator}, basada en la simulación física tridimensional sin validación de reglas.}
     \label{fig:tabletop}
 \end{figure}
+
+Por otro lado, se encuentra \textit{Board Game Arena} (véase la Figura \ref{fig:bga}), que está basado en un motor de validación de estados. En este modelo el cumplimiento de las reglas y las transiciones de estado se delegan al sistema, actuando así como un árbitro imparcial dentro de la partida garantizando la integridad de las mecánicas \cite{elias_characteristics}. El presente TFG se alinea con este segundo enfoque, ya que lo que se busca es crear un motor de reglas estricto que ofrezca una experiencia de juego automatizada, accesible desde el navegador y libre de la fricción que suponen los simuladores tridimensionales
 
 \begin{figure}[H]
     \centering
@@ -38,7 +38,7 @@ Como alternativa a una API REST, se decidió utilizar el protocolo \textit{WebSo
 
 El alto volumen de conexiones concurrentes que presenta un juego multijugador exige un entorno de ejecución capaz de gestionar con eficiencia el consumo elevado de recursos que se produce al mantener las conexiones abiertas en un estado de sincronización permanente. En el caso de los servidores web tradicionales, el modelo de concurrencia basado en hilos (\textit{thread-per-request}) se ve afectado por el cambio de contexto (\textit{context switching}) \cite{tilkov_node}, provocando un rápido agotamiento de la memoria y cuellos de botella. Por otro lado, la mantenibilidad del código y el uso de lenguajes unificados constituyó un factor determinante a la hora de decantarse por una arquitectura de servidor. 
 
-Por estos motivos, se adoptó \textit{Node.js}. Su arquitectura basada en un bucle de eventos (\textit{Event Loop}) procesa las solicitudes de red de forma asíncrona, evitando bloquear el hilo principal durante la espera de respuestas de la base de datos o de los clientes. Este diseño arquitectónico permite al sistema mantener activas miles de conexiones bidireccionales de manera simultánea con un consumo residual de recursos. Además, la capacidad de usar lenguajes isomórficos reduce la sobrecarga cognitiva del equipo de desarrollo y permite la compartición directa de módulos lógicos entre cliente y servidor \cite{cantelon_node}.
+Por estos motivos, se adoptó \textit{Node.js}. Su arquitectura basada en un bucle de eventos (\textit{Event Loop}) procesa las solicitudes de red de forma asíncrona, evitando bloquear el hilo principal durante la espera de respuestas de la base de datos o de los clientes. Este diseño arquitectónico permite al sistema mantener activas miles de conexiones bidireccionales de manera simultánea con un consumo residual de recursos. Sumado a las ventajas arquitectónicas de emplear un lenguaje isomórfico, la elección de esta pila tecnológica se sustenta fuertemente en la experiencia previa del equipo de desarrollo. Contar con un conocimiento previo de este entorno reduce de forma drástica la curva de aprendizaje, minimiza la sobrecarga cognitiva y supone una ventaja estratégica para agilizar el ciclo de implementación del proyecto.
 
 \section{Tecnologías de Frontend Reactividad de Interfaz}
 
