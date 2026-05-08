@@ -6,35 +6,58 @@ The good parts of a book may be only something a writer is lucky enough to overh
 \end{quotation}
 
 \begin{abstract}
-Resumen de lo que va a ocurrir en el capítulo. ¿Cuál es el objetivo que tenemos con este capítulo?
+En este capítulo se presenta el estudio económico detallado para el desarrollo del proyecto \textit{King and Peasant}. El objetivo es cuantificar el valor real del producto en el mercado actual, desglosando y justificando de manera analítica los costes directos de personal, la amortización del material informático empleado y los costes indirectos derivados de la operativa técnica.
 \end{abstract}
 
 \section{Resumen de costes del proyecto}
+
+En el presente capítulo se detalla el presupuesto económico estimado para el desarrollo de este TFG. Para el cálculo de los costes de personal, se ha tomado como referencia la guía salarial del sector tecnológico en España editada por \textit{Manfred} para el año 2026 \cite{manfred2026}, adaptando los rangos salariales a perfiles de nivel de entrada (\textit{Junior}).
+
+A continuación, en la Tabla \ref{tabla:resumen_costes}, se presenta el desglose general de los costes del proyecto, divididos en personal, material e indirectos.
 
 \begin{table*}[h!]
 	\centering
 	\begin{coolTable}{ll}{2}
 {Resumen del proyecto}
-	\textbf{Costes de personal}&5.045 \euro\\
-	Sueldo neto&2.030 \euro\\
-	Impuestos&1.000 \euro\\
-	Costes sociales&2.015 \euro\\
-	\textbf{Costes materiales}&560 \euro\\
-	\textbf{Costes indirectos}&450 \euro\\
+	\textbf{Costes de personal}& 11.266,67 \euro\\
+	Sueldo bruto& 8.666,67 \euro\\
+	Costes sociales& 2.600,00 \euro\\
+	\textbf{Costes materiales}& 66,67 \euro\\
+	\textbf{Costes indirectos}& 1.133,33 \euro\\
 	\midrule
-	\textbf{TOTAL}&8.000 \euro\\
+	\textbf{TOTAL}&12.466,67 \euro\\
 	\end{coolTable}
 	\caption{Tabla resumen de costes}
+	\label{tabla:resumen_costes}
 \end{table*}
 
 \section{Costes de personal}
 
-Ya hablaremos de esto
+El equipo de desarrollo está compuesto por dos integrantes, quienes han de dedicar un esfuerzo individual de 300 horas, lo que supone un esfuerzo conjunto de 600 horas en total. Para realizar una estimación salarial precisa y alineada con la metodología de trabajo definida en capítulos anteriores, se ha desglosado este tiempo asumiendo los diferentes roles técnicos que el proyecto requirió.
+
+\textit{Nota metodológica:} Aunque el proyecto fue ejecutado de forma equitativa por los dos autores, la asignación y división del tiempo en distintos perfiles permite presupuestar de forma rigurosa el valor de mercado de las diferentes actividades desarrolladas (gestión, programación y pruebas).
+
+Tomando como base una jornada laboral anual de 1.800 horas y extrapolando los salarios brutos anuales para perfiles \textit{Junior} a partir de la guía \textit{Manfred} (2026), se establecen los siguientes costes por hora:
+\begin{itemize}
+    \item \textbf{Desarrollador Full-Stack Junior (65\% del tiempo):} 390 horas. Salario base de 25.000 \euro/año (13,89 \euro/hora). Realiza tareas como la codificación de la interfaz, el servidor lógico y la integración de bases de datos.
+    \item \textbf{Tech Lead Junior (25\% del tiempo):} 150 horas. Salario base estimado de 30.000 \euro/año (16,67 \euro/hora). Realiza tareas como el diseño de la arquitectura del ecosistema, la toma de decisiones tecnológicas, la gestión del proyecto mediante tableros ágiles y la elaboración de la documentación técnica.
+    \item \textbf{QA Engineer Junior (10\% del tiempo):} 60 horas. Salario base de 22.500 \euro/año (12,50 \euro/hora). Realiza tareas como la automatización y ejecución de la batería de pruebas de integración y componentes.
+\end{itemize}
+
+El salario bruto total derivado de estas horas asciende a 8.666,67 \euro. A esta cantidad se le han añadido los costes sociales obligatorios, estimados en un 30\% del salario bruto (2.600,00 \euro), lo que sitúa el coste de personal total en \textbf{11.266,67 \euro}.
 
 \section{Costes materiales}
 
-Y de esto también. Ver Sección \ref{sec:arquitectura}.
+Los costes materiales del proyecto se reducen al equipo informático utilizado para el desarrollo y la redacción de la memoria, dado que no se ha incurrido en gastos externos de adquisición de dominios o alojamiento web (\textit{hosting}) de pago.
+
+El \textit{hardware} empleado consiste en dos ordenadores portátiles, con un precio de adquisición estimado de 800 \euro{} cada uno (1.600 \euro{} en total). Siguiendo las directrices de la Agencia Tributaria, los equipos informáticos se amortizan legalmente a razón de un 25\% anual, lo que equivale a una depreciación global de 400 \euro{} al año por ambos equipos.
+
+Dado que la dedicación al proyecto ha sido de 300 horas por persona frente a las 1.800 horas de una jornada anual (es decir, una sexta parte del tiempo laboral del año), la amortización imputable al proyecto se calcula dividiendo la amortización anual entre seis. Por consiguiente, el coste material imputado asciende a \textbf{66,67 \euro}.
 
 \section{Costes indirectos}
 
-Y esto es una fiesta
+Los costes indirectos engloban aquellos gastos estructurales y operativos necesarios para la viabilidad del proyecto que son de difícil imputación individualizada, tales como el consumo eléctrico o la conectividad a internet. 
+
+Para este cálculo, se ha aplicado un porcentaje de estimación estándar del 10\% sobre la suma total de los costes directos previamente expuestos (personal y materiales). 
+
+Tomando como base de cálculo la cifra de 11.333,34 \euro{} (11.266,67 \euro{} + 66,67 \euro), la aplicación de dicho 10\% devuelve un coste indirecto total de \textbf{1.133,33 \euro}, conformando así el presupuesto íntegro y definitivo del proyecto.
