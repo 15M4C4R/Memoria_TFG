@@ -8,6 +8,127 @@ The good parts of a book may be only something a writer is lucky enough to overh
 En este capítulo se expone la planificación temporal del proyecto, estructurada mediante la metodología ágil definida previamente. Se detalla el cronograma de ejecución a través de hitos mensuales y \textit{Sprints} semanales, abarcando desde la configuración inicial de la arquitectura hasta el despliegue final del sistema. Asimismo, se documentan las desviaciones surgidas durante el ciclo de vida del desarrollo y se analizan las medidas correctivas adoptadas por el equipo para garantizar el cumplimiento de los plazos.
 \end{abstract}
 
+\section{Gestión del Alcance}
+
+La gestión del alcance constituye el primer pilar de la fase de planificación definida en la metodología del proyecto. Su objetivo es delimitar con precisión qué funcionalidades se van a implementar y cuáles quedan excluidas, asegurando que el desarrollo se mantenga alineado con los recursos y el tiempo disponibles.
+
+\subsection{Recopilación de Requisitos}
+
+La fase de análisis comienza identificando el contrato del sistema, estableciendo qué debe hacer la aplicación, bajo qué restricciones operará y cuáles son las leyes del dominio del juego.
+
+\subsubsection{Actores del sistema}
+
+Para el desarrollo de \textit{King and Peasant}, el proceso comienza identificando las necesidades del sistema, estableciendo
+qué debe hacer la aplicación (requisitos funcionales) y bajo qué restricciones de calidad, rendimiento y seguridad debe operar (requisitos no funcionales). Se definen dos perfiles de interacción: el \textbf{Usuario No Autenticado}, que accede a funciones de registro, y el \textbf{Jugador}, que gestiona la sesión y las mecánicas de juego: 
+
+\begin{itemize}
+    \item \textbf{Usuario No Autenticado (Invitado):} Entidad que interactúa con las capas públicas del sistema, con el único objetivo de registrarse o autenticarse.
+    \item \textbf{Jugador (Usuario Registrado):} Actor principal que posee una sesión activa y tiene acceso a la totalidad de las mecánicas del juego y módulos sociales.
+\end{itemize}
+
+\subsubsection{Requisitos Funcionales (RF)}
+
+Las características operativas que el sistema debe satisfacer se estructuran en los siguientes requisitos funcionales principales:
+\begin{itemize}
+    \item \textbf{RF-01. Gestión de Identidad:} El sistema debe permitir el registro de nuevos usuarios, el inicio de sesión seguro y la gestión de la información del perfil del jugador.
+    \item \textbf{RF-02. Ecosistema Social:} El sistema debe proveer un mecanismo para gestionar peticiones de amistad entre usuarios y ofrecer un chat de comunicación en tiempo real durante las partidas.
+    \item \textbf{RF-03. Infraestructura de \textit{Lobbies}:} El sistema debe permitir a un usuario autenticado crear salas de juego, tanto de acceso público como privado, y gestionar la espera de oponentes.
+    \item \textbf{RF-04. Motor de Juego Asimétrico:} El sistema debe calcular la lógica de cartas, gestionar los turnos asíncronos y sincronizar bidireccionalmente el estado del tablero entre los jugadores conectados.
+\end{itemize}
+
+\subsubsection{Requisitos No Funcionales (RNF)}
+Dada la naturaleza interactiva del proyecto, los requisitos no funcionales resultan críticos para la viabilidad. Se han definido las siguientes restricciones técnicas:
+\begin{itemize}
+    \item \textbf{RNF-01. Arquitectura y Stack:} El cliente debe construirse como una \textit{Single Page Application} (SPA) con \textit{React}. El servidor utilizará \textit{Node.js} bajo una arquitectura modular. El código fuente se organizará estrictamente como un Monorepositorio mediante \textit{npm workspaces}.
+    \item \textbf{RNF-02. Rendimiento y Concurrencia:} El sistema exige latencia casi nula. Las acciones deben procesarse en tiempo real utilizando \textit{WebSockets} (\textit{Socket.io}) y apoyándose en \textit{Redis} para el estado volátil. 
+    \item \textbf{RNF-03. Seguridad:} La autenticación se basará en \textit{JSON Web Tokens} (JWT) y las credenciales se protegerán mediante algoritmos de \textit{hashing} (\texttt{bcryptjs}).
+    \item \textbf{RNF-04. Fiabilidad, Despliegue y QA:} Todo el entorno debe estar contenedorizado con \textit{Docker} y alojado en un servicio en la nube. Se requiere un flujo automatizado mediante \textit{GitHub Actions} y calidad de código garantizada por pruebas unitarias (\textit{Jest} y \textit{Vitest}).
+\end{itemize}
+
+\subsubsection{Reglas de Negocio (RN)}
+\textit{King and Peasant} es un juego asimétrico cuyas mecánicas imponen un conjunto de restricciones estrictas ajenas al software (las reglas del manual). Estas reglas condicionan directamente la validación del servidor:
+\begin{itemize}
+    \item \textbf{RN-01. Estructura en Eras:} La resolución del juego se divide en ''Eras'', venciendo quien gane 2 Eras. El sistema debe orquestar el reseteo del tablero sin destruir el \textit{Lobby}.
+    \item \textbf{RN-02. Capacidad de Tablero Asimétrica:} El Rey tiene una restricción física máxima de 3 cartas de Guardia, mientras que el Campesino no tiene límite de Rebeldes.
+    \item \textbf{RN-03. Restricción de Infiltración:} La carta objetivo del Campesino debe estar desplegada boca abajo en el \textit{Town}. El \textit{Game Service} debe rechazar peticiones desde la mano.
+    \item \textbf{RN-04. Flujo Asimétrico:} El Rey finaliza su turno obligatoriamente robando una carta; para el Campesino es voluntario. El controlador debe inyectar acciones automáticas solo para el Rey.
+    \item \textbf{RN-05. Atomicidad de Victoria:} Las condiciones para ganar son asimétricas. El servidor debe auditar el estado tras cada modificación, interrumpiendo cualquier evento si se dispara el \textit{trigger} de victoria.
+\end{itemize}
+
+\subsection{Definición del Alcance}
+
+Una vez consolidado el catálogo de requisitos, se procede a filtrar y delimitar las fronteras del sistema. Este proceso de cribado es fundamental para centrar los esfuerzos técnicos en el núcleo del proyecto, asegurando que el desarrollo sea viable dentro de los plazos y recursos del TFG. A continuación se detallan los elementos que componen el alcance y aquellos que quedan explícitamente excluidos para garantizar la calidad del Producto Mínimo Viable (MVP).
+
+\subsubsection{Dentro del alcance}
+El desarrollo abarca el ciclo de vida completo de la aplicación web, integrando los siguientes pilares tecnológicos y funcionales:
+\begin{itemize}
+    \item \textbf{Arquitectura de comunicación:} Implementación de un servidor capaz de gestionar sesiones concurrentes y comunicación bidireccional en tiempo real mediante el protocolo \textit{WebSockets}.
+    \item \textbf{Motor de reglas digital:} Traducción del reglamento físico de \textit{King and Peasant} a una lógica de negocio automatizada que valida los estados de la partida y previene jugadas ilegales.
+    \item \textbf{Gestión de usuarios y persistencia:} Diseño de la capa de datos para perfiles, sistemas de amistad e histórico de enfrentamientos asimétricos.
+    \item \textbf{Despliegue y contenedores:} Orquestación del entorno mediante \textit{Docker} para asegurar la portabilidad, la paridad de entornos y la accesibilidad pública del sistema.
+\end{itemize}
+
+\subsubsection{Fuera del alcance}
+Con el fin de priorizar la robustez del motor de juego y la arquitectura de red, se excluyen los siguientes aspectos del desarrollo actual:
+\begin{itemize}
+    \item \textbf{Diseño original de mecánicas:} Se delega el balanceo y la autoría del juego en el reglamento físico creado por nPipsGames, evitando la inversión de tiempo en diseño lúdico.
+    \item \textbf{Desarrollo móvil nativo:} El sistema se limita exclusivamente al entorno web (navegador), sin contemplar aplicaciones específicas para iOS o Android.
+    \item \textbf{Monetización y economía virtual:} Se descarta la implementación de pasarelas de pago, divisas internas o sistemas de progresión comercial.
+    \item \textbf{Sistema competitivo y emparejamiento:} No se contemplan clasificaciones globales (Elo) ni algoritmos de \textit{matchmaking} automático, delegando la creación de partidas en el sistema de \textit{Lobbies}.
+    \item \textbf{Inteligencia Artificial (PvE):} El proyecto se enfoca estrictamente en la interacción entre humanos (PvP), por lo que no se desarrollan agentes autónomos o \textit{bots}.
+\end{itemize}
+
+\subsection{Estructura de Desglose del Trabajo (EDT)}
+
+Para transformar el alcance del proyecto en componentes planificables y accionables, se define la Estructura de Desglose del Trabajo (EDT). Esta herramienta jerárquica descompone el proyecto en paquetes de trabajo manejables, los cuales alimentan directamente la pila de producto (\textit{Product Backlog}) utilizada en la metodología ágil para su posterior estimación y ejecución semanal.
+
+Con base en los requisitos y el alcance previamente delimitado, el esfuerzo técnico del proyecto se estructura en cuatro grandes paquetes de trabajo:
+
+\begin{itemize}
+    \item \textbf{Paquete 1: Gestión e Infraestructura}
+    \begin{itemize}
+        \item 1.1. Orquestación del monorepositorio y espacios de trabajo (\textit{workspaces}).
+        \item 1.2. Contenedorización de bases de datos y servicios mediante \textit{Docker}.
+        \item 1.3. Configuración de los flujos de Integración y Despliegue Continuo (CI/CD).
+        \item 1.4. Definición de la metodología de control de versiones y elaboración de la memoria técnica.
+    \end{itemize}
+
+    \item \textbf{Paquete 2: Capa de Datos y Seguridad}
+    \begin{itemize}
+        \item 2.1. Modelado de la arquitectura de la información (Diagramas UML y Entidad-Relación).
+        \item 2.2. Implementación de esquemas y migraciones mediante \textit{Prisma ORM}.
+        \item 2.3. Desarrollo del sistema de autenticación segura (JWT y \textit{bcrypt}).
+        \item 2.4. Construcción de interfaces reactivas para el Registro, Inicio de Sesión y gestión del Perfil.
+    \end{itemize}
+
+    \item \textbf{Paquete 3: Ecosistema Social y Comunicación}
+    \begin{itemize}
+        \item 3.1. Configuración del servidor de \textit{WebSockets} (\textit{Socket.io}) para eventos asíncronos.
+        \item 3.2. Lógica e interfaz del sistema de amistades (envío, aceptación y rechazo de peticiones).
+        \item 3.3. Desarrollo de la infraestructura de salas de espera (\textit{Lobbies}) públicas y privadas.
+        \item 3.4. Implementación del canal de mensajería (chat) en tiempo real para las partidas.
+    \end{itemize}
+
+    \item \textbf{Paquete 4: Motor de Juego Asimétrico (\textit{Core})}
+    \begin{itemize}
+        \item 4.1. Gestión del estado en memoria (\textit{Redis}) y flujos transaccionales de inicio/fin de partida.
+        \item 4.2. Implementación de la lógica asimétrica de cartas, inspección de roles y transiciones de Era.
+        \item 4.3. Desarrollo del sistema de interrupciones y acciones asíncronas (\textit{Pending Actions}).
+        \item 4.4. Integración del patrón DTO para la censura de información confidencial en la red.
+        \item 4.5. Construcción del tablero interactivo (sistema \textit{Drag \& Drop} y animaciones de estado).
+        \item 4.6. Ejecución de baterías de pruebas, refactorización y estabilización de condiciones de victoria.
+    \end{itemize}
+\end{itemize}
+
+Para facilitar la comprensión visual de esta jerarquía operativa, la Figura \ref{fig:edt_diagrama} ilustra el mapa conceptual de los paquetes funcionales desarrollados por el equipo.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/diagrama_edt.png}
+    \caption{Estructura de Desglose del Trabajo (EDT) del proyecto \textit{King and Peasant}.}
+    \label{fig:edt_diagrama}
+\end{figure}
+
 \section{Gestión de recursos}
 
 Para garantizar la correcta ejecución del proyecto \textit{King and Peasant}, se ha llevado a cabo una planificación detallada de los elementos y herramientas necesarios para su desarrollo. A continuación, se describen los recursos humanos y físicos que han intervenido en el ciclo de vida de la aplicación.
