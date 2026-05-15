@@ -18,8 +18,7 @@ La fase de análisis comienza identificando el contrato del sistema, establecien
 
 \subsubsection{Actores del sistema}
 
-Para el desarrollo de \textit{King and Peasant}, el proceso comienza identificando las necesidades del sistema, estableciendo
-qué debe hacer la aplicación (requisitos funcionales) y bajo qué restricciones de calidad, rendimiento y seguridad debe operar (requisitos no funcionales). Se definen dos perfiles de interacción: el \textbf{Usuario No Autenticado}, que accede a funciones de registro, y el \textbf{Jugador}, que gestiona la sesión y las mecánicas de juego: 
+Para el desarrollo de \textit{King and Peasant}, se definen dos perfiles de interacción principales en base a las necesidades del sistema: el \textbf{Usuario No Autenticado}, que accede a las funciones públicas, y el \textbf{Jugador}, que gestiona la sesión y las mecánicas de juego: 
 
 \begin{itemize}
     \item \textbf{Usuario No Autenticado (Invitado):} Entidad que interactúa con las capas públicas del sistema, con el único objetivo de registrarse o autenticarse.
@@ -48,7 +47,7 @@ Dada la naturaleza interactiva del proyecto, los requisitos no funcionales resul
 \subsubsection{Reglas de Negocio (RN)}
 \textit{King and Peasant} es un juego asimétrico cuyas mecánicas imponen un conjunto de restricciones estrictas ajenas al software (las reglas del manual). Estas reglas condicionan directamente la validación del servidor:
 \begin{itemize}
-    \item \textbf{RN-01. Estructura en Eras:} La resolución del juego se divide en ''Eras'', venciendo quien gane 2 Eras. El sistema debe orquestar el reseteo del tablero sin destruir el \textit{Lobby}.
+    \item \textbf{RN-01. Estructura en Eras:} La resolución del juego se divide en ``Eras'', venciendo quien gane 2 Eras. El sistema debe orquestar el reseteo del tablero sin destruir el \textit{Lobby}.
     \item \textbf{RN-02. Capacidad de Tablero Asimétrica:} El Rey tiene una restricción física máxima de 3 cartas de Guardia, mientras que el Campesino no tiene límite de Rebeldes.
     \item \textbf{RN-03. Restricción de Infiltración:} La carta objetivo del Campesino debe estar desplegada boca abajo en el \textit{Town}. El \textit{Game Service} debe rechazar peticiones desde la mano.
     \item \textbf{RN-04. Flujo Asimétrico:} El Rey finaliza su turno obligatoriamente robando una carta; para el Campesino es voluntario. El controlador debe inyectar acciones automáticas solo para el Rey.
@@ -80,86 +79,117 @@ Con el fin de priorizar la robustez del motor de juego y la arquitectura de red,
 
 \subsection{Estructura de Desglose del Trabajo (EDT)}
 
-Para transformar el alcance del proyecto en componentes planificables y accionables, se define la Estructura de Desglose del Trabajo (EDT). Esta herramienta jerárquica descompone el proyecto en paquetes de trabajo manejables, los cuales alimentan directamente la pila de producto (\textit{Product Backlog}) utilizada en la metodología ágil para su posterior estimación y ejecución semanal.
+Para transformar el alcance del proyecto en componentes planificables y accionables, se define la Estructura de Desglose del Trabajo (EDT). Esta herramienta jerárquica descompone el sistema en paquetes de trabajo basados en la planificación técnica definitiva, los cuales alimentan directamente la pila de producto (\textit{Product Backlog}) para su ejecución.
 
-Con base en los requisitos y el alcance previamente delimitado, el esfuerzo técnico del proyecto se estructura en cuatro grandes paquetes de trabajo:
+Con base en la arquitectura y los requisitos, el esfuerzo técnico se estructura en los siguientes niveles operativos:
+
+ \begin{itemize}
+
+\item \textbf{Paquete 1: Gestión e Infraestructura}
 
 \begin{itemize}
-    \item \textbf{Paquete 1: Gestión e Infraestructura}
-    \begin{itemize}
-        \item 1.1. Orquestación del monorepositorio y espacios de trabajo (\textit{workspaces}).
-        \item 1.2. Contenedorización de bases de datos y servicios mediante \textit{Docker}.
-        \item 1.3. Configuración de los flujos de Integración y Despliegue Continuo (CI/CD).
-        \item 1.4. Definición de la metodología de control de versiones y elaboración de la memoria técnica.
-    \end{itemize}
 
-    \item \textbf{Paquete 2: Capa de Datos y Seguridad}
-    \begin{itemize}
-        \item 2.1. Modelado de la arquitectura de la información (Diagramas UML y Entidad-Relación).
-        \item 2.2. Implementación de esquemas y migraciones mediante \textit{Prisma ORM}.
-        \item 2.3. Desarrollo del sistema de autenticación segura (JWT y \textit{bcrypt}).
-        \item 2.4. Construcción de interfaces reactivas para el Registro, Inicio de Sesión y gestión del Perfil.
-    \end{itemize}
+\item 1.1. Orquestación del monorepositorio y espacios de trabajo (\textit{workspaces}).
 
-    \item \textbf{Paquete 3: Ecosistema Social y Comunicación}
-    \begin{itemize}
-        \item 3.1. Configuración del servidor de \textit{WebSockets} (\textit{Socket.io}) para eventos asíncronos.
-        \item 3.2. Lógica e interfaz del sistema de amistades (envío, aceptación y rechazo de peticiones).
-        \item 3.3. Desarrollo de la infraestructura de salas de espera (\textit{Lobbies}) públicas y privadas.
-        \item 3.4. Implementación del canal de mensajería (chat) en tiempo real para las partidas.
-    \end{itemize}
+\item 1.2. Contenedorización de bases de datos y servicios mediante \textit{Docker}.
 
-    \item \textbf{Paquete 4: Motor de Juego Asimétrico (\textit{Core})}
-    \begin{itemize}
-        \item 4.1. Gestión del estado en memoria (\textit{Redis}) y flujos transaccionales de inicio/fin de partida.
-        \item 4.2. Implementación de la lógica asimétrica de cartas, inspección de roles y transiciones de Era.
-        \item 4.3. Desarrollo del sistema de interrupciones y acciones asíncronas (\textit{Pending Actions}).
-        \item 4.4. Integración del patrón DTO para la censura de información confidencial en la red.
-        \item 4.5. Construcción del tablero interactivo (sistema \textit{Drag \& Drop} y animaciones de estado).
-        \item 4.6. Ejecución de baterías de pruebas, refactorización y estabilización de condiciones de victoria.
-    \end{itemize}
+\item 1.3. Configuración de los flujos de Integración y Despliegue Continuo (CI/CD).
+
+\item 1.4. Definición de la metodología de control de versiones y elaboración de la memoria técnica.
+
 \end{itemize}
 
-Para facilitar la comprensión visual de esta jerarquía operativa, la Figura \ref{fig:edt_diagrama} ilustra el mapa conceptual de los paquetes funcionales desarrollados por el equipo.
+
+\item \textbf{Paquete 2: Capa de Datos y Seguridad}
+
+\begin{itemize}
+
+\item 2.1. Modelado de la arquitectura de la información (Diagramas UML y Entidad-Relación).
+
+\item 2.2. Implementación de esquemas y migraciones mediante \textit{Prisma ORM}.
+
+\item 2.3. Desarrollo del sistema de autenticación segura (JWT y \textit{bcrypt}).
+
+\item 2.4. Construcción de interfaces reactivas para el Registro, Inicio de Sesión y gestión del Perfil.
+
+\end{itemize}
+
+
+\item \textbf{Paquete 3: Ecosistema Social y Comunicación}
+
+\begin{itemize}
+
+\item 3.1. Configuración del servidor de \textit{WebSockets} (\textit{Socket.io}) para eventos asíncronos.
+
+\item 3.2. Lógica e interfaz del sistema de amistades (envío, aceptación y rechazo de peticiones).
+
+\item 3.3. Desarrollo de la infraestructura de salas de espera (\textit{Lobbies}) públicas y privadas.
+
+\item 3.4. Implementación del canal de mensajería (chat) en tiempo real para las partidas.
+
+\end{itemize}
+
+
+\item \textbf{Paquete 4: Motor de Juego Asimétrico (\textit{Core})}
+
+\begin{itemize}
+
+\item 4.1. Gestión del estado en memoria (\textit{Redis}) y flujos transaccionales de inicio/fin de partida.
+
+\item 4.2. Implementación de la lógica asimétrica de cartas, inspección de roles y transiciones de Era.
+
+\item 4.3. Desarrollo del sistema de interrupciones y acciones asíncronas (\textit{Pending Actions}).
+
+\item 4.4. Integración del patrón DTO para la censura de información confidencial en la red.
+
+\item 4.5. Construcción del tablero interactivo (sistema \textit{Drag \& Drop} y animaciones de estado).
+
+\item 4.6. Ejecución de baterías de pruebas, refactorización y estabilización de condiciones de victoria.
+
+\end{itemize}
+
+\end{itemize} 
+
+Para facilitar la comprensión visual de esta jerarquía operativa, la Figura \ref{fig:edt_diagrama} ilustra el desglose de tareas y su distribución por módulos.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/diagrama_edt.png}
-    \caption{Estructura de Desglose del Trabajo (EDT) del proyecto \textit{King and Peasant}.}
+    \includegraphics[width=1\textwidth]{figures/diagrama_edt.png}
+    \caption{Diagrama de la Estructura de Desglose del Trabajo (EDT) del proyecto.}
     \label{fig:edt_diagrama}
 \end{figure}
 
 \section{Gestión de recursos}
 
-Para garantizar la correcta ejecución del proyecto \textit{King and Peasant}, se ha llevado a cabo una planificación detallada de los elementos y herramientas necesarios para su desarrollo. A continuación, se describen los recursos humanos y físicos que han intervenido en el ciclo de vida de la aplicación.
+Para garantizar la correcta ejecución del proyecto \textit{King and Peasant}, se lleva a cabo una planificación detallada de los elementos y herramientas necesarios para su desarrollo. A continuación, se describen los recursos humanos y físicos que intervienen en el ciclo de vida de la aplicación.
 
 \subsection{Recursos humanos}
 
-El equipo de desarrollo está formado por dos integrantes, Guillermo e Ismael, operando bajo un modelo organizativo estrictamente horizontal. Este enfoque se ha fundamentado en el consenso, la comunicación continua y una responsabilidad compartida frente a todas las fases del proyecto. La carga de trabajo conjunta asciende a 600 horas (300 horas por persona).
+El equipo de desarrollo está formado por dos integrantes, Guillermo e Ismael, operando bajo un modelo organizativo estrictamente horizontal. Este enfoque se fundamenta en el consenso, la comunicación continua y una responsabilidad compartida frente a todas las fases del proyecto. La carga de trabajo conjunta asciende a 600 horas (300 horas por persona).
 
-Para cubrir todas las áreas técnicas de un ciclo de vida de \textit{software} completo, y para fundamentar el cálculo del presupuesto detallado en el capítulo de costes, el equipo ha asumido y alternado los siguientes roles:
+Para cubrir todas las áreas técnicas de un ciclo de vida de software completo, y para fundamentar el cálculo del presupuesto detallado en el capítulo de costes, el equipo asume y alterna los siguientes roles:
 
 \begin{itemize}
-    \item \textbf{Desarrollador Full-Stack Junior (65\% del tiempo):} Abarcando la mayor parte del esfuerzo temporal, este rol se ha centrado en la implementación práctica del sistema, incluyendo el desarrollo de las pantallas e interfaces, la programación de la lógica del servidor y la integración con las bases de datos.
-    \item \textbf{Tech Lead Junior (25\% del tiempo):} Perfil dedicado al diseño de la arquitectura general, la gestión del tablero de tareas, la redacción de la presente memoria técnica y la toma de decisiones tecnológicas. Dichas decisiones se han guiado en todo momento por el análisis analítico conjunto del equipo y la evaluación técnica de las necesidades del sistema.
-    \item \textbf{QA Engineer Junior (10\% del tiempo):} Orientado a asegurar la estabilidad del producto final. Cabe destacar que las pruebas de calidad no se han realizado de manera diluida o individual para cada pequeña tarea de desarrollo; por el contrario, el calendario del proyecto ha estipulado un período de pruebas específico y consolidado donde este perfil ha tomado el protagonismo para validar las funcionalidades implementadas.
+    \item \textbf{Desarrollador Full-Stack Junior (65 \% del tiempo):} Abarcando la mayor parte del esfuerzo temporal, este rol se centra en la implementación práctica del sistema, incluyendo el desarrollo de las pantallas e interfaces, la programación de la lógica del servidor y la integración con las bases de datos.
+    \item \textbf{Tech Lead Junior (25 \% del tiempo):} Perfil dedicado al diseño de la arquitectura general, la gestión del tablero de tareas, la redacción de la presente memoria técnica y la toma de decisiones tecnológicas. Dichas decisiones se guían en todo momento por el análisis conjunto del equipo y la evaluación técnica de las necesidades del sistema.
+    \item \textbf{QA Engineer Junior (10 \% del tiempo):} Orientado a asegurar la estabilidad del producto final. Cabe destacar que las pruebas de calidad no se realizan de manera diluida o individual para cada pequeña tarea de desarrollo; por el contrario, el calendario del proyecto estipula un período de pruebas específico y consolidado donde este perfil toma el protagonismo para validar las funcionalidades implementadas.
 \end{itemize}
 
 \subsection{Recursos físicos}
 
-La infraestructura de \textit{hardware} requerida para la programación, la ejecución de entornos locales y la propia redacción de la memoria se ha cubierto de manera íntegra con el equipamiento de los autores.
+La infraestructura de hardware requerida para la programación, la ejecución de entornos locales y la propia redacción de la memoria se cubre de manera íntegra con el equipamiento de los autores.
 
-En concreto, los recursos físicos se limitan a dos ordenadores portátiles. Dadas las características tecnológicas del proyecto, estos dispositivos han contado con la capacidad de procesamiento y memoria suficientes para levantar los servidores en local, gestionar la virtualización de los servicios y ejecutar los clientes concurrentes sin interrupciones que afectaran a la productividad.
+En concreto, los recursos físicos se limitan a dos ordenadores portátiles. Dadas las características tecnológicas del proyecto, estos dispositivos cuentan con la capacidad de procesamiento y memoria suficientes para levantar los servidores en local, gestionar la virtualización de los servicios y ejecutar los clientes concurrentes sin interrupciones que afecten a la productividad.
 
-\section{Gestión del Cronograma}
+\section{Plan de Gestión del Cronograma}
 
 Esta sección define el marco de referencia para la planificación, desarrollo y control del tiempo a lo largo del proyecto, estableciendo los mecanismos necesarios para garantizar que los hitos se alcancen en las fechas previstas. Tal y como establece la metodología de gestión, este proceso se articula partiendo de un calendario global, seguido de una estimación y priorización de tareas, para finalizar con la asignación de recursos.
 
 \subsection{Propósito y Alcance}
-El propósito de este apartado es formalizar los criterios y procedimientos que el equipo seguirá para gestionar el calendario del proyecto. Esto incluye desde la descomposición inicial de tareas hasta el control de desviaciones y la generación de informes de progreso.
+El propósito de este apartado es formalizar los criterios y procedimientos que el equipo sigue para gestionar el calendario del proyecto. Esto incluye desde la descomposición inicial de tareas hasta el control de desviaciones y la generación de informes de progreso.
 
 \subsection{Metodología y Modelo de Programación}
-Para la gestión del tiempo se ha optado por un \textbf{enfoque Ágil}, estructurado de la siguiente forma:
+Para la gestión del tiempo se opta por un \textbf{enfoque Ágil}, estructurado de la siguiente forma:
 \begin{itemize}
     \item \textbf{Ciclos de trabajo:} Sprints de una semana de duración.
     \item \textbf{Asignación:} Tareas independientes asignadas a cada miembro del equipo para maximizar el paralelismo.
@@ -167,14 +197,14 @@ Para la gestión del tiempo se ha optado por un \textbf{enfoque Ágil}, estructu
 \end{itemize}
 
 \subsection{Herramientas de Gestión}
-Se han seleccionado herramientas específicas para cubrir los distintos niveles de control del tiempo:
+Se seleccionan herramientas específicas para cubrir los distintos niveles de control del tiempo:
 \begin{itemize}
     \item \textbf{Gestión operativa:} Tableros Kanban de GitHub para el seguimiento del flujo de trabajo diario.
     \item \textbf{Monitorización de esfuerzo:} Herramienta \textit{Toptracker} para el registro y medición del tiempo efectivo dedicado a cada tarea.
 \end{itemize}
 
 \subsection{Unidades de Medida y Nivel de Precisión}
-Para asegurar un control granular del progreso, se han definido las siguientes métricas:
+Para asegurar un control granular del progreso, se definen las siguientes métricas:
 \begin{itemize}
     \item \textbf{Unidad de tiempo:} Las estimaciones y registros se realizan en horas efectivas de trabajo.
     \item \textbf{Nivel de granularidad:} Las tareas de desarrollo no deben superar una estimación de 6 horas. Aquellas actividades que excedan este límite se subdividen en tareas menores para evitar cuellos de botella y mejorar la visibilidad del avance.
@@ -188,14 +218,14 @@ La responsabilidad del mantenimiento del cronograma es compartida por todo el eq
 \begin{itemize}
     \item \textbf{Frecuencia:} El estado de las tareas (Pendiente, En Progreso, Bloqueado o Finalizado) se actualiza diariamente.
     \item \textbf{Revisión:} Semanalmente se realiza un análisis del cronograma general para verificar el alineamiento con los hitos globales.
-    \item \textbf{Registro:} Cualquier cambio significativo o re-planificación queda debidamente documentado en las actas de reunión.
+    \item \textbf{Registro:} Cualquier cambio significativo o replanificación queda debidamente documentado en las actas de reunión.
 \end{itemize}
 
 \subsection{Umbrales de Control y Gestión de Desviaciones}
-Se han establecido límites de control para activar planes de contingencia ante posibles retrasos:
+Se establecen límites de control para activar planes de contingencia ante posibles retrasos:
 \begin{itemize}
     \item \textbf{Desviación Aceptable (1-2 días):} Se considera un retraso gestionable. Si la desviación persiste o se repite en sprints consecutivos, se convoca una reunión de análisis para identificar la causa raíz.
-    \item \textbf{Desviación Crítica (>3 días):} Se considera un riesgo alto para la entrega. Requiere una reunión de emergencia inmediata y la revisión integral de la planificación para ajustar el alcance o los recursos.
+    \item \textbf{Desviación Crítica ($>3$ días):} Se considera un riesgo alto para la entrega. Requiere una reunión de emergencia inmediata y la revisión integral de la planificación para ajustar el alcance o los recursos.
 \end{itemize}
 
 \subsection{Informes de Rendimiento}
@@ -219,7 +249,7 @@ El cronograma se inicia con la definición de un calendario global que abarca un
     \textbf{Fecha de fin}&15/05/2026\\ 
     \textbf{Periodicidad de las revisiones}&1 semana (Sprints)\\
     \textbf{Carga de trabajo semanal conjunta}&32 horas\\
-    \textbf{Horas totales previstas}&600 horas (300h/persona)\\
+    \textbf{Horas totales previstas}&600 horas (300 h/persona)\\
     \textbf{Horas finales}&600 horas\\ 
     \end{coolTable}
     \caption{Tabla resumen de tiempos y planificación}
@@ -227,157 +257,114 @@ El cronograma se inicia con la definición de un calendario global que abarca un
 \end{table*}
 
 \subsection{Estimación temporal y Priorización de tareas del alcance}
-Una vez fijado el calendario, se procede a la estimación y priorización del alcance. El proyecto ha sido dimensionado para una carga de trabajo total de 600 horas (300 horas por cada integrante). 
+Partiendo de los paquetes de trabajo definidos en la EDT y de las 600 horas asignadas a los recursos humanos, se procede a distribuir temporalmente estas tareas. El proyecto está dimensionado para una carga de trabajo total de 600 horas (300 horas por cada integrante). 
 
-Para la priorización, se ha seguido una estrategia basada en dependencias críticas: se prioriza el desarrollo del \textit{backend} y el núcleo lógico (\textit{Core}) del juego sobre los detalles estéticos o animaciones. Esto asegura que, en caso de desviación temporal, el proyecto cuente siempre con un Producto Mínimo Viable (MVP) funcional que cumpla con el alcance definido.
+Para la priorización, se sigue una estrategia basada en dependencias críticas: se prioriza el desarrollo del \textit{backend} y el núcleo lógico (\textit{Core}) del juego sobre los detalles estéticos o animaciones. Esto asegura que, en caso de desviación temporal, el proyecto cuente siempre con un Producto Mínimo Viable (MVP) funcional que cumpla con el alcance definido.
 
 \begin{itemize}
     \item \textbf{Enero - Arquitectura e Infraestructura:} Configuración inicial del repositorio, contenedorización de los servicios mediante \textit{Docker}, implementación del sistema de autenticación de usuarios y salas de espera (\textit{lobbies}), e inicialización del núcleo de la aplicación.
     \item \textbf{Febrero - \textit{Core} del Juego:} Desarrollo íntegro de la lógica de la partida, diseño del tablero interactivo y aseguramiento de la sincronización bidireccional en tiempo real.
     \item \textbf{Marzo - Reglas avanzadas y Refactorización:} Implementación de las mecánicas asimétricas complejas, pulido de la validación de estados en el \textit{backend} y blindaje de la seguridad de la plataforma.
-    \item \textbf{Abril - Aseguramiento de la calidad:} Además de la integración de las baterías de pruebas automatizadas, el esfuerzo técnico se centrará en refinar la experiencia de juego mediante un proceso exhaustivo de búsqueda, depuración y corrección de errores (\textit{bugs}), garantizando así la estabilidad del producto final.
+    \item \textbf{Abril - Aseguramiento de la calidad:} Además de la integración de las baterías de pruebas automatizadas, el esfuerzo técnico se centra en refinar la experiencia de juego mediante un proceso exhaustivo de búsqueda, depuración y corrección de errores (\textit{bugs}), garantizando así la estabilidad del producto final.
     \item \textbf{Mayo - Despliegue y Cierre:} Finalización de la presente memoria técnica, despliegue final del sistema y preparación para la defensa académica.
 \end{itemize}
 
-La determinación de estas fechas no ha sido arbitraria, sino que responde a un análisis de la carga lectiva y los hitos del calendario académico de la \textit{Escuela Técnica Superior de Ingeniería Informática}. Se estableció un ritmo de trabajo sostenido y diario con el objetivo de compatibilizar el desarrollo del proyecto con el resto de asignaturas del cuarto curso. Esta cadencia diaria ha sido la herramienta principal para evitar la acumulación de tareas en periodos de exámenes, permitiendo que el avance del proyecto fuera independiente de las fluctuaciones de carga de trabajo de otras materias.
+La determinación de estas fechas no es arbitraria, sino que responde a un análisis de la carga lectiva y los hitos del calendario académico de la \textit{Escuela Técnica Superior de Ingeniería Informática}. Se establece un ritmo de trabajo sostenido y diario con el objetivo de compatibilizar el desarrollo del proyecto con el resto de asignaturas del cuarto curso. Esta cadencia diaria es la herramienta principal para evitar la acumulación de tareas en periodos de exámenes, permitiendo que el avance del proyecto sea independiente de las fluctuaciones de carga de trabajo de otras materias.
 
-\section{Cronograma de iteraciones}
-Para materializar los pasos anteriores, el trabajo se fragmentó en \textit{Sprints} semanales detallados en la Tabla \ref{tab:cronograma_sprints}.
+\section{Cronograma de Iteraciones y Asignación de Tareas}
 
-\begin{table}[H]
-    \centering
-    \renewcommand{\arraystretch}{1.3}
-    \small
-    \begin{tabular}{|c|p{2.5cm}|p{10cm}|}
-        \hline
-        \textbf{Mes} & \textbf{Semana (Sprint)} & \textbf{Objetivos Técnicos Principales}  \\
-        \hline
-        \multirow{4}{*}{\textbf{Enero}} 
-        & 5 - 11 Ene & Inicialización de repositorio, Set Up Docker, Frontend/Backend y bases de datos. Diagramas UML. \\
-        \cline{2-3}
-        & 12 - 18 Ene & Set Up Despliegue Continuo, Tests, Metodología Git y Mock-ups UI. \\
-        \cline{2-3}
-        & 19 - 25 Ene & Desarrollo de Pantalla de Inicio  \\
-        \cline{2-3}
-        & 26 - 1 Feb & Desarrollo de Pantalla de Login/Registro y Listado de Salas. \\
-        \hline
-        \multirow{4}{*}{\textbf{Febrero}} 
-        & 2 - 8 Feb &  Pantalla de Usuario (Editar) y Sala \\
-        \cline{2-3}
-        & 9 - 15 Feb & Sistema de Amistad y funcionalidades avanzadas  de Salas. \\
-        \cline{2-3}
-        & 16 - 22 Feb & Pantalla Partida Prueba y Chat de Partida. \\
-        \cline{2-3}
-        & 23 - 1 Mar & Sistema de Barajas/Cartas, Inspección de roles y Flujo de estados/turnos. \\
-        \hline
-        \multirow{4}{*}{\textbf{Marzo}} 
-        & 2 - 8 Mar & Set up Inicio de Partida y Acciones Simples. \\
-        \cline{2-3}
-        & 9 - 15 Mar & Fin de Era/Partida y Condiciones finales. \\
-        \cline{2-3}
-        & 16 - 22 Mar & Accionar cartas y UI extra de partida. \\
-        \cline{2-3}
-        & 23 - 29 Mar & Implementación de Acciones Complejas 1. \\
-        \hline
-        \multirow{5}{*}{\textbf{Abril}} 
-        & 30 - 5 Abr & Implementación de Acciones Complejas 2 y Pantalla de Ganador. \\
-        \cline{2-3}
-        & 6 - 12 Abr & Mover cartas (\textit{Drag \& Drop}) y Animaciones de cartas. \\
-        \cline{2-3}
-        & 13 - 19 Abr & Test Lógica de Juego 1 y Test Sala. \\
-        \cline{2-3}
-        & 20 - 26 Abr & Test Lógica de Juego 2, Test Usuarios Rediseño estético final. \\
-        \cline{2-3}
-        & 27 - 3 May & Refactorización general y solución de errores (\textit{Bugfixing}). \\
-        \hline
-        \multirow{2}{*}{\textbf{Mayo}} 
-        & 4 - 10 May & Pruebas finales e integración completa. \\
-        \cline{2-3}
-        & 11 - 15 May & Finalización y revisión de la memoria técnica. \\
-        \hline
-    \end{tabular}
-    \caption{Cronograma inicial de tareas distribuidas por Sprints semanales.}
-    \label{tab:cronograma_sprints}
-\end{table}
+Para materializar la planificación temporal, el trabajo se fragmenta en \textit{Sprints} semanales que integran tanto los objetivos técnicos como la asignación de responsables. Esta distribución se realiza durante las reuniones de \textit{Sprint Planning}, donde los paquetes de trabajo definidos en la EDT se descomponen en tareas específicas buscando maximizar el paralelismo y asegurar que la carga de trabajo sea equitativa.
 
-\subsection{Asignación de tareas a recursos}
-Finalmente, las tareas priorizadas se asignan a los recursos humanos disponibles (los dos autores del proyecto). Esta asignación se realiza semanalmente durante la reunión de \textit{Sprint Planning}, donde las actividades descompuestas de la EDT se reparten equitativamente buscando el paralelismo. Se utiliza el tablero Kanban para visualizar dicha carga y asegurar que ninguno de los dos recursos exceda la capacidad semanal prevista, garantizando que el tiempo dedicado a la memoria y a la preparación de la defensa esté igualmente cubierto.
+Se utiliza un tablero Kanban para visualizar este flujo y garantizar que el tiempo dedicado a la arquitectura, el desarrollo y la redacción de la memoria esté cubierto. Con el fin de optimizar el espacio, en la columna de responsables se utilizan las siglas \textbf{I} (Ismael), \textbf{G} (Guillermo) y \textbf{A} (Ambos).
 
-\begin{table}[H]
-    \centering
-    \renewcommand{\arraystretch}{1.3}
-    \small 
-    \begin{tabular}{|c|p{10cm}|c|}
+{
+\renewcommand{\arraystretch}{1.3}
+\small
+\begin{longtable}{|c|c|p{8cm}|c|}
+\caption{Cronograma unificado de iteraciones y asignación de responsabilidades.}
+\label{tab:cronograma_unificado} \\
+\hline
+\textbf{Mes} & \textbf{Sprint} & \textbf{Objetivos Técnicos y Tareas} & \textbf{Resp.} \\
+\hline
+\endfirsthead
+
+\multicolumn{4}{c}%
+{{\bfseries \tablename\ \thetable{} -- Continuación de la página anterior}} \\
+\hline
+\textbf{Mes} & \textbf{Sprint} & \textbf{Objetivos Técnicos y Tareas} & \textbf{Resp.} \\
+\hline
+\endhead
+
+\hline \multicolumn{4}{|r|}{{\textit{Continúa en la siguiente página...}}} \\ \hline
+\endfoot
+
+\hline
+\endlastfoot
+
+        \textbf{Enero} 
+        & \multirow{2}{*}{5 - 11} & Inicialización de repositorio, \textit{Set up} \textit{Docker}, \textit{Frontend}/\textit{Backend} & I \\ \cline{3-4}
+        & & Calendario Inicial, Metodología Git y Diagramas UML & G \\ \cline{2-4}
+        & \multirow{2}{*}{12 - 18} & Configuración de Bases de Datos y \textit{Mock-ups} de interfaz & I \\ \cline{3-4}
+        & & \textit{Set up} Despliegue Continuo y Tests iniciales & G \\ \cline{2-4}
+        & 19 - 25 & Desarrollo de Pantalla de Inicio & G \\ \cline{2-4}
+        & \multirow{2}{*}{26 - 1 Feb} & Desarrollo de Pantalla de \textit{Login} y Registro & I \\ \cline{3-4}
+        & & Desarrollo de Pantalla de Listado de Salas & G \\
         \hline
-        \textbf{Mes} & \textbf{Objetivos Técnicos Principales} & \textbf{Recursos Humanos Asignados} \\
+        \textbf{Febrero} 
+        & \multirow{2}{*}{2 - 8} & Desarrollo de Pantalla de Usuario (Editar) & I \\ \cline{3-4}
+        & & Desarrollo de Pantalla de Sala & G \\ \cline{2-4}
+        & 9 - 15 & Sistema de Amistad y Salas & I \\ \cline{2-4}
+        & \multirow{2}{*}{16 - 22} & Pantalla de Partida Básica & G \\ \cline{3-4}
+        & & Chat de Partida en tiempo real & G \\ \cline{2-4}
+        & \multirow{2}{*}{23 - 1 Mar} & Sistema de Barajas, Cartas e Inspección de roles & I \\ \cline{3-4}
+        & & Flujo de estados y gestión de turnos & G \\
         \hline
-        \multirow{8}{*}{\textbf{Enero}} 
-        & Inicialización de repositorio, Set Up Docker, Frontend/Backend. & Ismael \\ \cline{2-3}
-        & Calendario Inicial, Documento de Metodología de Git & Guillermo \\ \cline{2-3}
-        & Configuración de las Bases de Datos y Mock-ups UI. & Ismael \\ \cline{2-3}
-        & Set Up Despliegue Continuo, Tests & Guillermo \\ \cline{2-3}
-        & Diagrama de Flujo de Partida y Diagrama UML de la Base de Datos & Ismael \\ \cline{2-3}
-        & Desarrollo de Pantalla de Inicio & Guillermo \\ \cline{2-3}
-        & Desarrollo de Pantalla de Login/Registro . & Ismael \\ \cline{2-3}
-        & Desarrollo de Pantalla de Listado de Salas . & Guillermo \\ 
+        \textbf{Marzo} 
+        & \multirow{2}{*}{2 - 8} & \textit{Set up} Inicio de Partida & I \\ \cline{3-4}
+        & & Desarrollo de Acciones Simples & G \\ \cline{2-4}
+        & \multirow{2}{*}{9 - 15} & Desarrollo de Fin de Era y Partida & I \\ \cline{3-4}
+        & & Implementación de Condiciones finales & G \\ \cline{2-4}
+        & 16 - 22 & Accionar cartas y UI extra de partida & I \\ \cline{2-4}
+        & 23 - 29 & Implementación de Acciones Complejas 1 & G \\
         \hline
-        \multirow{8}{*}{\textbf{Febrero}} 
-        & Desarrollo de Pantalla de Usuario (Editar) & Ismael \\ \cline{2-3}
-        & Desarrollo de Pantalla de Sala & Guillermo \\ \cline{2-3}
-        & Sistema de Amistad & Ismael \\ \cline{2-3}
-        & Pantalla de Partida Básica & Guillermo \\ \cline{2-3}
-        & Sistema de Barajas/Cartas & Ismael \\ \cline{2-3}
-        & Chat en Partida & Guillermo \\
-        & Inspeccionar carta y Restricción por Rol & Ismael \\
-        & Flujo de estados y turnos & Guillermo \\
+        \textbf{Abril} 
+        & \multirow{2}{*}{30 - 5} & Implementación de Acciones Complejas 2 & G \\ \cline{3-4}
+        & & Pantalla de Ganador y vuelta a la sala & I \\ \cline{2-4}
+        & 6 - 12 & Mover cartas (\textit{Drag \& Drop}) e hito de animaciones & A \\ \cline{2-4}
+        & 13 - 19 & Test Lógica de Juego 1 y Test de Salas & A \\ \cline{2-4}
+        & 20 - 26 & Test Lógica de Juego 2, Test Usuarios y Rediseño estético & A \\ \cline{2-4}
+        & 27 - 3 May & Refactorización general y solución de errores (\textit{Bugfixing}) & A \\
         \hline
-        \multirow{6}{*}{\textbf{Marzo}} 
-        & Set up Inicio de Partida. & Ismael \\ \cline{2-3}
-        & Acciones simples. & Guillermo \\ \cline{2-3}
-        & Fin de Era/Partida & Ismael \\ \cline{2-3}
-        & Condiciones final de partida. & Guillermo \\ \cline{2-3}
-        & Accionar cartas y UI extra de partida. & Ismael \\ \cline{2-3}
-        & Implementación de Acciones Complejas 1. & Guillermo \\
-        \hline
-        \multirow{9}{*}{\textbf{Abril}} 
-        & Pantalla de Ganador y Vuelta a la sala. & Ismael \\ \cline{2-3}
-        & Implementación de Acciones Complejas w. & Guillermo \\ \cline{2-3}
-        & Mover cartas (\textit{Drag \& Drop}) & Ismael \\ \cline{2-3}
-        & Animaciones en partida & Guillermo \\ \cline{2-3}
-        & Test Lógica de Juego 1. & Ismael \\ \cline{2-3}
-        & Test de Salas. & Guillermo \\ \cline{2-3}
-        & Test de Usuarios y Rediseño estético& Ismael \\ \cline{2-3}
-        & Test Lógica de Juego 2 & Guillermo \\ \cline{2-3}
-        & Refactorización general y solución de errores. & Guillermo e Ismael \\
-        \hline
-        \multirow{2}{*}{\textbf{Mayo}} 
-        & Pruebas finales y solución de errores & Guillermo e Ismael \\ \cline{2-3}
-        & Finalización y revisión de la memoria técnica. & Guillermo e Ismael \\
-        \hline
-    \end{tabular}
-    \caption{Distribución mensual de objetivos técnicos y recursos asignados.}
-    \label{tab:objetivos_mes_recursos}
-\end{table}
+        \textbf{Mayo} 
+        & 4 - 10 & Pruebas finales, solución de errores e integración final & A \\ \cline{2-4}
+        & 11 - 15 & Finalización y revisión de la memoria técnica & A \\
+\end{longtable}
+}
+
+\begin{center}
+    \footnotesize
+    \textbf{Leyenda de Responsables:} \textbf{I}: Ismael Carrasco | \textbf{G}: Guillermo | \textbf{A}: Ambos integrantes (Trabajo conjunto)
+\end{center}
 
 \section{Gestión de Costes}
 
-Como parte de la fase de planificación del proyecto, se ha definido una política de gestión financiera basada en las directrices de la disciplina de Gestión de Proyectos. El objetivo de este plan es establecer el marco de trabajo sobre el cual se valorará económicamente el producto. 
+Como parte de la fase de planificación del proyecto, se define una política de gestión financiera basada en las directrices de la disciplina de Gestión de Proyectos. El objetivo de este plan es establecer el marco de trabajo sobre el cual se valora económicamente el producto. 
 
-El desglose numérico, las estimaciones detalladas y el presupuesto final resultante de aplicar las directrices que se exponen a continuación, se encuentran desarrollados exhaustivamente en el capítulo correspondiente de esta memoria (ver Capítulo de Costes).
+El desglose numérico, las estimaciones detalladas y el presupuesto final resultante de aplicar las directrices que se exponen a continuación, se encuentran desarrollados exhaustivamente en el capítulo correspondiente de esta memoria (véase el Capítulo \ref{cap:costes}: Costes).
 
 \subsection{Tipos de Coste}
-Para estructurar el presupuesto del proyecto, se han planificado tres categorías fundamentales de gasto:
+Para estructurar el presupuesto del proyecto, se planifican tres categorías fundamentales de gasto:
 \begin{itemize}
-    \item \textbf{Costes de Personal:} Comprenden la valoración económica del esfuerzo y tiempo invertido por los integrantes del equipo. Para reflejar fielmente la realidad del desarrollo, este coste se ha planificado dividiendo las horas en función de los distintos roles técnicos asumidos durante el ciclo de vida del software (tales como \textit{Desarrollador Full-Stack}, \textit{Tech Lead} y \textit{QA Engineer}), añadiendo a la base salarial los costes sociales obligatorios.
-    \item \textbf{Costes Materiales:} Engloban los gastos relativos a los recursos físicos necesarios para la ejecución del TFG. En este proyecto, se limitan exclusivamente a la amortización del equipamiento informático (hardware) empleado por los autores.
-    \item \textbf{Costes Indirectos:} Categoría destinada a absorber los gastos operativos y estructurales de difícil asignación individual (como el consumo de energía eléctrica y el uso de red a internet), calculados como un porcentaje fijo sobre los costes directos.
+    \item \textbf{Costes de Personal:} Comprenden la valoración económica del esfuerzo y tiempo invertido por los integrantes del equipo. Para reflejar fielmente la realidad del desarrollo, este coste se planifica dividiendo las horas en función de los distintos roles técnicos asumidos (tales como \textit{Desarrollador Full-Stack}, \textit{Tech Lead} y \textit{QA Engineer}), añadiendo a la base salarial los costes sociales obligatorios.
+    \item \textbf{Costes Materiales:} Engloban los gastos relativos a los recursos físicos necesarios para la ejecución del TFG. En este proyecto, se limitan a la amortización del equipamiento informático (hardware) empleado por los autores y descrito en la sección de recursos físicos de este capítulo.
+    \item \textbf{Costes Indirectos:} Categoría destinada a absorber los gastos operativos y estructurales de difícil asignación individual (como el consumo de energía eléctrica y la conexión a internet), calculados como un porcentaje fijo sobre los costes directos.
 \end{itemize}
 
 \subsection{Supuestos y Restricciones}
 La planificación económica se fundamenta en los siguientes supuestos y limitaciones generales:
 \begin{itemize}
-    \item \textbf{Estabilidad de precios:} Se asume que los costes de los recursos humanos y materiales se mantendrán estables y sin fluctuaciones imprevistas a lo largo de todo el ciclo de vida del proyecto.
-    \item \textbf{Continuidad de suministros:} No se prevén incrementos significativos en los costes de servicios indirectos, tales como energía eléctrica, alquileres o conectividad a internet.
+    \item \textbf{Estabilidad de precios:} Se asume que los costes de los recursos humanos y materiales se mantienen estables y sin fluctuaciones imprevistas a lo largo de todo el ciclo de vida del proyecto.
+    \item \textbf{Continuidad de suministros:} No se prevén incrementos significativos en los costes de servicios indirectos, tales como energía eléctrica o conectividad a internet.
     \item \textbf{Unidad monetaria:} Todas las estimaciones, presupuestos y transacciones se realizan exclusivamente en euros (€).
     \item \textbf{Referencias externas:} Las estimaciones salariales se basan en guías profesionales de referencia para el sector tecnológico, ajustadas a la jornada laboral anual estándar.
     \item \textbf{Marco legal de amortización:} La imputación por desgaste de activos materiales se restringe a los coeficientes y periodos de amortización legalmente establecidos por la normativa tributaria vigente.
