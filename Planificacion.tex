@@ -350,7 +350,7 @@ Se utiliza un tablero Kanban para visualizar este flujo y garantizar que el tiem
 
 Como parte de la fase de planificación del proyecto, se define una política de gestión financiera basada en las directrices de la disciplina de Gestión de Proyectos. El objetivo de este plan es establecer el marco de trabajo sobre el cual se valora económicamente el producto. 
 
-El desglose numérico, las estimaciones detalladas y el presupuesto final resultante de aplicar las directrices que se exponen a continuación, se encuentran desarrollados exhaustivamente en el capítulo correspondiente de esta memoria (véase el Capítulo \ref{cap:costes}: Costes).
+El desglose numérico, las estimaciones detalladas y el presupuesto final resultante de aplicar las directrices que se exponen a continuación, se encuentran desarrollados exhaustivamente en el capítulo correspondiente de esta memoria (véase el \autoref{cap:costes}: Costes).
 
 \subsection{Tipos de Coste}
 Para estructurar el presupuesto del proyecto, se planifican tres categorías fundamentales de gasto:
@@ -369,6 +369,73 @@ La planificación económica se fundamenta en los siguientes supuestos y limitac
     \item \textbf{Referencias externas:} Las estimaciones salariales se basan en guías profesionales de referencia para el sector tecnológico, ajustadas a la jornada laboral anual estándar.
     \item \textbf{Marco legal de amortización:} La imputación por desgaste de activos materiales se restringe a los coeficientes y periodos de amortización legalmente establecidos por la normativa tributaria vigente.
 \end{itemize}
+
+\section{Gestión de Riesgos}
+
+Para asegurar la viabilidad del proyecto frente a eventos imprevistos, se lleva a cabo una identificación temprana de los riesgos que comprometen el éxito, los plazos o la calidad del sistema. Cada amenaza se evalúa combinando su \textit{Probabilidad} de ocurrencia (Baja, Media, Alta) y su \textit{Impacto} cualitativo en el proyecto (Bajo, Medio, Alto). A partir de este análisis, se definen estrategias de mitigación específicas divididas en tres categorías: tecnológicas, organizativas y operativas.
+
+\subsection{Identificación y Mitigación de Riesgos}
+
+\subsubsection{Riesgos Tecnológicos}
+
+\begin{itemize}
+    \item \textbf{RT-01. Cuellos de botella y latencia en tiempo real:} Al ser un juego multijugador dependiente de \textit{WebSockets}, la gestión concurrente del estado de la partida puede saturar el servidor y provocar desincronizaciones en los clientes. \\
+    \textbf{Mitigación (Probabilidad: Baja | Impacto: Alto):} Se diseña una arquitectura de persistencia híbrida. El estado volátil y los eventos en tiempo real se gestionan exclusivamente en la memoria de \textit{Redis}, limitando el uso de la base de datos relacional (\textit{MariaDB}) a operaciones en frío (perfiles e históricos), lo que previene la saturación del servidor.
+    
+    \item \textbf{RT-02. Pérdida de estado por desconexión abrupta:} Las microcortes en la conectividad a internet de los clientes pueden corromper el flujo de la partida o forzar cierres inesperados si el servidor pierde el rastro del socket. \\
+    \textbf{Mitigación (Probabilidad: Alta | Impacto: Alto):} Se implementa un sistema de persistencia de sesión acoplado a tokens JWT almacenados de forma temporal en \textit{Redis}. Al reconectarse, el cliente envía su token y el servidor le reasigna de manera automática el socket activo en el \textit{Lobby} correspondiente, restaurando su vista de juego sin penalizaciones.
+    
+    \item \textbf{RT-03. Inyección de trampas y alteración de la lógica en el cliente:} Al tratarse de un entorno web abierto, un usuario avanzado podría inspeccionar el tráfico de red o modificar el estado local de \textit{React} para visualizar las cartas ocultas del rival. \\
+    \textbf{Mitigación (Probabilidad: Alta | Impacto: Alto):} Se aplica un patrón de Servidor Autoritativo. El cliente de \textit{React} actúa como una mera capa de representación visual sin poder de decisión lógica. Adicionalmente, el backend filtra toda la información sensible mediante el patrón DTO antes de transmitir el estado, garantizando que el emisor reciba únicamente los datos visibles para su facción.
+    
+    \item \textbf{RT-04. Incremento de la deuda técnica por la asimetría del código:} La naturaleza asimétrica del juego exige duplicar lógicas de validación en el servidor, lo que puede elevar la complejidad ciclomática del código y dificultar el mantenimiento. \\
+    \textbf{Mitigación (Probabilidad: Alta | Impacto: Medio):} La planificación bloquea el \textit{Sprint} 8 de forma exclusiva para labores de refactorización profunda, limpieza de código muerto y abstracción de controladores comunes, evitando el acoplamiento temprano antes del desarrollo de las acciones complejas.
+\end{itemize}
+
+\subsubsection{Riesgos Organizativos}
+
+\begin{itemize}
+    \item \textbf{RO-01. Descompensación por la carga académica concurrente:} Las fluctuaciones en el calendario de exámenes y entregas del cuarto curso de la ingeniería pueden congelar temporalmente el avance del proyecto. \\
+    \textbf{Mitigación (Probabilidad: Alta | Impacto: Alto):} El calendario global prevé este factor reduciendo la carga de trabajo conjunto planificada en las semanas críticas, distribuyendo el esfuerzo técnico de manera diaria para evitar cuellos de botella antes de la fecha límite.
+    
+    \item \textbf{RO-02. Errores de estimación en tareas de alta complejidad:} El desarrollo de mecánicas lúdicas abstractas puede requerir más tiempo del previsto inicialmente por falta de experiencia previa. \\
+    \textbf{Mitigación (Probabilidad: Media | Impacto: Bajo):} Se aplica estrictamente la restricción de granularidad definida en el plan de gestión del cronograma: ninguna tarea unitaria excede las 6 horas de estimación. Si una actividad supera este límite, se subdivide obligatoriamente para acotar la incertidumbre.
+    
+    \item \textbf{RO-03. Conflictos de integración en el repositorio común:} Al trabajar dos personas en paralelo sobre un monorepositorio, los cambios masivos pueden generar conflictos de fusión complejos en la rama principal. \\
+    \textbf{Mitigación (Probabilidad: Media | Impacto: Medio):} Se aplica la estrategia de ramificación de Git mediante la adopción estricta de ramas independientes por funcionalidad (\textit{Feature Branches}). Está prohibido realizar modificaciones directas sobre la línea principal de desarrollo; todo incremento exige superar obligatoriamente la revisión de código por pares (\textit{Code Review}) para asegurar una fusión sin conflictos en el repositorio común antes de dar la tarea por finalizada.
+\end{itemize}
+
+\subsubsection{Riesgos Operativos}
+
+\begin{itemize}
+    \item \textbf{RP-01. Cambios imprevistos en el reglamento del juego físico original:} Modificaciones o fe de erratas publicadas por la editorial del juego de mesa durante el desarrollo podrían alterar la lógica del servidor ya programada. \\
+    \textbf{Mitigación (Probabilidad: Baja | Impacto: Medio):} Se congela de manera formal el manual de reglas de nPipsGames utilizado en el Hito 1 del proyecto. Cualquier cambio posterior en el juego físico se descarta del alcance actual y se relega como trabajo futuro en las conclusiones de la memoria.
+\end{itemize}
+
+\subsection{Matriz Resumen de Riesgos}
+
+Para facilitar la monitorización de las amenazas descritas, la Tabla \ref{tab:matriz_riesgos} sintetiza el nivel de criticidad final y la acción de control preferente asignada a cada riesgo.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \small
+    \begin{tabular}{|c|c|c|c|c|l|}
+        \hline
+        \textbf{ID} & \textbf{Categoría} & \textbf{Prob.} & \textbf{Imp.} & \textbf{Criticidad} & \textbf{Acción de Mitigación Principal} \\
+        \hline
+        \textbf{RT-01} & Tecnológico & Baja & Alto & \textbf{Medio} & Arquitectura híbrida en memoria con \textit{Redis}. \\ \hline
+        \textbf{RT-02} & Tecnológico & Alta & Alto & \textbf{Crítico} & Control de sesión mediante JWT en \textit{Redis}. \\ \hline
+        \textbf{RT-03} & Tecnológico & Alta & Alto & \textbf{Crítico} & Servidor autoritativo y filtrado asimétrico DTO. \\ \hline
+        \textbf{RT-04} & Tecnológico & Alta & Medio & \textbf{Alto} & Bloqueo del \textit{Sprint} 8 para refactorización. \\ \hline
+        \textbf{RO-01} & Organizativo & Alta & Alto & \textbf{Crítico} & Amortiguación de carga en periodos de examen. \\ \hline
+        \textbf{RO-02} & Organizativo & Media & Bajo & \textbf{Bajo} & Límite de granularidad estricto a 6 horas por tarea. \\ \hline
+        \textbf{RO-03} & Organizativo & Media & Medio & \textbf{Medio} & Control estricto de ramas y \textit{Pull Requests} conjuntas. \\ \hline
+        \textbf{RP-01} & Operativo & Baja & Medio & \textbf{Medio} & Congelación estricta del manual lúdico en el Hito 1. \\ \hline
+    \end{tabular}
+    \caption{Matriz resumen de riesgos y planes de contingencia del proyecto.}
+    \label{tab:matriz_riesgos}
+\end{table}
 
 %
 %\subsection{Reserva de Contingencia y Umbrales de Desviación}
