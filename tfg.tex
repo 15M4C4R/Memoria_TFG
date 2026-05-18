@@ -39,7 +39,7 @@
 
 \begin{document}
 
-\author{\ifnum\value{page}=2 Ismael Carrasco Mkhazni y Guillermo García León\else Ismael Carrasco Mkhazni\fi}
+\author{\ifnum\value{page}<3 Ismael Carrasco Mkhazni y Guillermo García León\else Ismael Carrasco Mkhazni\fi}
        {Grado en Ingeniería Informática - Ingeniería del Software}
        {\ifnum\value{page}=2 D. y D.\else D.\fi}
        {\ifnum\value{page}=2 15456902M / 17486052A\else 15456902M\fi}
@@ -133,9 +133,8 @@ Tu dedicatoria aquí
 % El parámetro pages=- le dice que incluya TODAS las páginas del PDF.
 % pagecommand={} hace que se mantenga la numeración de páginas de tu TFG.
 % width=\textwidth ajusta el PDF a los márgenes de tu memoria.
-\includepdf[pages=-, width=\textwidth, pagecommand={}]{figures/reglas_del_juego.pdf}
 
-\input{ejemplo}
+\includepdf[pages=-, width=\textwidth, pagecommand={}]{figures/reglas_del_juego.pdf}
 
 \lineNumbersOff
 

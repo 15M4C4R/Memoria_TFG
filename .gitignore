@@ -25,6 +25,7 @@
 *.synctex(auto).gz
 *.synctex.gz(busy)
 *.pdfsync
+*.glsdefs
 
 # Archivos de bibliografía (Biber / BibTeX)
 *.bcf
