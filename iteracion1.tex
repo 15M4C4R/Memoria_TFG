@@ -44,10 +44,10 @@ services:
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo primordial de esta primera iteración consistió en establecer los cimientos arquitectónicos e infraestructurales del proyecto \textit{King and Peasant}. Se buscó preparar un entorno de desarrollo robusto que garantizara la paridad entre los entornos de los distintos desarrolladores y sentar las bases de la metodología ágil que guiará el resto del ciclo de vida del software.
+El objetivo primordial de esta primera iteración consiste en establecer los cimientos arquitectónicos e infraestructurales del proyecto \textit{King and Peasant}. Se busca preparar un entorno de desarrollo robusto que garantice la paridad entre los entornos de los distintos desarrolladores y sentar las bases de la metodología ágil que guiará el resto del ciclo de vida del software.
 
 \textbf{2. Diseño de la Solución} \\
-Para abordar estas características, el diseño se articuló en torno a la orquestación inicial del entorno. A nivel de equipo, se diseñó una estructura de monorepositorio y se redactó el documento de metodología en Markdown para estandarizar el flujo de trabajo (ramas, \textit{commits} y seguimiento de \textit{issues}). A nivel técnico, para satisfacer el requisito de arquitectura (\textbf{RNF-ARQ}), el diseño contempló el uso de \textit{Docker} y \textit{Docker Compose}. La creación de los archivos \texttt{Dockerfile} permitió plantear un despliegue aislado de los entornos de ejecución base (véase la Figura \ref{fig:docker_topology}).
+Para abordar estas características, el diseño se articula en torno a la orquestación inicial del entorno. A nivel de equipo, se diseña una estructura de monorepositorio y se redacta el documento de metodología en Markdown para estandarizar el flujo de trabajo (ramas, \textit{commits} y seguimiento de \textit{issues}). A nivel técnico, para satisfacer el requisito de arquitectura (\textbf{RNF-ARQ}), el diseño contempla el uso de \textit{Docker} y \textit{Docker Compose}. La creación de los archivos \texttt{Dockerfile} permite plantear un despliegue aislado de los entornos de ejecución base (véase la Figura \ref{fig:docker_topology}).
 
 \begin{figure}[H]
 \centering
@@ -83,25 +83,25 @@ Para abordar estas características, el diseño se articuló en torno a la orque
 \end{figure}
 
 \textbf{3. Detalles de Implementación} \\
-Para asegurar la cohesión del monorepositorio, se estructuró el proyecto utilizando \textit{npm workspaces}, agrupando el cliente (\textit{Vite/React}) y el servidor (\textit{Node.js}) bajo un único árbol de dependencias. La orquestación se materializó a través de \textit{scripts} centralizados en el \texttt{package.json} raíz, combinando \textit{concurrently} para levantar múltiples entornos de desarrollo en paralelo y \textit{Docker Compose} para inicializar la capa de persistencia. Esto permitió que, mediante un único comando (\texttt{npm run start:local}), el sistema validara la salud de los contenedores y ejecutara las migraciones de base de datos antes de exponer los puertos, eliminando la fricción de configuración inicial.
+Para asegurar la cohesión del monorepositorio, se estructura el proyecto utilizando \textit{npm workspaces}, agrupando el cliente (\textit{Vite/React}) y el servidor (\textit{Node.js}) bajo un único árbol de dependencias. La orquestación se materializa a través de \textit{scripts} centralizados en el \texttt{package.json} raíz, combinando \textit{concurrently} para levantar múltiples entornos de desarrollo en paralelo y \textit{Docker Compose} para inicializar la capa de persistencia. Esto permite que, mediante un único comando (\texttt{npm run start:local}), el sistema valide la salud de los contenedores y ejecute las migraciones de base de datos antes de exponer los puertos, eliminando la fricción de configuración inicial.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Durante el seguimiento de la orquestación inicial, se detectó una desviación: surgieron conflictos de red que impedían el arranque limpio de los servicios en los contenedores. El control del problema se gestionó unificando la red interna bajo un driver \textit{bridge} personalizado. Tras aplicar esta replanificación técnica, la iteración concluyó satisfactoriamente. La infraestructura base y las políticas del repositorio quedaron operativas, eliminando la fricción inicial y asegurando que el equipo pudiera arrancar con el desarrollo de la capa de datos en el siguiente \textit{sprint} sin arrastrar deuda técnica.
+Durante el seguimiento de la orquestación inicial, se detecta una desviación: surgen conflictos de red que impiden el arranque limpio de los servicios en los contenedores. El control del problema se gestiona unificando la red interna bajo un driver \textit{bridge} personalizado. Tras aplicar esta replanificación técnica, la iteración concluye satisfactoriamente. La infraestructura base y las políticas del repositorio quedan operativas, eliminando la fricción inicial y asegurando que el equipo pueda arrancar con el desarrollo de la capa de datos en el siguiente \textit{sprint} sin arrastrar deuda técnica.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-Durante la primera iteración, el objetivo fue establecer los cimientos organizativos del proyecto, preparando las herramientas de planificación e inicializando las metodologías de trabajo en equipo. Las tareas principales consistieron en la creación del calendario inicial de desarrollo y la redacción del documento de metodología para el uso de GitHub, abarcando la gestión de ramas, \textit{issues} y \textit{commits}.
+Durante la primera iteración, el objetivo es establecer los cimientos organizativos del proyecto, preparando las herramientas de planificación e inicializando las metodologías de trabajo en equipo. Las tareas principales consisten en la creación del calendario inicial de desarrollo y la redacción del documento de metodología para el uso de GitHub, abarcando la gestión de ramas, \textit{issues} y \textit{commits}.
 
 \textbf{2. Diseño} \\
-El calendario inicial se diseñó mediante la herramienta Obsidian para proporcionar una hoja de ruta clara de las tareas a realizar. Este se estructuró en iteraciones de una semana, priorizando inicialmente la configuración y tareas sencillas para facilitar la toma de contacto con las tecnologías, dejando la lógica central para la fase media y un periodo final dedicado exclusivamente a pruebas y corrección de errores. Por otro lado, la metodología de GitHub se diseñó para garantizar un desarrollo conjunto organizado, definiendo roles específicos para cada rama y reglas estrictas de integración de código que materializan la mitigación planificada frente al riesgo de conflictos en el repositorio (\textbf{RO-03}, véase la Tabla \ref{tab:matriz_riesgos}).
+El calendario inicial se diseña mediante la herramienta Obsidian para proporcionar una hoja de ruta clara de las tareas a realizar. Este se estructura en iteraciones de una semana, priorizando inicialmente la configuración y tareas sencillas para facilitar la toma de contacto con las tecnologías, dejando la lógica central para la fase media y un periodo final dedicado exclusivamente a pruebas y corrección de errores. Por otro lado, la metodología de GitHub se diseña para garantizar un desarrollo conjunto organizado, definiendo roles específicos para cada rama y reglas estrictas de integración de código que materializan la mitigación planificada frente al riesgo de conflictos en el repositorio (\textbf{RO-03}, véase la Tabla \ref{tab:matriz_riesgos}).
 
 \textbf{3. Implementación} \\
-Se materializó el calendario inicial en Obsidian, detallando la distribución de tareas por semanas (véase la Figura \ref{fig:calendario_obsidian}). Asimismo, se redactó e implementó la metodología en GitHub con las siguientes especificaciones técnicas:
+Se materializa el calendario inicial en Obsidian, detallando la distribución de tareas por semanas (véase la Figura \ref{fig:calendario_obsidian}). Asimismo, se redacta e implementa la metodología en GitHub con las siguientes especificaciones técnicas:
 \begin{itemize}
-    \item \textbf{Política de ramas}: Se establecieron las ramas \texttt{main} (versión estable), \texttt{trunk} (integración previa), \texttt{feature/task X} (nuevas funcionalidades según el ID de la \textit{issue}) y \texttt{bugfix/task Y} (corrección de errores).
+    \item \textbf{Política de ramas}: Se establecen las ramas \texttt{main} (versión estable), \texttt{trunk} (integración previa), \texttt{feature/task X} (nuevas funcionalidades según el ID de la \textit{issue}) y \texttt{bugfix/task Y} (corrección de errores).
     \item \textbf{Flujo de integración}: Los cambios de las ramas de funcionalidad se integran en \texttt{trunk} tras su compleción, y de \texttt{trunk} a \texttt{main} tras validar la estabilidad. Las ramas temporales se destruyen tras el \textit{merge}.
-    \item \textbf{Gestión de Issues}: Se definió el uso de una \textit{issue} por tarea con etiquetas y descripciones detalladas, gestionadas en un tablero de proyecto bajo los estados ``A realizar'', ``En desarrollo'' y ``Hecha''.
-    \item \textbf{Política de Commits}: Se adoptó la estructura de \textit{Conventional Commits}, realizando al menos un registro por cada sesión de trabajo para mantener la trazabilidad del desarrollo.
+    \item \textbf{Gestión de Issues}: Se define el uso de una \textit{issue} por tarea con etiquetas y descripciones detalladas, gestionadas en un tablero de proyecto bajo los estados ``A realizar'', ``En desarrollo'' y ``Hecha''.
+    \item \textbf{Política de Commits}: Se adopta la estructura de \textit{Conventional Commits}, realizando al menos un registro por cada sesión de trabajo para mantener la trazabilidad del desarrollo.
 \end{itemize}
 
 \begin{figure}[H]
@@ -113,16 +113,16 @@ Se materializó el calendario inicial en Obsidian, detallando la distribución d
 \end{figure}
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Las tareas se realizaron correctamente y en el tiempo esperado. El establecimiento de estas bases metodológicas y el cronograma visual permitió un arranque fluido del desarrollo técnico, reduciendo la fricción organizativa en las siguientes iteraciones.
+Las tareas se realizan correctamente y en el tiempo esperado. El establecimiento de estas bases metodológicas y el cronograma visual permite un arranque fluido del desarrollo técnico, reduciendo la fricción organizativa en las siguientes iteraciones.
 
 \subsection{Iteración 2: Diseño de Interfaces, Orquestación de Datos y Configuración de Testing y CD}
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo establecido para este ciclo, centrado en las responsabilidades individuales de infraestructura y diseño visual, fue sentar las bases de la identidad del proyecto \textit{King and Peasant} mediante la elaboración de \textit{mock-ups} detallados y la orquestación de las bases de datos en el entorno local.
+El objetivo establecido para este ciclo, centrado en las responsabilidades individuales de infraestructura y diseño visual, es sentar las bases de la identidad del proyecto \textit{King and Peasant} mediante la elaboración de \textit{mock-ups} detallados y la orquestación de las bases de datos en el entorno local.
 
 \textbf{2. Diseño de la Solución} \\
-El diseño de la solución arrancó con la elaboración de los \textit{mock-ups} completos de las pantallas clave del ecosistema, incluyendo los flujos de autenticación (Login/Registro), las salas de espera (\textit{Lobbies}), el perfil del usuario, el menu principal y el tablero de la partida asimétrica. Esta labor proporcionó una visión estructural clara para el desarrollo en cliente, como se ilustra en la Figura \ref{fig:ui_gameboard}. A nivel de infraestructura, y en cumplimiento del requisito de rendimiento (\textbf{RNF-REN}), el diseño amplió la configuración de \textit{Docker Compose} para incluir el despliegue aislado de los servicios de \textit{MariaDB} y \textit{Redis}.
+El diseño de la solución arranca con la elaboración de los \textit{mock-ups} completos de las pantallas clave del ecosistema, incluyendo los flujos de autenticación (Login/Registro), las salas de espera (\textit{Lobbies}), el perfil del usuario, el menu principal y el tablero de la partida asimétrica. Esta labor proporciona una visión estructural clara para el desarrollo en cliente, como se ilustra en la Figura \ref{fig:ui_gameboard}. A nivel de infraestructura, y en cumplimiento del requisito de rendimiento (\textbf{RNF-REN}), el diseño amplía la configuración de \textit{Docker Compose} para incluir el despliegue aislado de los servicios de \textit{MariaDB} y \textit{Redis}.
 
 \begin{figure}[H]
 \begin{center}
@@ -133,20 +133,20 @@ El diseño de la solución arrancó con la elaboración de los \textit{mock-ups}
 \end{figure}
 
 \textbf{3. Detalles de Implementación} \\
-La integración de múltiples motores de bases de datos exigió un desarrollo cauteloso en el archivo \texttt{docker-compose.yml}. Se implementaron volúmenes persistentes (\textit{Volumes}) tanto para \textit{MariaDB} (\texttt{/var/lib/mysql}) como para \textit{Redis} (\texttt{/data}), asegurando que la reinicialización de los contenedores no provocara la pérdida de información crítica. Adicionalmente, se ejecutaron comprobaciones de estado (\textit{healthchecks}) con comandos nativos como \textit{mysqladmin ping} y \textit{redis-cli ping}, garantizando que los servicios de \textit{backend} dependientes (\textit{depends\_on}) no intenten establecer conexiones hasta que los motores estén operativos.
+La integración de múltiples motores de bases de datos exige un desarrollo cauteloso en el archivo \texttt{docker-compose.yml}. Se implementan volúmenes persistentes (\textit{Volumes}) tanto para \textit{MariaDB} (\texttt{/var/lib/mysql}) como para \textit{Redis} (\texttt{/data}), asegurando que la reinicialización de los contenedores no provoque la pérdida de información crítica. Adicionalmente, se ejecutan comprobaciones de estado (\textit{healthchecks}) con comandos nativos como \textit{mysqladmin ping} y \textit{redis-cli ping}, garantizando que los servicios de \textit{backend} dependientes (\textit{depends\_on}) no intenten establecer conexiones hasta que los motores estén operativos.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Durante el control de la integración del almacenamiento en memoria surgieron bloqueos temporales en la comunicación de los servicios locales. La desviación se resolvió en caliente corrigiendo el mapeo de puertos y exponiendo el 6379 hacia el \textit{localhost} en el \texttt{docker-compose.yml}. Tras esta corrección, las tareas se completaron satisfactoriamente y se integraron en la rama principal, dejando la plataforma preparada para iniciar la estructuración del ORM en la iteración siguiente.
+Durante el control de la integración del almacenamiento en memoria surgen bloqueos temporales en la comunicación de los servicios locales. La desviación se resuelve en caliente corrigiendo el mapeo de puertos y exponiendo el 6379 hacia el \textit{localhost} en el \texttt{docker-compose.yml}. Tras esta corrección, las tareas se completan satisfactoriamente y se integran en la rama principal, dejando la plataforma preparada para iniciar la estructuración del ORM en la iteración siguiente.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-Esta iteración se centró en la creación de la infraestructura de calidad y despliegue técnico. Se requirió configurar las herramientas de \textit{testing} automatizado y establecer un entorno de Despliegue Continuo (CD) que permitiera visualizar los avances del proyecto en un entorno de ejecución real y accesible a través de la red.
+Esta iteración se centra en la creación de la infraestructura de calidad y despliegue técnico. Se requiere configurar las herramientas de \textit{testing} automatizado y establecer un entorno de Despliegue Continuo (CD) que permita visualizar los avances del proyecto en un entorno de ejecución real y accesible a través de la red.
 
 \textbf{2. Diseño} \\
-Se diseñó un entorno de pruebas híbrido utilizando Jest para validar la lógica del servidor (Backend) y Vitest para los componentes de la interfaz de usuario (Frontend). Para el despliegue de la aplicación, se optó por la plataforma Render debido a su integración nativa con entornos Node.js. La elección de este servicio se fundamentó en la disponibilidad de un plan gratuito y en que se disponía de experiencia técnica previa en su configuración, lo que facilitó la gestión de la infraestructura. El flujo de CD se diseñó para activarse automáticamente mediante GitHub Actions cada vez que se integrasen cambios en la rama principal y en la rama \textit{trunk}.
+Se diseña un entorno de pruebas híbrido utilizando Jest para validar la lógica del servidor (Backend) y Vitest para los componentes de la interfaz de usuario (Frontend). Para el despliegue de la aplicación, se opta por la plataforma Render debido a su integración nativa con entornos Node.js. La elección de este servicio se fundamenta en la disponibilidad de un plan gratuito y en que se dispone de experiencia técnica previa en su configuración, lo que facilita la gestión de la infraestructura. El flujo de CD se diseña para activarse automáticamente mediante GitHub Actions cada vez que se integren cambios en la rama principal y en la rama \textit{trunk}.
 
 \textbf{3. Implementación} \\
-Se procedió a la instalación y configuración de las librerías de testeo en ambos paquetes del monorepositorio. Además, se implementó un flujo de trabajo automatizado para el despliegue. Este \textit{workflow} actúa como un puente entre el repositorio de código y el servidor de producción; se encuentra configurado para activarse ante dos eventos: la publicación de una nueva versión (\textit{release}) o la realización de un \textit{push} en la rama \texttt{trunk}. 
+Se procede a la instalación y configuración de las librerías de testeo en ambos paquetes del monorepositorio. Además, se implementa un flujo de trabajo automatizado para el despliegue. Este \textit{workflow} actúa como un puente entre el repositorio de código y el servidor de producción; se encuentra configurado para activarse ante dos eventos: la publicación de una nueva versión (\textit{release}) o la realización de un \textit{push} en la rama \texttt{trunk}. 
 
 Al dispararse, el proceso se ejecuta en una máquina virtual con Ubuntu que realiza una petición HTTP POST mediante la herramienta \texttt{curl} a un \textit{webhook} específico de Render. La dirección de este enlace se gestiona de forma segura a través de los secretos del repositorio (\textit{secrets}) para evitar accesos no autorizados. Al recibir esta señal, Render inicia automáticamente la construcción de la nueva versión, instalando las dependencias necesarias y actualizando el servicio en la nube.
 
@@ -170,7 +170,7 @@ jobs:
 \end{lstlisting}
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Se identificó una desviación durante el seguimiento de esta fase: el entorno de despliegue se configuró de manera prematura, sin contar todavía con código funcional de la aplicación para validar el proceso de extremo a extremo. Como medida de replanificación, se determinó que esta configuración deberá ser validada nuevamente en la iteración 4, una vez que existan servicios reales y componentes desplegables.
+Se identifica una desviación durante el seguimiento de esta fase: el entorno de despliegue se configuró de manera prematura, sin contar todavía con código funcional de la aplicación para validar el proceso de extremo a extremo. Como medida de replanificación, se determina que esta configuración debe ser validada nuevamente en la iteración 4, una vez que existan servicios reales y componentes desplegables.
 
 \section{Autenticación y Modelado de Datos}
 
@@ -218,58 +218,58 @@ model User {
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo principal asignado para esta iteración se centró en la conceptualización teórica del dominio de datos, así como en el modelado formal del flujo que gobernaría la asimetría de las partidas.
+El objetivo principal asignado para esta iteración se centra en la conceptualización teórica del dominio de datos, así como en el modelado formal del flujo que gobierna la asimetría de las partidas.
 
 \textbf{2. Diseño de la Solución} \\
-El diseño de esta etapa se articuló en torno a la arquitectura de la información. Se elaboró el modelo Entidad-Relación y el diagrama UML correspondiente a la base de datos relacional. De forma paralela, el equipo diseñó los estados de la partida, los turnos intercalados y las mecánicas asimétricas plasmándolas en diagramas de flujo operativos.
+El diseño de esta etapa se articula en torno a la arquitectura de la información. Se elabora el modelo Entidad-Relación y el diagrama UML correspondiente a la base de datos relacional. De forma paralela, el equipo diseña los estados de la partida, los turnos intercalados y las mecánicas asimétricas plasmándolas en diagramas de flujo operativos.
 
 \textbf{3. Detalles de Implementación} \\
-El diseño estructural requirió abstraer la asimetría del juego a un modelo de datos cohesivo. El esquema relacional implementó entidades independientes para \texttt{User}, \texttt{Friendship}, \texttt{Lobby} y \texttt{Game}. La complejidad se centró en la entidad \texttt{Card}, la cual fue codificada para contener tanto los atributos del bando del Rey (\texttt{nameKing}, \texttt{typeKing}) como los del Campesino (\texttt{namePeasant}, \texttt{typePeasant}) en un mismo registro. Esto facilitó enormemente la futura gestión del mazo único compartido. Las relaciones múltiples reflexivas en la entidad \texttt{User} (como \texttt{gamesAsPlayer1} o \texttt{friendshipsSent}) se implementaron para permitir consultas eficientes de historiales y marcadores.
+El diseño estructural requiere abstraer la asimetría del juego a un modelo de datos cohesivo. El esquema relacional implementa entidades independientes para \texttt{User}, \texttt{Friendship}, \texttt{Lobby} y \texttt{Game}. La complejidad se centra en la entidad \texttt{Card}, la cual se codifica para contener tanto los atributos del bando del Rey (\texttt{nameKing}, \texttt{typeKing}) como los del Campesino (\texttt{namePeasant}, \texttt{typePeasant}) en un mismo registro. Esto facilita enormemente la futura gestión del mazo único compartido. Las relaciones múltiples reflexivas en la entidad \texttt{User} (como \texttt{gamesAsPlayer1} o \texttt{friendshipsSent}) se implementan para permitir consultas eficientes de historiales y marcadores.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-El seguimiento de este \textit{sprint} arrojó resultados óptimos. Los objetivos de modelado de datos y flujos lógicos se alcanzaron con éxito, sin registrarse desviaciones temporales ni bloqueos técnicos que obligaran a replanificar. El diseño quedó certificado y listo para ser trasladado al ORM en la siguiente iteración.
+El seguimiento de este \textit{sprint} arroja resultados óptimos. Los objetivos de modelado de datos y flujos lógicos se alcanzan con éxito, sin registrarse desviaciones temporales ni bloqueos técnicos que obliguen a replanificar. El diseño queda certificado y listo para ser trasladado al ORM en la siguiente iteración.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-El requerimiento central fue la creación de la página de inicio (\textit{Landing Page}) y la definición inicial de los esquemas de datos que soportarían la lógica de las partidas.
+El requerimiento central es la creación de la página de inicio (\textit{Landing Page}) y la definición inicial de los esquemas de datos que soportan la lógica de las partidas.
 
 \textbf{2. Diseño} \\
-El diseño se centró en el Frontend, traduciendo los \textit{mock-ups} visuales a componentes de React. Se planteó como una página estática de navegación que no requería interacción con la base de datos, sirviendo únicamente como nodo central para redirigir al usuario hacia el registro, el login o la búsqueda de partidas.
+El diseño se centra en el Frontend, traduciendo los \textit{mock-ups} visuales a componentes de React. Se plantea como una página estática de navegación que no requiere interacción con la base de datos, sirviendo únicamente como nodo central para redirigir al usuario hacia el registro, el login o la búsqueda de partidas.
 
 \textbf{3. Implementación} \\
-Se desarrolló la interfaz de usuario asegurando la fidelidad visual con los diseños previos. Se implementaron los sistemas de rutas internas para dejar preparados los accesos a funcionalidades que se desarrollarían en fases posteriores.
+Se desarrolla la interfaz de usuario asegurando la fidelidad visual con los diseños previos. Se implementan los sistemas de rutas internas para dejar preparados los accesos a funcionalidades que se desarrollan en fases posteriores.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Se detectó que el tiempo estimado para esta tarea fue excesivo dado su carácter estático. Aplicando nuestro criterio técnico, se decidió replanificar el excedente de tiempo de esta iteración para reforzar la configuración del ORM y la base de datos en la siguiente fase.
+Se detecta que el tiempo estimado para esta tarea fue excesivo dado su carácter estático. Aplicando nuestro criterio técnico, se decide replanificar el excedente de tiempo de esta iteración para reforzar la configuración del ORM y la base de datos en la siguiente fase.
 
 \subsection{Iteración 4: Implementación del Modelo Estructural, Gestión de Usuarios y Listado de Salas}
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo principal para esta iteración se basó en la implementación técnica del modelo de datos diseñado previamente en la base de datos relacional, haciendo uso del modelo Entidad-Relación y el diagrama UML correspondiente.
+El objetivo principal para esta iteración se basa en la implementación técnica del modelo de datos diseñado previamente en la base de datos relacional, haciendo uso del modelo Entidad-Relación y el diagrama UML correspondiente.
 
 \textbf{2. Diseño de la Solución} \\
-En cumplimiento con el requisito de arquitectura (\textbf{RNF-ARQ}), el diseño de la solución dictaminó que este modelo conceptual se trasladara al entorno de desarrollo utilizando \textit{Prisma ORM}. Se diseñó una estrategia basada en migraciones secuenciales sobre el despliegue aislado de \textit{MariaDB}, garantizando que el esquema de la base de datos estuviera en sincronía con el contenedor de Docker.
+En cumplimiento con el requisito de arquitectura (\textbf{RNF-ARQ}), el diseño de la solución dictamina que este modelo conceptual se traslade al entorno de desarrollo utilizando \textit{Prisma ORM}. Se diseña una estrategia basada en migraciones secuenciales sobre el despliegue aislado de \textit{MariaDB}, garantizando que el esquema de la base de datos esté en sincronía con el contenedor de Docker.
 
 \textbf{3. Detalles de Implementación} \\
-La transición del modelo a la infraestructura real se codificó definiendo el esquema en \texttt{schema.prisma}. Esta implementación generó automáticamente un cliente tipado para \textit{Node.js}, proporcionando autocompletado y seguridad de tipos en la capa de controladores. La ejecución de las migraciones (\texttt{prisma migrate}) actuó como un sistema de control de versiones sobre \textit{MariaDB}, garantizando que cualquier cambio en la estructura de tablas o índices (como \texttt{@@unique([idSender, idReceiver])} en las amistades) se aplicase de forma atómica.
+La transición del modelo a la infraestructura real se codifica definiendo el esquema en \texttt{schema.prisma}. Esta implementación genera automáticamente un cliente tipado para \textit{Node.js}, proporcionando autocompletado y seguridad de tipos en la capa de controladores. La ejecución de las migraciones (\texttt{prisma migrate}) actúa como un sistema de control de versiones sobre \textit{MariaDB}, garantizando que cualquier cambio en la estructura de tablas o índices (como \texttt{@@unique([idSender, idReceiver])} en las amistades) se aplique de forma atómica.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Durante el control de calidad de la iteración no se reportaron fallos en las transacciones de las migraciones. El modelo de datos se materializó en los contenedores locales sin desviaciones, cerrando la iteración en el tiempo estipulado y permitiendo continuar con la capa de seguridad.
+Durante el control de calidad de la iteración no se reportan fallos en las transacciones de las migraciones. El modelo de datos se materializa en los contenedores locales sin desviaciones, cerrando la iteración en el tiempo estipulado y permitiendo continuar con la capa de seguridad.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-El objetivo central de esta fase fue el desarrollo de una interfaz funcional que permitiera a los usuarios interactuar con el sistema de salas, permitiendo la visualización de los espacios disponibles, así como la creación de nuevos entornos de juego o la unión a los existentes. Adicionalmente, surgió la necesidad de implementar una capa de abstracción para la base de datos mediante un sistema de mapeo objeto-relacional (ORM), lo que representó un requerimiento técnico adicional para facilitar el manejo de la persistencia.
+El objetivo central de esta fase es el desarrollo de una interfaz funcional que permita a los usuarios interactuar con el sistema de salas, permitiendo la visualización de los espacios disponibles, así como la creación de nuevos entornos de juego o la unión a los existentes. Adicionalmente, surge la necesidad de implementar una capa de abstracción para la base de datos mediante un sistema de mapeo objeto-relacional (ORM), lo que representa un requerimiento técnico adicional para facilitar el manejo de la persistencia.
 
 \textbf{2. Diseño} \\
-Para garantizar la integridad y el correcto funcionamiento de las salas, se diseñó un modelo de datos robusto. Se determinó que la entidad encargada de las salas debía poseer atributos específicos, priorizando la unicidad del nombre para evitar duplicidades en los lobbys y la obligatoriedad de un jugador líder (Jugador 1), garantizando que no existan salas vacías sin un administrador de partida.
+Para garantizar la integridad y el correcto funcionamiento de las salas, se diseña un modelo de datos robusto. Se determina que la entidad encargada de las salas debe poseer atributos específicos, priorizando la unicidad del nombre para evitar duplicidades en los lobbys y la obligatoriedad de un jugador líder (Jugador 1), garantizando que no existan salas vacías sin un administrador de partida.
 
-Tras una fase de investigación técnica, se optó por la utilización de Prisma ORM frente a otras alternativas como Sequelize. A pesar de contar con experiencia previa en este último, se valoró que Prisma ofrecía una mayor sencillez de uso y se ajustaba de manera más eficiente a las necesidades arquitectónicas del proyecto.
+Tras una fase de investigación técnica, se opta por la utilización de Prisma ORM frente a otras alternativas como Sequelize. A pesar de contar con experiencia previa en este último, se valora que Prisma ofrece una mayor sencillez de uso y se ajusta de manera más eficiente a las necesidades arquitectónicas del proyecto.
 
 \textbf{3. Implementación} \\
-En la capa de \textit{frontend}, se procedió a la maquetación y desarrollo de la pantalla de listado de salas, asegurando la fidelidad técnica respecto a los diseños establecidos en los \textit{mock-ups}. En el servidor, se estructuró la lógica de negocio mediante la creación de los archivos correspondientes a rutas, servicios y controladores. Para optimizar las fases de prueba, se desarrollaron \textit{seeders} encargados de poblar el sistema con salas predefinidas, permitiendo validar la interfaz de usuario de forma cómoda.
+En la capa de \textit{frontend}, se procede a la maquetación y desarrollo de la pantalla de listado de salas, asegurando la fidelidad técnica respecto a los diseños establecidos en los \textit{mock-ups}. En el servidor, se estructura la lógica de negocio mediante la creación de los archivos correspondientes a rutas, servicios y controladores. Para optimizar las fases de prueba, se desarrollan \textit{seeders} encargados de poblar el sistema con salas predefinidas, permitiendo validar la interfaz de usuario de forma cómoda.
 
-La estructura de la base de datos se definió bajo los siguientes requisitos técnicos:
+La estructura de la base de datos se define bajo los siguientes requisitos técnicos:
 \begin{enumerate}
     \item \textbf{id:} identificativo único de la sala, no nulo.
     \item \textbf{nombre:} único y no nulo para evitar duplicidad de nombres en los lobbys.
@@ -280,35 +280,35 @@ La estructura de la base de datos se definió bajo los siguientes requisitos té
     \item \textbf{Id del jugador 2:} identificador opcional del segundo participante.
 \end{enumerate}
 
-Respecto a la integración de Prisma, se realizó la configuración inicial de la estructura de carpetas y el esquema base.
+Respecto a la integración de Prisma, se realiza la configuración inicial de la estructura de carpetas y el esquema base.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Las tareas se completaron satisfactoriamente y dentro de los márgenes temporales previstos. No obstante, se identificó como una desviación la inclusión de la tarea extraordinaria de configuración del ORM, la cual no figuraba en la planificación original. Como medida de aprendizaje, se estableció que los requerimientos de infraestructura deben ser evaluados con mayor rigor en las etapas iniciales de diseño para mitigar riesgos de retraso en el cronograma de desarrollo.
+Las tareas se completan satisfactoriamente y dentro de los márgenes temporales previstos. No obstante, se identifica como una desviación la inclusión de la tarea extraordinaria de configuración del ORM, la cual no figuraba en la planificación original. Como medida de aprendizaje, se establece que los requerimientos de infraestructura deben ser evaluados con mayor rigor en las etapas iniciales de diseño para mitigar riesgos de retraso en el cronograma de desarrollo.
 
 \subsection{Iteración 5: Gestión de Identidad, Perfiles y Lógica Interna de Salas de Espera}
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo primordial de este ciclo consistió en implementar de forma integral la capa de gestión de usuarios del ecosistema. Esto abarcó tanto la seguridad del acceso (registro y autenticación de credenciales) como la administración de la identidad digital del jugador, proporcionando una zona privada para la edición de datos personales y la visualización de estadísticas de juego.
+El objetivo primordial de este ciclo consiste en implementar de forma integral la capa de gestión de usuarios del ecosistema. Esto abarca tanto la seguridad del acceso (registro y autenticación de credenciales) como la administración de la identidad digital del jugador, proporcionando una zona privada para la edición de datos personales y la visualización de estadísticas de juego.
 
 \textbf{2. Diseño de la Solución} \\
-El diseño de la solución abordó la construcción de las vistas operativas de \textit{Login}, \textit{Register} y el panel de \textit{Profile}. Dando cumplimiento al requisito de seguridad (\textbf{RNF-SEG}), el diseño de la lógica del servidor se basó en la emisión y validación de \textit{JSON Web Tokens} (JWT), asegurando el encriptado unidireccional de contraseñas. Para el cliente, se diseñaron formularios reactivos integrados con un contexto global de autenticación para gobernar las rutas privadas.
+El diseño de la solución aborda la construcción de las vistas operativas de \textit{Login}, \textit{Register} y el panel de \textit{Profile}. Dando cumplimiento al requisito de seguridad (\textbf{RNF-SEG}), el diseño de la lógica del servidor se basa en la emisión y validación de \textit{JSON Web Tokens} (JWT), asegurando el encriptado unidireccional de contraseñas. Para el cliente, se diseñan formularios reactivos integrados con un contexto global de autenticación para gobernar las rutas privadas.
 
 \textbf{3. Detalles de Implementación} \\
-El núcleo de la seguridad se implementó codificando la ofuscación de contraseñas con \textit{bcrypt} durante el registro. En la autenticación exitosa, el \textit{backend} firma un JWT empaquetando el identificador del usuario. El \textit{frontend} inyecta este \textit{token} como cabecera en cada petición HTTP protegida. Un \textit{middleware} programado en \textit{Node.js} intercepta estas peticiones, verificando la validez criptográfica de la firma antes de permitir el acceso a controladores restringidos mediante \textit{Prisma ORM}.
+El núcleo de la seguridad se implementa codificando la ofuscación de contraseñas con \textit{bcrypt} durante el registro. En la autenticación exitosa, el \textit{backend} firma un JWT empaquetando el identificador del usuario. El \textit{frontend} inyecta este \textit{token} como cabecera en cada petición HTTP protegida. Un \textit{middleware} programado en \textit{Node.js} intercepta estas peticiones, verificando la validez criptográfica de la firma antes de permitir el acceso a controladores restringidos mediante \textit{Prisma ORM}.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-El seguimiento de la integración detectó desviaciones severas en el cliente y el servidor. En el \textit{frontend}, surgieron dificultades con la persistencia del estado de sesión; se replanificó implementando un \textit{AuthContext} en \textit{React}. En el \textit{backend}, el diseño inicial de los controladores mezclaba validaciones con persistencia. Se aplicó una refactorización correctiva orientada a la separación de responsabilidades. Tras estas acciones de control, la iteración concluyó satisfactoriamente unificando los flujos de acceso.
+El seguimiento de la integración detecta desviaciones severas en el cliente y el servidor. En el \textit{frontend}, surgen dificultades con la persistencia del estado de sesión; se replanifica implementando un \textit{AuthContext} en \textit{React}. En el \textit{backend}, el diseño inicial de los controladores mezclaba validaciones con persistencia. Se aplica una refactorización correctiva orientada a la separación de responsabilidades. Tras estas acciones de control, la iteración concluye satisfactoriamente unificando los flujos de acceso.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-Esta iteración se centró en la implementación de la lógica interna de la sala de espera (\textit{Lobby Room}), permitiendo a los usuarios interactuar con el entorno antes del inicio de la partida. Los requisitos funcionales incluyeron la capacidad de unirse a salas, actualizar el estado de preparación (listo/no listo) y abandonar la estancia. Sin embargo, debido a que el sistema de gestión de cuentas se encontraba en desarrollo simultáneo, se debieron emplear identificadores de usuario estáticos de forma temporal para avanzar en la lógica de las salas.
+Esta iteración se centra en la implementación de la lógica interna de la sala de espera (\textit{Lobby Room}), permitiendo a los usuarios interactuar con el entorno antes del inicio de la partida. Los requisitos funcionales incluyen la capacidad de unirse a salas, actualizar el estado de preparación (listo/no listo) y abandonar la estancia. Sin embargo, debido a que el sistema de gestión de cuentas se encontraba en desarrollo simultáneo, se deben emplear identificadores de usuario estáticos de forma temporal para avanzar en la lógica de las salas.
 
 \textbf{2. Diseño} \\
-Se diseñó un sistema dinámico de gestión de estados para las salas para asegurar una experiencia de usuario coherente. La lógica principal contemplaba que el sistema reaccionara de forma autónoma ante la salida de un jugador: si el líder abandonaba la sala pero existía un segundo jugador, este heredaba automáticamente el liderazgo de la partida; en caso de que la sala quedara vacía, se procedía a su eliminación definitiva de la base de datos para optimizar los recursos. Asimismo, se planteó la necesidad de sincronización en tiempo real para visualizar la información de ambos participantes, aunque su implementación técnica definitiva se vio condicionada por la disponibilidad de las herramientas de comunicación bidireccional.
+Se diseña un sistema dinámico de gestión de estados para las salas para asegurar una experiencia de usuario coherente. La lógica principal contempla que el sistema reaccione de forma autónoma ante la salida de un jugador: si el líder abandona la sala pero existe un segundo jugador, este hereda automáticamente el liderazgo de la partida; en caso de que la sala quede vacía, se procede a su eliminación definitiva de la base de datos para optimizar los recursos. Asimismo, se plantea la necesidad de sincronización en tiempo real para visualizar la información de ambos participantes, aunque su implementación técnica definitiva se ve condicionada por la disponibilidad de las herramientas de comunicación bidireccional.
 
 \textbf{3. Implementación} \\
-Se desarrolló la interfaz de usuario de la sala siguiendo fielmente los diseños previos, integrando indicadores visuales para los jugadores y su estado de preparación. Para la salida de la estancia, se implementó un botón en el \textit{frontend} que invoca el punto de acceso de la API encargado de ejecutar la función \texttt{leaveLobby}. Esta rutina gestiona la desvinculación en la base de datos y la redistribución de roles:
+Se desarrolla la interfaz de usuario de la sala siguiendo fielmente los diseños previos, integrando indicadores visuales para los jugadores y su estado de preparación. Para la salida de la estancia, se implementa un botón en el \textit{frontend} que invoca el punto de acceso de la API encargado de ejecutar la función \texttt{leaveLobby}. Esta rutina gestiona la desvinculación en la base de datos y la redistribución de roles:
 
 \begin{lstlisting}[basicstyle=\scriptsize\ttfamily,caption={Lógica de gestión de liderazgo y eliminación de salas al abandonar},label={cod:lobby_logic}]
 if(lobby.player1Id === playerId){
@@ -327,10 +327,10 @@ if(lobby.player1Id === playerId){
     }
 \end{lstlisting}
 
-Debido a que la configuración de \textit{Socket.io} no se pudo completar durante esta fase, la actualización visual del estado de los jugadores se resolvió mediante una solución técnica provisional de \textit{polling} en el \textit{frontend}. Se utilizó un \texttt{useEffect()} configurado para realizar consultas automáticas a la API cada 2 segundos, garantizando que la información se viera reflejada periódicamente a la espera de la integración definitiva de WebSockets.
+Debido a que la configuración de \textit{Socket.io} no se pudo completar durante esta fase, la actualización visual del estado de los jugadores se resuelve mediante una solución técnica provisional de \textit{polling} en el \textit{frontend}. Se utiliza un \texttt{useEffect()} configurado para realizar consultas automáticas a la API cada 2 segundos, garantizando que la información se vea reflejada periódicamente a la espera de la integración definitiva de WebSockets.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-La ejecución de la iteración se completó de manera parcial debido a diversas complicaciones técnicas. La falta de configuración inicial de \textit{Socket.io} impidió establecer una comunicación bidireccional real, lo que limitó la gestión de desconexiones automáticas al cierre de la aplicación o cambio de URL, obligando a depender exclusivamente de la acción manual en la interfaz. Como medida de replanificación, se elevó la prioridad de la configuración de WebSockets para la siguiente fase con el fin de eliminar el sistema de consultas temporales y cubrir satisfactoriamente los requisitos de tiempo real.
+La ejecución de la iteración se completa de manera parcial debido a diversas complicaciones técnicas. La falta de configuración inicial de \textit{Socket.io} impidió establecer una comunicación bidireccional real, lo que limitó la gestión de desconexiones automáticas al cierre de la aplicación o cambio de URL, obligando a depender exclusivamente de la acción manual en la interfaz. Como medida de replanificación, se eleva la prioridad de la configuración de WebSockets para la siguiente fase con el fin de eliminar el sistema de consultas temporales y cubrir satisfactoriamente los requisitos de tiempo real.
 
 \section{Interacciones Sociales y Comunicación Bidireccional}
 
@@ -361,10 +361,10 @@ const registerLobbyHandlers = (io, socket) => {
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo establecido para este ciclo fue implementar el componente social del ecosistema, diseñando un sistema de amistades entre usuarios e introduciendo la base técnica para la comunicación bidireccional necesaria en la futura partida.
+El objetivo establecido para este ciclo es implementar el componente social del ecosistema, diseñando un sistema de amistades entre usuarios e introduciendo la base técnica para la comunicación bidireccional necesaria en la futura partida.
 
 \textbf{2. Diseño de la Solución} \\
-El diseño se dividió en dos frentes. Por un lado, se planificaron los \textit{endpoints} y el modelo de entidad relacional para enviar, aceptar y rechazar amistades, junto con su vista (\textit{Dashboard}). Por otro lado, en cumplimiento del requisito de rendimiento (\textbf{RNF-REN}) y como escudo principal frente al riesgo de saturación del servidor por concurrencia (\textbf{RT-01}), se diseñó la sustitución del protocolo HTTP tradicional por \textit{WebSockets} (\textit{Socket.io}) en el servidor. La justificación arquitectónica de esta decisión se detalla en la Tabla \ref{tab:ws_analisis}.
+El diseño se divide en dos frentes. Por un lado, se planifican los \textit{endpoints} y el modelo de entidad relacional para enviar, aceptar y rechazar amistades, junto con su vista (\textit{Dashboard}). Por otro lado, en cumplimiento del requisito de rendimiento (\textbf{RNF-REN}) y como escudo principal frente al riesgo de saturación del servidor por concurrencia (\textbf{RT-01}), se diseña la sustitución del protocolo HTTP tradicional por \textit{WebSockets} (\textit{Socket.io}) en el servidor. La justificación arquitectónica de esta decisión se detalla en la Tabla \ref{tab:ws_analisis}.
 
 \begin{table}[H]
 \centering
@@ -382,20 +382,20 @@ El diseño se dividió en dos frentes. Por un lado, se planificaron los \textit{
 \end{table}
 
 \textbf{3. Detalles de Implementación} \\
-El principal desafío de implementación consistió en mantener una única fuente de verdad sincronizada. El algoritmo desarrollado operó estableciendo un mapa en memoria en el servidor que vincula el \texttt{userId} con su \texttt{socket.id}. Tras completarse una transacción en \textit{MariaDB} (ej. aceptar una solicitud), el controlador invoca al gestor de \textit{Sockets}. Éste emite un evento tipado (\textit{Broadcast} dirigido) enviando el nuevo estado del \textit{Dashboard}, forzando a la vista \textit{React} a re-renderizarse de forma reactiva sin necesidad de sondeo.
+El principal desafío de implementación consiste en mantener una única fuente de verdad sincronizada. El algoritmo desarrollado opera estableciendo un mapa en memoria en el servidor que vincula el \texttt{userId} con su \texttt{socket.id}. Tras completarse una transacción en \textit{MariaDB} (ej. aceptar una solicitud), el controlador invoca al gestor de \textit{Sockets}. Éste emite un evento tipado (\textit{Broadcast} dirigido) enviando el nuevo estado del \textit{Dashboard}, forzando a la vista \textit{React} a re-renderizarse de forma reactiva sin necesidad de sondeo.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Durante el control de calidad de la comunicación, se detectaron dificultades persistentes para establecer una conexión estable (fugas de memoria por múltiples instancias por usuario). La desviación se mitigó replanificando la lógica del cliente e implementando retornos de limpieza (\textit{cleanup}) en los \textit{hooks} de \textit{React} para forzar la desconexión explícita. El ciclo concluyó exitosamente, dejando el motor de comunicación listo para iniciar el flujo principal de la partida.
+Durante el control de calidad de la comunicación, se detectan dificultades persistentes para establecer una conexión estable (fugas de memoria por múltiples instancias por usuario). La desviación se mitiga replanificando la lógica del cliente e implementando retornos de limpieza (\textit{cleanup}) en los \textit{hooks} de \textit{React} para forzar la desconexión explícita. El ciclo concluye exitosamente, dejando el motor de comunicación listo para iniciar el flujo principal de la partida.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-El hito principal de esta iteración fue establecer la base técnica y arquitectónica de la partida mediante comunicación bidireccional en tiempo real. Se buscó crear los cimientos tanto en el \textit{frontend} como en el \textit{backend} para que el estado del juego se sincronice automáticamente entre los dispositivos de ambos jugadores cada vez que se realice una acción.
+El hito principal de esta iteración es establecer la base técnica y arquitectónica de la partida mediante comunicación bidireccional en tiempo real. Se busca crear los cimientos tanto en el \textit{frontend} como en el \textit{backend} para que el estado del juego se sincronice automáticamente entre los dispositivos de ambos jugadores cada vez que se realice una acción.
 
 \textbf{2. Diseño} \\
-Para garantizar una experiencia de juego fluida, se diseñó una arquitectura de baja latencia. Se decidió utilizar Redis como base de datos en memoria para gestionar el estado volátil de la partida, evitando así la sobrecarga de consultas constantes a MariaDB. El modelo de datos de la partida se definió mediante una estructura JSON que centraliza la información crítica: el turno activo (\textit{peasant} o \textit{king}), el mazo central, la pila de descartes y el estado individual (mano y pueblo) de cada participante. Asimismo, se diseñó un sistema de salas mediante WebSockets para aislar los eventos de cada partida de forma independiente.
+Para garantizar una experiencia de juego fluida, se diseña una arquitectura de baja latencia. Se decide utilizar Redis como base de datos en memoria para gestionar el estado volátil de la partida, evitando así la sobrecarga de consultas constantes a MariaDB. El modelo de datos de la partida se define mediante una estructura JSON que centraliza la información crítica: el turno activo (\textit{peasant} o \textit{king}), el mazo central, la pila de descartes y el estado individual (mano y pueblo) de cada participante. Asimismo, se diseña un sistema de salas mediante WebSockets para aislar los eventos de cada partida de forma independiente.
 
 \textbf{3. Implementación} \\
-La implementación comenzó con el desarrollo de una pantalla de partida estática en el \textit{frontend} para validar la sincronización. Se integró una función de recuperación de estado asistida por un \textit{hook} \texttt{useEffect()} y gestionada mediante \texttt{useState()}:
+La implementación comienza con el desarrollo de una pantalla de partida estática en el \textit{frontend} para validar la sincronización. Se integra una función de recuperación de estado asistida por un \textit{hook} \texttt{useEffect()} y gestionada mediante \texttt{useState()}:
 
 \begin{lstlisting}[language={},basicstyle=\scriptsize\ttfamily,caption={Actualización de estado de la partida en el cliente},label={cod:game.tsx1}]
 const fetchGameState = async () => {
@@ -411,7 +411,7 @@ const fetchGameState = async () => {
   };
 \end{lstlisting}
 
-Para la comunicación en tiempo real, se configuró un \textit{socket} encargado de emitir el evento \texttt{joinGame} al cargar la página, suscribiendo al cliente a una sala específica. Simultáneamente, se estableció un escucha para el evento \texttt{action}, el cual dispara la recarga del estado cada vez que el servidor notifica un cambio:
+Para la comunicación en tiempo real, se configura un \textit{socket} encargado de emitir el evento \texttt{joinGame} al cargar la página, suscribiendo al cliente a una sala específica. Simultáneamente, se establece un escucha para el evento \texttt{action}, el cual dispara la recarga del estado cada vez que el servidor notifica un cambio:
 
 \begin{lstlisting}[language={},basicstyle=\scriptsize\ttfamily,caption={Hook de suscripción y escucha de acciones de juego},label={cod:game.tsx2}]
 useEffect(() => {
@@ -427,7 +427,7 @@ useEffect(() => {
   }, [socket, id]);
 \end{lstlisting}
 
-En el \textit{backend}, se desarrolló la capa de servicio \texttt{gameService.js} para orquestar la persistencia en Redis. La función \texttt{createGame} inicializa el objeto JSON con el estado de salida:
+En el \textit{backend}, se desarrolla la capa de servicio \texttt{gameService.js} para orquestar la persistencia en Redis. La función \texttt{createGame} inicializa el objeto JSON con el estado de salida:
 
 \begin{lstlisting}[language={},basicstyle=\scriptsize\ttfamily,caption={Inicialización del estado de partida en Redis},label={cod:gameService1}]
 const createGame = async ( lobbyId, player1Id, player2Id) => {
@@ -454,7 +454,7 @@ const createGame = async ( lobbyId, player1Id, player2Id) => {
 };
 \end{lstlisting}
 
-Finalmente, se implementó la lógica de cambio de turnos en el servidor. Al procesar una acción, el controlador emite una señal a todos los clientes conectados en la sala mediante \texttt{socket.io.to(game:\{id\}).emit('action')}, garantizando que ambos jugadores vean reflejado el movimiento instantáneamente:
+Finalmente, se implementa la lógica de cambio de turnos en el servidor. Al procesar una acción, el controlador emite una señal a todos los clientes conectados en la sala mediante \texttt{socket.io.to(game:\{id\}).emit('action')}, garantizando que ambos jugadores vean reflejado el movimiento instantáneamente:
 
 \begin{lstlisting}[language={},basicstyle=\scriptsize\ttfamily,caption={Fragmento de la lógica de transición de turnos},label={cod:gameService2}]
 if(gameState.turn == "peasant" && playerId==gameState.players.peasant.id){
@@ -467,7 +467,7 @@ if(gameState.turn == "peasant" && playerId==gameState.players.peasant.id){
 \end{lstlisting}
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Esta iteración resultó en un éxito técnico, logrando una sincronización fluida entre los jugadores. La arquitectura híbrida (MariaDB para datos persistentes y Redis con WebSockets para el tablero activo) demostró ser eficiente. Con la infraestructura core operativa, se da por finalizada esta fase, permitiendo que las siguientes iteraciones se centren exclusivamente en el desarrollo de las mecánicas avanzadas y los efectos específicos de las cartas.
+Esta iteración resulta en un éxito técnico, logrando una sincronización fluida entre los jugadores. La arquitectura híbrida (MariaDB para datos persistentes y Redis con WebSockets para el tablero activo) demuestra ser eficiente. Con la infraestructura core operativa, se da por finalizada esta fase, permitiendo que las siguientes iteraciones se centren exclusivamente en el desarrollo de las mecánicas avanzadas y los efectos específicos de las cartas.
 
 \section{Arquitectura del Motor de Juego Asimétrico}
 
@@ -502,47 +502,47 @@ const resolvePendingAction = async (gameId, userId, targetData) => {
 \subsection{Iteración 7: Auditoría Interna, Reorganización Estructural y Planificación}
 
 \textbf{1. Definición de Características} \\
-El objetivo inicial de la iteración consistía en comenzar el desarrollo técnico del motor de juego y el chat en partida. Sin embargo, ante el rápido crecimiento del proyecto, el equipo decidió estratégicamente pivotar los esfuerzos hacia una auditoría profunda del código existente, evaluando las funcionalidades implementadas hasta la fecha para identificar y catalogar la deuda técnica acumulada.
+El objetivo inicial de la iteración consiste en comenzar el desarrollo técnico del motor de juego y el chat en partida. Sin embargo, ante el rápido crecimiento del proyecto, el equipo decide estratégicamente pivotar los esfuerzos hacia una auditoría profunda del código existente, evaluando las funcionalidades implementadas hasta la fecha para identificar y catalogar la deuda técnica acumulada.
 
 \textbf{2. Diseño de la Solución} \\
-Al paralizar el desarrollo de nuevas características, el diseño se centró en elaborar un plan de auditoría. Dando cumplimiento al requisito de mantenibilidad (\textbf{RNF-MAN}), se diseñó un protocolo de revisión de los flujos de datos entre cliente y servidor, con el fin de detectar problemas de escalabilidad visual y riesgos de sobreexposición de datos sensibles en red que podrían comprometer la arquitectura asimétrica futura.
+Al paralizar el desarrollo de nuevas características, el diseño se centra en elaborar un plan de auditoría. Dando cumplimiento al requisito de mantenibilidad (\textbf{RNF-MAN}), se diseña un protocolo de revisión de los flujos de datos entre cliente y servidor, con el fin de detectar problemas de escalabilidad visual y riesgos de sobreexposición de datos sensibles en red que podrían comprometer la arquitectura asimétrica futura.
 
 \textbf{3. Detalles de Implementación} \\
-Durante este periodo, la ejecución técnica se limitó a tareas de inspección de código estático y análisis de tráfico de red. Se identificaron vulnerabilidades estructurales en la serialización de datos enviados por \textit{WebSockets} y un alto nivel de acoplamiento en los componentes de \textit{React}, documentando exhaustivamente cada hallazgo en el sistema de control de versiones (\textit{Issues}).
+Durante este periodo, la ejecución técnica se limita a tareas de inspección de código estático y análisis de tráfico de red. Se identifican vulnerabilidades estructurales en la serialización de datos enviados por \textit{WebSockets} y un alto nivel de acoplamiento en los componentes de \textit{React}, documentando exhaustivamente cada hallazgo en el sistema de control de versiones (\textit{Issues}).
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-El control de este \textit{sprint} representó un punto de inflexión crítico. La auditoría demostró que era inasumible continuar el desarrollo sin sanear el núcleo del sistema debido al incremento de la deuda técnica por la asimetría del código (\textbf{RT-04}). Como medida de replanificación, el equipo modificó la lista de tareas, arrastrando el desarrollo del chat y priorizando una refactorización masiva para el siguiente ciclo. Se asumió el riesgo consciente de que ciertas características menores quedarían fuera del alcance del proyecto a cambio de garantizar la integridad de la arquitectura central.
+El control de este \textit{sprint} representa un punto de inflexión crítico. La auditoría demuestra que es inasumible continuar el desarrollo sin sanear el núcleo del sistema debido al incremento de la deuda técnica por la asimetría del código (\textbf{RT-04}). Como medida de replanificación, el equipo modifica la lista de tareas, arrastrando el desarrollo del chat y priorizando una refactorización masiva para el siguiente ciclo. Se asume el riesgo consciente de que ciertas características menores queden fuera del alcance del proyecto a cambio de garantizar la integridad de la arquitectura central.
 
 \subsection{Iteración 8: Refactorización, Estado Inicial de Partida y Chat en Tiempo Real}
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo de este \textit{sprint} fue ejecutar la reestructuración profunda dictaminada en la auditoría previa para mejorar la legibilidad del código. Adicionalmente, se fijó el hito de preparar la base de datos para la configuración del estado inicial de la partida (cartas y mazos).
+El objetivo de este \textit{sprint} es ejecutar la reestructuración profunda dictaminada en la auditoría previa para mejorar la legibilidad del código. Adicionalmente, se fija el hito de preparar la base de datos para la configuración del estado inicial de la partida (cartas y mazos).
 
 \textbf{2. Diseño de la Solución} \\
-Para cumplir el requisito de mantenibilidad (\textbf{RNF-MAN}), el diseño de la refactorización dictó unificar la nomenclatura y extraer componentes reutilizables en \textit{React}. A nivel de arquitectura (\textbf{RNF-ARQ}), se diseñó el uso del patrón \textit{Data Transfer Object} (DTO) para aislar la \textit{lógica de negocio} de los datos emitidos por red, asegurando la naturaleza "ciega" del juego asimétrico y neutralizando de forma activa la amenaza de alteración de lógica o inyección de trampas en el cliente (\textbf{RT-03}). Además, se planificaron los \textit{seeders} de la base de datos.
+Para cumplir el requisito de mantenibilidad (\textbf{RNF-MAN}), el diseño de la refactorización dicta unificar la nomenclatura y extraer componentes reutilizables en \textit{React}. A nivel de arquitectura (\textbf{RNF-ARQ}), se diseña el uso del patrón \textit{Data Transfer Object} (DTO) para aislar la \textit{lógica de negocio} de los datos emitidos por red, asegurando la naturaleza "ciega" del juego asimétrico y neutralizando de forma activa la amenaza de alteración de lógica o inyección de trampas en el cliente (\textbf{RT-03}). Además, se planifican los \textit{seeders} de la base de datos.
 
 \textbf{3. Detalles de Implementación} \\
-La vulnerabilidad estructural descubierta se mitigó codificando funciones adaptadoras (\textit{mappers}) puras. Estas rutinas reciben el estado absoluto del juego desde \textit{Redis} y construyen un nuevo objeto purgado para el \textit{socket} receptor. De este modo, propiedades sensibles como la mano del rival se procesan y se envían únicamente como conteos de longitud (números enteros), garantizando que el cliente no pueda inspeccionar el tráfico para obtener ventajas ilícitas.
+La vulnerabilidad estructural descubierta se mitiga codificando funciones adaptadoras (\textit{mappers}) puras. Estas rutinas reciben el estado absoluto del juego desde \textit{Redis} y construyen un nuevo objeto purgado para el \textit{socket} receptor. De este modo, propiedades sensibles como la mano del rival se procesan y se envían únicamente como conteos de longitud (números enteros), garantizando que el cliente no pueda inspeccionar el tráfico para obtener ventajas ilícitas.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Durante la validación de la refactorización, el seguimiento reveló brechas en el filtrado de datos (ej. \textit{Rival town dto}), que seguían exponiendo información privada. El control de calidad forzó a replanificar la serialización JSON, introduciendo validadores estrictos en los \textit{mappers}. Tras superar este reto, la base de código quedó notablemente robusta y lista para iniciar el sistema funcional de cartas.
+Durante la validación de la refactorización, el seguimiento revela brechas en el filtrado de datos (ej. \textit{Rival town dto}), que siguen exponiendo información privada. El control de calidad fuerza a replanificar la serialización JSON, introduciendo validadores estrictos en los \textit{mappers}. Tras superar este reto, la base de código queda notablemente robusta y lista para iniciar el sistema funcional de cartas.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-El hito principal de esta fase fue la estabilización y el saneamiento de las tecnologías integradas hasta la fecha. Debido a que la configuración inicial del entorno de despliegue se realizó de manera prematura, se hizo necesario revisitar esta infraestructura para garantizar un funcionamiento correcto y robusto. Asimismo, se planteó la implementación de un canal de comunicación de texto en tiempo real (chat) exclusivo para los jugadores dentro de una misma sesión de juego, con el fin de mejorar la interactividad.
+El hito principal de esta fase es la estabilización y el saneamiento de las tecnologías integradas hasta la fecha. Debido a que la configuración inicial del entorno de despliegue se realizó de manera prematura, se hace necesario revisitar esta infraestructura para garantizar un funcionamiento correcto y robusto. Asimismo, se plantea la implementación de un canal de comunicación de texto en tiempo real (chat) exclusivo para los jugadores dentro de una misma sesión de juego, con el fin de mejorar la interactividad.
 
 \textbf{2. Diseño} \\
-Para el sistema de Despliegue Continuo (CD), se diseñó una arquitectura de integración en dos fases secuenciales dentro de GitHub Actions. El objetivo fue asegurar que ninguna versión con fallos técnicos llegase a los entornos de ejecución. La primera fase se encarga de la validación mediante tests unitarios y de integración; solo tras un éxito total, se activa la segunda fase de despliegue.
+Para el sistema de Despliegue Continuo (CD), se diseña una arquitectura de integración en dos fases secuenciales dentro de GitHub Actions. El objetivo es asegurar que ninguna versión con fallos técnicos llegue a los entornos de ejecución. La primera fase se encarga de la validación mediante tests unitarios y de integración; solo tras un éxito total, se activa la segunda fase de despliegue.
 
-Para el chat de partida, se diseñó un modelo de comunicación bidireccional apoyado en WebSockets. Para garantizar la privacidad y el rendimiento, se proyectó un aislamiento lógico basado en el identificador único de la partida almacenado en Redis. De esta forma, los mensajes se difunden únicamente a los usuarios conectados a la misma instancia de juego, evitando interferencias entre sesiones concurrentes.
+Para el chat de partida, se diseña un modelo de comunicación bidireccional apoyado en WebSockets. Para garantizar la privacidad y el rendimiento, se proyecta un aislamiento lógico basado en el identificador único de la partida almacenado en Redis. De esta forma, los mensajes se difunden únicamente a los usuarios conectados a la misma instancia de juego, evitando interferencias entre sesiones concurrentes.
 
 \textbf{3. Implementación} \\
-Se reescribió íntegramente el flujo de trabajo en GitHub Actions (\texttt{CI/CD Deploy Pipeline}). Este \textit{workflow} se activa automáticamente ante cualquier subida de código a las ramas \texttt{main} y \texttt{trunk}. La implementación técnica se divide en dos \textit{jobs}:
+Se reescribe íntegramente el flujo de trabajo en GitHub Actions (\texttt{CI/CD Deploy Pipeline}). Este \textit{workflow} se activa automáticamente ante cualquier subida de código a las ramas \texttt{main} y \texttt{trunk}. La implementación técnica se divide en dos \textit{jobs}:
 
 \begin{enumerate}
     \item \textbf{test}: Se instancia una máquina virtual con Ubuntu y Node.js 20. Se instalan las dependencias y se ejecutan los tests de la aplicación.
-    \item \textbf{deploy}: Este trabajo depende de la finalización exitosa del anterior (\texttt{needs: test}). Se implementó una lógica condicional para discriminar el entorno de destino: si los cambios provienen de \texttt{trunk}, se lanzan peticiones \texttt{curl} a los \textit{webhooks} de \textit{Staging} en Render; si provienen de \texttt{main}, se notifican los \textit{hooks} de producción.
+    \item \textbf{deploy}: Este trabajo depende de la finalización exitosa del anterior (\texttt{needs: test}). Se implementa una lógica condicional para discriminar el entorno de destino: si los cambios provienen de \texttt{trunk}, se lanzan peticiones \texttt{curl} a los \textit{webhooks} de \textit{Staging} en Render; si provienen de \texttt{main}, se notifican los \textit{hooks} de producción.
 \end{enumerate}
 
 \begin{lstlisting}[basicstyle=\scriptsize\ttfamily,caption={Fragmento del Workflow de CI/CD con lógica de tests y despliegue por ramas},label={cod:cicd_pipeline}]
@@ -575,22 +575,22 @@ jobs:
           curl -X POST "${{ secrets.RENDER_HOOK_FRONT_MAIN }}"
 \end{lstlisting}
 
-En cuanto al chat, se desarrolló la interfaz de usuario integrada visualmente en la pantalla de partida del \textit{frontend}. En el \textit{backend}, se configuraron los eventos de WebSockets para el envío y recepción de mensajes, asegurando que la comunicación sea instantánea y esté confinada al canal específico de la sesión activa en Redis.
+En cuanto al chat, se desarrolla la interfaz de usuario integrada visualmente en la pantalla de partida del \textit{frontend}. En el \textit{backend}, se configuran los eventos de WebSockets para el envío y recepción de mensajes, asegurando que la comunicación sea instantánea y esté confinada al canal específico de la sesión activa en Redis.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Las tareas se completaron satisfactoriamente en el tiempo estipulado. La implementación del chat actuó como una prueba de concepto técnica fundamental para validar la estabilidad de Socket.io antes de abordar la lógica compleja de las mecánicas del juego. No se detectaron desviaciones, por lo que se procedió a la siguiente fase de desarrollo funcional.
+Las tareas se completan satisfactoriamente en el tiempo estipulado. La implementación del chat actúa como una prueba de concepto técnica fundamental para validar la estabilidad de Socket.io antes de abordar la lógica compleja de las mecánicas del juego. No se detectan desviaciones, por lo que se procede a la siguiente fase de desarrollo funcional.
 
 \subsection{Iteración 9: Desarrollo del Motor de Juego, UX Dinámica y Sincronización de Salas}
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo establecido consistió en dotar de vida al motor de \textit{King and Peasant}, centrándose en la implementación funcional de las cartas de acción y el complejo sistema de acciones pendientes (\textit{Pending Actions}) para manejar la interactividad asimétrica de la partida.
+El objetivo establecido consiste en dotar de vida al motor de \textit{King and Peasant}, centrándose en la implementación funcional de las cartas de acción y el complejo sistema de acciones pendientes (\textit{Pending Actions}) para manejar la interactividad asimétrica de la partida.
 
 \textbf{2. Diseño de la Solución} \\
-El diseño de la solución abordó la creación de los servicios (\textit{Game Service}) y controladores encargados de procesar el uso de cartas, validando la capacidad asimétrica del tablero (\textbf{RN-02}) y automatizando el cierre de turno (\textbf{RN-04}). En el cliente, se diseñaron las interfaces dinámicas para explorar la pila de descartes y el diccionario visual de acciones.
+El diseño de la solución aborda la creación de los servicios (\textit{Game Service}) y controladores encargados de procesar el uso de cartas, validando la capacidad asimétrica del tablero (\textbf{RN-02}) y automatizando el cierre de turno (\textbf{RN-04}). En el cliente, se diseñan las interfaces dinámicas para explorar la pila de descartes y el diccionario visual de acciones.
 
 \textbf{3. Detalles de Implementación} \\
-El problema computacional residía en congelar el estado del motor de forma segura delegando el contexto a \textit{Redis}. El sistema de cola de acciones (\textit{Pending Actions}) se implementó generando un objeto \texttt{pendingAction} que bloquea algorítmicamente el turno global. Cuando el cliente envía la resolución, un despachador dinámico invoca la función específica requerida, aplica las mutaciones, purga la acción y reactiva el turno, tal y como se formaliza en la Tabla \ref{tab:pending_actions}.
+El problema computacional reside en congelar el estado del motor de forma segura delegando el contexto a \textit{Redis}. El sistema de cola de acciones (\textit{Pending Actions}) se implementa generando un objeto \texttt{pendingAction} que bloquea algorítmicamente el turno global. Cuando el cliente envía la resolución, un despachador dinámico invoca la función específica requerida, aplica las mutaciones, purga la acción y reactiva el turno, tal y como se formaliza en la Tabla \ref{tab:pending_actions}.
 
 \begin{table}[htbp]
 \centering
@@ -606,17 +606,17 @@ El problema computacional residía en congelar el estado del motor de forma segu
 \end{table}
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-El control de la implementación reportó complicaciones severas al sincronizar las mecánicas asíncronas del servidor con la vista. Al aplicar reglas estrictas (\textbf{RN-03}), se originaron bloqueos en la selección de cartas. La desviación obligó a replanificar el control de flujo en \textit{React}, aislando la resolución de las promesas del ciclo de vida de los modales. Solventado esto, el hito crítico se alcanzó, permitiendo la interactividad en mesa.
+El control de la implementación reporta complicaciones severas al sincronizar las mecánicas asíncronas del servidor con la vista. Al aplicar reglas estrictas (\textbf{RN-03}), se originan bloqueos en la selección de cartas. La desviación obliga a replanificar el control de flujo en \textit{React}, aislando la resolución de las promesas del ciclo de vida de los modales. Solventado esto, el hito crítico se alcanza, permitiendo la interactividad en mesa.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-El objetivo principal de esta iteración se centró en el pulido de la experiencia de usuario (UX) y en la corrección de errores arrastrados desde la Iteración 5 respecto al ciclo de vida de las salas de espera. Concretamente, se estableció la necesidad de configurar los botones de las cartas en el \textit{frontend} para mostrar textos de acción dinámicos basados en el estado y ubicación de la carta seleccionada. Adicionalmente, se definieron tres características críticas para las salas: aplicar \textit{Socket.io} para sincronizar los estados de preparación (listo/no listo), garantizar la redirección simultánea de ambos jugadores a la pantalla de partida al iniciarla el líder, y expulsar automáticamente a cualquier usuario que abandone la sala por desconexión o cambio de URL.
+El objetivo principal de esta iteración se centra en el pulido de la experiencia de usuario (UX) y en la corrección de errores arrastrados desde la Iteración 5 respecto al ciclo de vida de las salas de espera. Concretamente, se establece la necesidad de configurar los botones de las cartas en el \textit{frontend} para mostrar textos de acción dinámicos basados en el estado y ubicación de la carta seleccionada. Adicionalmente, se definen tres características críticas para las salas: aplicar \textit{Socket.io} para sincronizar los estados de preparación (listo/no listo), garantizar la redirección simultánea de ambos jugadores a la pantalla de partida al iniciarla el líder, y expulsar automáticamente a cualquier usuario que abandone la sala por desconexión o cambio de URL.
 
 \textbf{2. Diseño} \\
-Para la interfaz de las cartas, se diseñó un componente reactivo (\texttt{ActionCard}) parametrizable, capaz de recibir la descripción, el texto del botón y la ruta de redirección como propiedades, adaptándose al contexto de la partida. En cuanto a la gestión de salas, se diseñó un sistema estricto de redirección sincronizada emitido desde el servidor. Para el control de presencia, se diseñó un mecanismo de tolerancia a desconexiones breves: si un cliente pierde conexión o navega fuera de la vista, se inicia una cuenta atrás de 5 segundos antes de considerar el abandono como definitivo y proceder a la expulsión.
+Para la interfaz de las cartas, se diseña un componente reactivo (\texttt{ActionCard}) parametrizable, capaz de recibir la descripción, el texto del botón y la ruta de redirección como propiedades, adaptándose al contexto de la partida. En cuanto a la gestión de salas, se diseña un sistema estricto de redirección sincronizada emitido desde el servidor. Para el control de presencia, se diseña un mecanismo de tolerancia a desconexiones breves: si un cliente pierde conexión o navega fuera de la vista, se inicia una cuenta atrás de 5 segundos antes de considerar el abandono como definitivo y proceder a la expulsión.
 
 \textbf{3. Implementación} \\
-En el cliente, el componente \texttt{ActionCard} se implementó utilizando el \textit{hook} \texttt{useNavigate} para manejar las acciones de enrutamiento dinámico al pulsar el botón de la carta. En el servidor, se integró plenamente \textit{Socket.io} para reemplazar el sistema de consultas temporales (\textit{polling}) anterior. Se codificó la lógica en \texttt{LobbySocket.js}, donde se interceptan los eventos de salida explícita e interrupción de conexión (\texttt{disconnecting}). 
+En el cliente, el componente \texttt{ActionCard} se implementa utilizando el \textit{hook} \texttt{useNavigate} para manejar las acciones de enrutamiento dinámico al pulsar el botón de la carta. En el servidor, se integra plenamente \textit{Socket.io} para reemplazar el sistema de consultas temporales (\textit{polling}) anterior. Se codifica la lógica en \texttt{LobbySocket.js}, donde se interceptan los eventos de salida explícita e interrupción de conexión (\texttt{disconnecting}). 
 
 Cuando ocurre una desconexión no controlada, se ejecuta una función auxiliar que establece un \texttt{setTimeout} de 5000 milisegundos. Si el usuario no se reconecta cancelando dicho temporizador, se ejecuta el borrado en base de datos mediante \texttt{lobbyService.leaveLobby} y se emite la actualización al resto de clientes:
 
@@ -644,34 +644,34 @@ const AuxLeaveLobby = async (numId, lobbyId, socket, io) => {
 \end{lstlisting}
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Se solventaron con éxito los bloqueos arrastrados desde las etapas iniciales de la creación de salas. La correcta aplicación de WebSockets estabilizó el flujo de inicio de partida, y las tareas se realizaron correctamente y en el tiempo esperado. Todo el plan se ejecutó satisfactoriamente, dejando la infraestructura de comunicación completamente lista para albergar las reglas del juego.
+Se solventan con éxito los bloqueos arrastrados desde las etapas iniciales de la creación de salas. La correcta aplicación de WebSockets estabiliza el flujo de inicio de partida, y las tareas se realizan correctamente y en el tiempo esperado. Todo el plan se ejecuta satisfactoriamente, dejando la infraestructura de comunicación completamente lista para albergar las reglas del juego.
 
 \subsection{Iteración 10: Lógica Base de Turnos, Interacciones de Cartas y Condiciones de Victoria}
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo fue definir la finalización algorítmica de las partidas, estableciendo las condiciones de victoria asimétricas de cada facción (Guardias vs. Asesino/Revueltas) y puliendo mecánicas clave de final de juego.
+El objetivo es definir la finalización algorítmica de las partidas, estableciendo las condiciones de victoria asimétricas de cada facción (Guardias vs. Asesino/Revueltas) y puliendo mecánicas clave de final de juego.
 
 \textbf{2. Diseño de la Solución} \\
-Para garantizar la atomicidad de victoria (\textbf{RN-05}), el diseño de la lógica de negocio exigió que el motor comprobara de forma asíncrona la victoria tras cada movimiento. Se ideó una orquestación transaccional para asegurar que, al detectar un ganador, \textit{MariaDB} reflejara el cambio de estado, la caché en memoria se bloqueara y el cliente renderizara modales dinámicos de cierre.
+Para garantizar la atomicidad de victoria (\textbf{RN-05}), el diseño de la lógica de negocio exige que el motor compruebe de forma asíncrona la victoria tras cada movimiento. Se idea una orquestación transaccional para asegurar que, al detectar un ganador, \textit{MariaDB} refleje el cambio de estado, la caché en memoria se bloquee y el cliente renderice modales dinámicos de cierre.
 
 \textbf{3. Detalles de Implementación} \\
-La complejidad se abordó programando un interceptor central de validación. Tras cualquier mutación en \textit{Redis}, el algoritmo evalúa en paralelo las condiciones absolutas del Campesino frente a las del Rey. Si una aserción retorna un estado ganador válido, el motor consolida el estado en \textit{MariaDB} dentro de una misma transacción de \textit{Prisma}, y envía un código de interrupción por \textit{WebSockets} que destruye el hilo de memoria para evitar condiciones de carrera.
+La complejidad se aborda programando un interceptor central de validación. Tras cualquier mutación en \textit{Redis}, el algoritmo evalúa en paralelo las condiciones absolutas del Campesino frente a las del Rey. Si una aserción retorna un estado ganador válido, el motor consolida el estado en \textit{MariaDB} dentro de una misma transacción de \textit{Prisma}, y envía un código de interrupción por \textit{WebSockets} que destruye el hilo de memoria para evitar condiciones de carrera.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Durante las pruebas de transición final, el equipo de control detectó errores de concurrencia que desencadenaban un Error 500 en el servidor al intentar actualizar el estado y destruir el hilo simultáneamente. La corrección requirió replanificar el \texttt{GameController}, encapsulando las sentencias en un bloque transaccional \textit{try/catch} con \textit{await}. Tras la corrección, el motor logró determinar a un ganador de forma robusta.
+Durante las pruebas de transición final, el equipo de control detecta errores de concurrencia que desencadenaban un Error 500 en el servidor al intentar actualizar el estado y destruir el hilo simultáneamente. La corrección requiere replanificar el \texttt{GameController}, encapsulando las sentencias en un bloque transaccional \textit{try/catch} con \textit{await}. Tras la corrección, el motor logra determinar a un ganador de forma robusta.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-Una vez establecida la comunicación bidireccional estable, el objetivo de esta fase fue la inmersión en el núcleo funcional del juego. Se definieron e implementaron las acciones fundamentales que componen el turno de un jugador: jugar cartas de tipo guardia y rebelde, gestionar el paso de turno, el robo de cartas y la mecánica exclusiva del Rey denominada ``Condenar a un Rebelde''. Para dar soporte a estas funcionalidades, se desarrollaron diversos puntos de acceso en la API junto con sus lógicas de negocio correspondientes en las capas de controladores y servicios.
+Una vez establecida la comunicación bidireccional estable, el objetivo de esta fase es la inmersión en el núcleo funcional del juego. Se definen e implementan las acciones fundamentales que componen el turno de un jugador: jugar cartas de tipo guardia y rebelde, gestionar el paso de turno, el robo de cartas y la mecánica exclusiva del Rey denominada ``Condenar a un Rebelde''. Para dar soporte a estas funcionalidades, se desarrollan diversos puntos de acceso en la API junto con sus lógicas de negocio correspondientes en las capas de controladores y servicios.
 
 \textbf{2. Diseño} \\
-Se diseñó una arquitectura de servicios modular para gestionar el uso de cartas, discriminando el flujo mediante un parámetro \texttt{isHand}. Si la carta se juega desde la mano, el sistema debe evaluar si es una carta de acción (ejecución inmediata) o un personaje (colocación en el pueblo). Si se juega desde el pueblo, la lógica se vuelve asimétrica: los guardias activan sus efectos, mientras que los rebeldes pueden ser devueltos a la mano si están revelados, intentar una infiltración o activar su habilidad especial.
+Se diseña una arquitectura de servicios modular para gestionar el uso de cartas, discriminando el flujo mediante un parámetro \texttt{isHand}. Si la carta se juega desde la mano, el sistema debe evaluar si es una carta de acción (ejecución inmediata) o un personaje (colocación en el pueblo). Si se juega desde el pueblo, la lógica se vuelve asimétrica: los guardias activan sus efectos, mientras que los rebeldes pueden ser devueltos a la mano si están revelados, intentar una infiltración o activar su habilidad especial.
 
-Para la gestión de efectos, se proyectó el uso de diccionarios (\texttt{guardCards} y \texttt{rebelCards}) que asocian el identificador de cada carta con su función lógica específica, facilitando la escalabilidad del mazo. Asimismo, se diseñó la acción de condena del Rey como una apuesta de victoria inmediata basada en la identificación del \texttt{ASSASSIN} enemigo.
+Para la gestión de efectos, se proyecta el uso de diccionarios (\texttt{guardCards} y \texttt{rebelCards}) que asocian el identificador de cada carta con su función lógica específica, facilitando la escalabilidad del mazo. Asimismo, se diseña la acción de condena del Rey como una apuesta de victoria inmediata basada en la identificación del \texttt{ASSASSIN} enemigo.
 
 \textbf{3. Implementación} \\
-En el \texttt{gameService.js}, se sustituyó la lógica genérica por funciones especializadas. El método \texttt{playHandCard} valida la propiedad y el turno antes de derivar a \texttt{playActionCard} o \texttt{placeCardInTown}. Por su parte, \texttt{playTownCard} implementa el control de flujo para las cartas ya desplegadas:
+En el \texttt{gameService.js}, se sustituye la lógica genérica por funciones especializadas. El método \texttt{playHandCard} valida la propiedad y el turno antes de derivar a \texttt{playActionCard} o \texttt{placeCardInTown}. Por su parte, \texttt{playTownCard} implementa el control de flujo para las cartas ya desplegadas:
 
 \begin{lstlisting}[basicstyle=\scriptsize\ttfamily,caption={Validaciones para la ejecución de acciones desde el pueblo},label={cod:gameService3}]
 if(userRol === 'king'){
@@ -689,10 +689,10 @@ if(userRol === 'king'){
 }
 \end{lstlisting}
 
-Se implementó el método \texttt{peasantDrawCard} utilizando la función \texttt{pop()} sobre el mazo almacenado en Redis para añadir la carta a la mano del campesino. En contraste, se configuró que el Rey robe automáticamente al finalizar su turno. Para la acción \texttt{condemnRebel()}, se desarrolló una lógica que evalúa si la carta seleccionada (del pueblo rival o del mazo) coincide con el objetivo de victoria, permitiendo al bando real finalizar la partida con éxito.
+Se implementa el método \texttt{peasantDrawCard} utilizando la función \texttt{pop()} sobre el mazo almacenado en Redis para añadir la carta a la mano del campesino. En contraste, se configura que el Rey robe automáticamente al finalizar su turno. Para la acción \texttt{condemnRebel()}, se desarrolla una lógica que evalúa si la carta seleccionada (del pueblo rival o del mazo) coincide con el objetivo de victoria, permitiendo al bando real finalizar la partida con éxito.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Las tareas base del motor de juego se resolvieron satisfactoriamente. Se identificó como punto pendiente la integración total de las condiciones de victoria, cuya validación global se está desarrollando de forma coordinada con el otro integrante del equipo. Como medida de replanificación, se determinó dedicar las siguientes iteraciones a la implementación detallada de los efectos individuales de cada carta de personaje y a la resolución de interacciones complejas mediante un sistema de estados pendientes.
+Las tareas base del motor de juego se resuelven satisfactoriamente. Se identifica como punto pendiente la integración total de las condiciones de victoria, cuya validación global se desarrolla de forma coordinada con el otro integrante del equipo. Como medida de replanificación, se determina dedicar las siguientes iteraciones a la implementación detallada de los efectos individuales de cada carta de personaje y a la resolución de interacciones complejas mediante un sistema de estados pendientes.
 
 \section{Aseguramiento de Calidad y Pulido Final}
 
@@ -723,26 +723,26 @@ describe('gameService', () => {
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo fundamental consistió en desarrollar la capa visual e interactiva del núcleo del juego, implementando el \textit{frontend} de las Cartas de Acción y el complejo sistema de Acciones Pendientes (\textit{Pending Actions}) para permitir a los jugadores reaccionar a eventos asimétricos.
+El objetivo fundamental consiste en desarrollar la capa visual e interactiva del núcleo del juego, implementando el \textit{frontend} de las Cartas de Acción y el complejo sistema de Acciones Pendientes (\textit{Pending Actions}) para permitir a los jugadores reaccionar a eventos asimétricos.
 
 \textbf{2. Diseño de la Solución} \\
-Para cumplir el requisito de rendimiento (\textbf{RNF-REN}), el diseño planteó traducir la lógica del servidor a una experiencia reactiva. Se proyectó un diccionario visual unificado (\texttt{pendingActionsUI.tsx}) capaz de instanciar modales específicos (como el ataque \textit{Strike} del Rey) congelando la interfaz general sin perder el contexto visual del tablero.
+Para cumplir el requisito de rendimiento (\textbf{RNF-REN}), el diseño plantea traducir la lógica del servidor a una experiencia reactiva. Se proyecta un diccionario visual unificado (\texttt{pendingActionsUI.tsx}) capaz de instanciar modales específicos (como el ataque \textit{Strike} del Rey) congelando la interfaz general sin perder el contexto visual del tablero.
 
 \textbf{3. Detalles de Implementación} \\
-El diccionario dinámico se implementó mapeando las claves de acción del servidor con sus respectivos componentes en \textit{React}. Cuando \textit{Socket.io} notifica un estado con \texttt{pendingAction}, el cliente evalúa si el foco recae en el jugador local. En caso afirmativo, se invoca el componente del diccionario forzando la decisión del usuario y bloqueando algorítmicamente el resto de interacciones (\textit{force play}) hasta que el controlador del servidor resuelva la promesa asíncrona.
+El diccionario dinámico se implementa mapeando las claves de acción del servidor con sus respectivos componentes en \textit{React}. Cuando \textit{Socket.io} notifica un estado con \texttt{pendingAction}, el cliente evalúa si el foco recae en el jugador local. En caso afirmativo, se invoca el componente del diccionario forzando la decisión del usuario y bloqueando algorítmicamente el resto de interacciones (\textit{force play}) hasta que el controlador del servidor resuelva la promesa asíncrona.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Durante el acoplamiento del diccionario, el control de la interfaz detectó desajustes visuales (\textit{frontend bugs}) al intentar interactuar con el mazo general mientras un modal estaba activo. Este defecto forzó una replanificación en la jerarquía de dependencias de \textit{React}, reescribiendo los \textit{hooks} para forzar el paso de turno únicamente cuando se confirmaba el retorno HTTP/WS 200 desde el servidor, estabilizando así el flujo.
+Durante el acoplamiento del diccionario, el control de la interfaz detecta desajustes visuales (\textit{frontend bugs}) al intentar interactuar con el mazo general mientras un modal estaba activo. Este defecto fuerza una replanificación en la jerarquía de dependencias de \textit{React}, reescribiendo los \textit{hooks} para forzar el paso de turno únicamente cuando se confirma el retorno HTTP/WS 200 desde el servidor, estabilizando así el flujo.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-La característica crítica a abordar fue el sistema de "Acciones Pendientes": situaciones de juego donde el efecto de una carta interrumpe el flujo normal y exige que el jugador seleccione objetivos adicionales (cartas enemigas, zonas) antes de finalizar el turno.
+La característica crítica a abordar es el sistema de "Acciones Pendientes": situaciones de juego donde el efecto de una carta interrumpe el flujo normal y exige que el jugador seleccione objetivos adicionales (cartas enemigas, zonas) antes de finalizar el turno.
 
 \textbf{2. Diseño} \\
-Se diseñó una arquitectura basada en diccionarios emparejados (Cliente-Servidor). En el Frontend (\texttt{pendingActionsUI}), se define qué instrucciones mostrar, qué zonas son clicables y qué validaciones previas existen antes de confirmar. En el Backend, los diccionarios (\texttt{rebelPendingCards} y \texttt{guardPendingCards}) capturan el \textit{payload} (ej. identificador de la carta objetivo), ejecutan la mutación del estado y cambian el turno.
+Se diseña una arquitectura basada en diccionarios emparejados (Cliente-Servidor). En el Frontend (\texttt{pendingActionsUI}), se define qué instrucciones mostrar, qué zonas son clicables y qué validaciones previas existen antes de confirmar. En el Backend, los diccionarios (\texttt{rebelPendingCards} y \texttt{guardPendingCards}) capturan el \textit{payload} (ej. identificador de la carta objetivo), ejecutan la mutación del estado y cambian el turno.
 
 \textbf{3. Implementación} \\
-Se implementó de manera robusta la sincronización de estas interfaces. A continuación, se muestra cómo se modela el comportamiento de la carta \texttt{THUG} tanto en el cliente para recolectar el objetivo, como en el servidor para resolver su lógica (eliminar guardia, descartar, y robar carta):
+Se implementa de manera robusta la sincronización de estas interfaces. A continuación, se muestra cómo se modela el comportamiento de la carta \texttt{THUG} tanto en el cliente para recolectar el objetivo, como en el servidor para resolver su lógica (eliminar guardia, descartar, y robar carta):
 
 \begin{lstlisting}[basicstyle=\scriptsize\ttfamily,caption={Validación de UI para la carta THUG en el Frontend},label={cod:pendingActionsUI1}]
 "THUG": {
@@ -776,73 +776,73 @@ Se implementó de manera robusta la sincronización de estas interfaces. A conti
 \end{lstlisting}
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-El diseño mediante diccionarios demostró ser muy escalable. Aplicando criterio técnico, se estandarizó este patrón para delegar su uso a todo el catálogo de cartas, marcando el objetivo de la siguiente iteración como un proceso de control de calidad sobre cada carta individual.
+El diseño mediante diccionarios demuestra ser muy escalable. Aplicando criterio técnico, se estandariza este patrón para delegar su uso a todo el catálogo de cartas, marcando el objetivo de la siguiente iteración como un proceso de control de calidad sobre cada carta individual.
 
 \subsection{Iteración 12: Consolidación Funcional del Motor de Juego y Lógica de Cartas}
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El propósito consistió en consolidar el abanico completo de funcionalidades mecánicas de las cartas de ambos bandos, asegurando que las acciones asimétricas complejas (como tácticas de guardias o emboscadas) se resolvieran de forma íntegra.
+El propósito consiste en consolidar el abanico completo de funcionalidades mecánicas de las cartas de ambos bandos, asegurando que las acciones asimétricas complejas (como tácticas de guardias o emboscadas) se resuelvan de forma íntegra.
 
 \textbf{2. Diseño de la Solución} \\
-Dando cumplimiento al requisito de funcionalidad (\textbf{RNF-FUN}), el diseño algorítmico orquestó rutinas para alterar el estado de las entidades, calcular daños, escudos y penalizaciones de forma atómica. En el \textit{frontend}, el diseño contempló la incorporación de modales dinámicos para visualizar mazos durante la partida.
+Dando cumplimiento al requisito de funcionalidad (\textbf{RNF-FUN}), el diseño algorítmico orquesta rutinas para alterar el estado de las entidades, calcular daños, escudos y penalizaciones de forma atómica. En el \textit{frontend}, el diseño contempla la incorporación de modales dinámicos para visualizar mazos durante la partida.
 
 \textbf{3. Detalles de Implementación} \\
-La programación de acciones múltiples (ej. una carta que permite mirar la mano rival y descartar una carta) se implementó bifurcando el \textit{GameService}. El servidor valida la orden y crea el \texttt{pendingAction}, inyectando al cliente los datos temporales. Una vez tomada la decisión, la resolución final unifica las propiedades alteradas y reanuda el turno general purgando la caché diferida de \textit{Redis}, garantizando una ejecución inmutable.
+La programación de acciones múltiples (ej. una carta que permite mirar la mano rival y descartar una carta) se implementa bifurcando el \textit{GameService}. El servidor valida la orden y crea el \texttt{pendingAction}, inyectando al cliente los datos temporales. Una vez tomada la decisión, la resolución final unifica las propiedades alteradas y reanuda el turno general purgando la caché diferida de \textit{Redis}, garantizando una ejecución inmutable.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-El control de calidad evidenció fricciones temporales al enlazar el diccionario visual con resoluciones múltiples encadenadas. Las respuestas de validación fallaban. Como medida correctiva, se replanificó la arquitectura de respuestas del \textit{GameService} para homogeneizar los formatos de transferencia (DTO) en cada paso de validación intermedia, dejando el sistema de cartas prácticamente completado.
+El control de calidad evidencia fricciones temporales al enlazar el diccionario visual con resoluciones múltiples encadenadas. Las respuestas de validación fallan. Como medida correctiva, se replanifica la arquitectura de respuestas del \textit{GameService} para homogeneizar los formatos de transferencia (DTO) en cada paso de validación intermedia, dejando el sistema de cartas prácticamente completado.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-El objetivo fue la implementación exhaustiva y validación funcional de todas las cartas de personaje restantes en el juego. El objetivo central consistió en integrar estas mecánicas dentro del sistema de diccionarios de Acciones Pendientes y efectos simples construido previamente, asegurando que el abanico completo de interacciones asimétricas estuviera disponible y operativo para el transcurso de las partidas.
+El objetivo es la implementación exhaustiva y validación funcional de todas las cartas de personaje restantes en el juego. El objetivo central consiste en integrar estas mecánicas dentro del sistema de diccionarios de Acciones Pendientes y efectos simples construido previamente, asegurando que el abanico completo de interacciones asimétricas esté disponible y operativo para el transcurso de las partidas.
 
 \textbf{2. Diseño} \\
-Para abordar el volumen de trabajo de forma eficiente, se optó por un enfoque metodológico riguroso basado en una matriz de control de calidad. Se diseñó un documento de seguimiento donde se listaron pormenorizadamente todas las cartas que componen el juego junto a cada una de sus acciones y efectos posibles. Este diseño permitió estructurar el desarrollo no como una tarea abierta, sino como un proceso sistemático de verificación y cierre de requisitos funcionales mediante una activación, prueba y corrección procedimental.
+Para abordar el volumen de trabajo de forma eficiente, se opta por un enfoque metodológico riguroso basado en una matriz de control de calidad. Se diseña un documento de seguimiento donde se listan pormenorizadamente todas las cartas que componen el juego junto a cada una de sus acciones y efectos posibles. Este diseño permite estructurar el desarrollo no como una tarea abierta, sino como un proceso sistemático de verificación y cierre de requisitos funcionales mediante una activación, prueba y corrección procedimental.
 
 \textbf{3. Implementación} \\
-La fase de ejecución técnica se desarrolló siguiendo un ciclo iterativo de \textit{Test-Driven Development} manual. Utilizando la lista definida en la fase de diseño, se procedió a verificar cada acción individualmente en el entorno local, revisando los cambios tanto en Redis como en el cliente. El procedimiento se ejecutó bajo los siguientes pasos:
+La fase de ejecución técnica se desarrolla siguiendo un ciclo iterativo de \textit{Test-Driven Development} manual. Utilizando la lista definida en la fase de diseño, se procede a verificar cada acción individualmente en el entorno local, revisando los cambios tanto en Redis como en el cliente. El procedimiento se ejecuta bajo los siguientes pasos:
 \begin{itemize}
     \item Recorrido sistemático de la lista probando cada acción y anotando su correcto funcionamiento o sus fallos.
-    \item Por cada acción que presentaba anomalías, se procedió a la modificación del código para corregir o terminar de implementar la funcionalidad restante.
+    \item Por cada acción que presentaba anomalías, se procede a la modificación del código para corregir o terminar de implementar la funcionalidad restante.
     \item Re-ejecución de la prueba tras cada cambio en el código hasta validar la resolución de la acción, marcándola entonces como resuelta.
     \item Monitorización continua durante la partida para detectar nuevos fallos en acciones previamente validadas, re-incorporándolas a la lista de revisión en caso necesario.
 \end{itemize}
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-La aplicación de este procedimiento resultó en un éxito técnico notable, logrando dejar operativa la gran mayoría de las cartas en la partida. La metodología sistemática permitió, además, identificar y catalogar errores específicos o funcionalidades pendientes de gran complejidad —como la mecánica de infiltración profunda— que no pudieron solventarse en este ciclo. Como medida de replanificación, estas necesidades aisladas se definieron como requerimientos independientes para ser abordados en las siguientes etapas operativas.
+La aplicación de este procedimiento resulta en un éxito técnico notable, logrando dejar operativa la gran mayoría de las cartas en la partida. La metodología sistemática permite, además, identificar y catalogar errores específicos o funcionalidades pendientes de gran complejidad —como la mecánica de infiltración profunda— que no pudieron solventarse en este ciclo. Como medida de replanificación, estas necesidades aisladas se definen como requerimientos independientes para ser abordados en las siguientes etapas operativas.
 
 \subsection{Iteración 13: Estabilización del Bucle de Partida y Mecánica de Infiltración}
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo fue completar la capa de presentación de la mecánica especial de Infiltración y garantizar la robustez algorítmica del bucle de partida (transiciones entre Eras y validaciones deterministas).
+El objetivo es completar la capa de presentación de la mecánica especial de Infiltración y garantizar la robustez algorítmica del bucle de partida (transiciones entre Eras y validaciones deterministas).
 
 \textbf{2. Diseño de la Solución} \\
-Para asegurar la fiabilidad (\textbf{RNF-FIA}), el diseño requirió crear un componente reactivo (\texttt{InfiltrateModal.tsx}) acoplado al diccionario de acciones, dotando al jugador de una vista controlada para examinar la mano rival. Paralelamente, se diseñó la estabilización de los scripts de entorno local (\texttt{npm run start:local}) y del bloque de aserciones de victoria (\textit{Win Condition}) en el servidor.
+Para asegurar la fiabilidad (\textbf{RNF-FIA}), el diseño requiere crear un componente reactivo (\texttt{InfiltrateModal.tsx}) acoplado al diccionario de acciones, dotando al jugador de una vista controlada para examinar la mano rival. Paralelamente, se diseña la estabilización de los scripts de entorno local (\texttt{npm run start:local}) y del bloque de aserciones de victoria (\textit{Win Condition}) en el servidor.
 
 \textbf{3. Detalles de Implementación} \\
-El componente \textit{React} fue programado para capturar el DTO efímero y congelar el entorno de la partida. Su estado visual se coordinó estrictamente con la respuesta asíncrona del servidor, asegurando que los modales se desmontaran limpiamente y reanudaran el cauce natural de turnos tras la alteración exitosa en la base de datos de memoria.
+El componente \textit{React} se programa para capturar el DTO efímero y congelar el entorno de la partida. Su estado visual se coordina estrictamente con la respuesta asíncrona del servidor, asegurando que los modales se desmonten limpiamente y reanuden el cauce natural de turnos tras la alteración exitosa en la base de datos de memoria.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Las pruebas del bucle final de juego levantaron una alerta crítica: la invocación a \texttt{setupNewEra} corrompía la asignación de cartas en memoria al cambiar de fase. La desviación exigió replanificar los ciclos del \textit{GameService}, reescribiendo desde cero las funciones de reasignación y limpieza de manos para asegurar que la nueva Era comenzara de forma determinista.
+Las pruebas del bucle final de juego levantan una alerta crítica: la invocación a \texttt{setupNewEra} corrompía la asignación de cartas en memoria al cambiar de fase. La desviación exige replanificar los ciclos del \textit{GameService}, reescribiendo desde cero las funciones de reasignación y limpieza de manos para asegurar que la nueva Era comience de forma determinista.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-El objetivo de esta iteración se centró en perfeccionar el flujo de turnos mediante la automatización del robo de cartas para el bando del Rey y en el diseño conceptual de la mecánica de infiltración. Se buscó que el Rey recibiera una carta de forma obligatoria al finalizar sus acciones, asegurando la progresión del mazo real. Asimismo, se inició el estudio técnico sobre cómo permitir que el bando rebelde inyectara cartas en el mazo enemigo, evaluando la viabilidad de diferentes interfaces para el usuario.
+El objetivo de esta iteración se centra en perfeccionar el flujo de turnos mediante la automatización del robo de cartas para el bando del Rey y en el diseño conceptual de la mecánica de infiltración. Se busca que el Rey reciba una carta de forma obligatoria al finalizar sus acciones, asegurando la progresión del mazo real. Asimismo, se inicia el estudio técnico sobre cómo permitir que el bando rebelde inyecte cartas en el mazo enemigo, evaluando la viabilidad de diferentes interfaces para el usuario.
 
 \textbf{2. Diseño} \\
-Para el robo automático, se diseñó una lógica de interceptación en la transición de turnos. En lugar de una simple alternancia de roles, se proyectó una función de envoltura que evalúa el estado saliente: si el jugador que finaliza es el Rey, el sistema debe invocar la lógica de robo antes de actualizar el turno en Redis.
+Para el robo automático, se diseña una lógica de interceptación en la transición de turnos. En lugar de una simple alternancia de roles, se proyecta una función de envoltura que evalúa el estado saliente: si el jugador que finaliza es el Rey, el sistema debe invocar la lógica de robo antes de actualizar el turno en Redis.
 
-Respecto a la infiltración, se analizaron diversas alternativas de diseño para que el jugador eligiera la posición de inserción en el mazo:
+Respecto a la infiltración, se analizan diversas alternativas de diseño para que el jugador elija la posición de inserción en el mazo:
 \begin{enumerate}
-    \item \textbf{Selector numérico}: Un control en el modal de acciones para indicar el índice exacto. Se descartó por añadir una carga visual excesiva y requerir validaciones adicionales de rango en el cliente.
+    \item \textbf{Selector numérico}: Un control en el modal de acciones para indicar el índice exacto. Se descarta por añadir una carga visual excesiva y requerir validaciones adicionales de rango en el cliente.
     \item \textbf{Selección basada en UID}: Utilizar el diccionario de acciones pendientes para esperar el identificador de una carta ya presente en el mazo, permitiendo insertar la nueva carta justo antes de la seleccionada.
 \end{enumerate}
-Aunque se avanzó en la definición lógica de la segunda opción, se decidió finalmente delegar la implementación técnica completa y la creación del componente visual al otro integrante del equipo para garantizar la coherencia con el diseño de la interfaz del mazo.
+Aunque se avanza en la definición lógica de la segunda opción, se decide finalmente delegar la implementación técnica completa y la creación del componente visual al otro integrante del equipo para garantizar la coherencia con el diseño de la interfaz del mazo.
 
 \textbf{3. Implementación} \\
-La implementación técnica principal consistió en el desarrollo de la función auxiliar de cambio de turno en la capa de servicios. Esta función sustituyó al método básico anterior, integrando una comprobación de rol y la llamada a \texttt{drawCardFromDeck} específicamente para el Rey.
+La implementación técnica principal consiste en el desarrollo de la función auxiliar de cambio de turno en la capa de servicios. Esta función sustituye al método básico anterior, integrando una comprobación de rol y la llamada a \texttt{drawCardFromDeck} específicamente para el Rey.
 
 \begin{lstlisting}[language=Java,basicstyle=\scriptsize\ttfamily,caption={Logica de cambio de turno con robo automático para el bando real},label={cod:king_draw_logic}]
 const changeTurnWithDraw = async (gameState) => {
@@ -856,105 +856,105 @@ const changeTurnWithDraw = async (gameState) => {
 };
 \end{lstlisting}
 
-En cuanto a la infiltración, se prepararon los esqueletos de los diccionarios en el servidor (\texttt{peasantPendingActions}) para soportar el estado \texttt{INFILTRATE}, dejando la base preparada para que el compañero finalizara la integración con el componente gráfico avanzado.
+En cuanto a la infiltración, se preparan los esqueletos de los diccionarios en el servidor (\texttt{peasantPendingActions}) para soportar el estado \texttt{INFILTRATE}, dejando la base preparada para que el compañero finalice la integración con el componente gráfico avanzado.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Las tareas de automatización del flujo del Rey se completaron con éxito, eliminando errores de omisión de robo manual. Al transferir la responsabilidad de la mecánica de infiltración al otro desarrollador, se pudo optimizar el tiempo de este ciclo para centrarse en la robustez de las transiciones de estado, asegurando que el motor de juego no presentara inconsistencias al guardar los cambios en Redis y blindando el alcance ante posibles modificaciones externas del manual físico (\textbf{RP-01}).
+Las tareas de automatización del flujo del Rey se completan con éxito, eliminando errores de omisión de robo manual. Al transferir la responsabilidad de la mecánica de infiltración al otro desarrollador, se puede optimizar el tiempo de este ciclo para centrarse en la robustez de las transiciones de estado, asegurando que el motor de juego no presente inconsistencias al guardar los cambios en Redis y blindando el alcance ante posibles modificaciones externas del manual físico (\textbf{RP-01}).
 
 \subsection{Iteración 14: Pulido de Reglas, Corrección de Errores y Refactorización Estructural }
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El propósito central consistió en el pulido exhaustivo de las reglas del juego (Guardias, Revueltas, Asesino) y el arreglo de errores arrastrados. Además, se fijó el objetivo de optimizar la mantenibilidad del código (\textbf{RNF-MAN}) del \textit{frontend}.
+El propósito central consiste en el pulido exhaustivo de las reglas del juego (Guardias, Revueltas, Asesino) y el arreglo de errores arrastrados. Además, se fija el objetivo de optimizar la mantenibilidad del código (\textbf{RNF-MAN}) del \textit{frontend}.
 
 \textbf{2. Diseño de la Solución} \\
-El diseño para refactorizar la excesiva complejidad del componente principal (\texttt{Game.tsx}) se fundamentó en tres pilares: extraer la lógica transaccional a \textit{Custom Hooks}, descomponer el árbol JSX en componentes atómicos (\texttt{PlayerArea.tsx}, \texttt{RivalArea.tsx}), y encapsular todas las interfaces de interrupción (\textit{Modals}) para mitigar re-renderizados.
+El diseño para refactorizar la excesiva complejidad del componente principal (\texttt{Game.tsx}) se fundamenta en tres pilares: extraer la lógica transaccional a \textit{Custom Hooks}, descomponer el árbol JSX en componentes atómicos (\texttt{PlayerArea.tsx}, \texttt{RivalArea.tsx}), y encapsular todas las interfaces de interrupción (\textit{Modals}) para mitigar re-renderizados.
 
 \textbf{3. Detalles de Implementación} \\
-A nivel de reglas, se programaron las correcciones matemáticas en los cálculos de letalidad. En la capa de \textit{frontend}, la refactorización se materializa separando el estado global de suscripciones a \textit{WebSockets} hacia \texttt{useGameActions.ts} y \texttt{useGameData.ts}. Adicionalmente, se codificó un nuevo sistema de notificaciones (\texttt{ErrorToast.tsx}) para interceptar y renderizar los errores enviados por el servidor.
+A nivel de reglas, se programan las correcciones matemáticas en los cálculos de letalidad. En la capa de \textit{frontend}, la refactorización se materializa separando el estado global de suscripciones a \textit{WebSockets} hacia \texttt{useGameActions.ts} y \texttt{useGameData.ts}. Adicionalmente, se codifica un nuevo sistema de notificaciones (\texttt{ErrorToast.tsx}) para interceptar y renderizar los errores enviados por el servidor.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Durante las pruebas de estrés de este ciclo, el control de errores cazó un fallo 500 no controlado en el cierre de sesiones. Este defecto crítico se solucionó encapsulando el cierre de la partida en una gestión robusta de excepciones. Esta acción correctiva dejó una base limpia y altamente estable.
+Durante las pruebas de estrés de este ciclo, el control de errores caza un fallo 500 no controlado en el cierre de sesiones. Este defecto crítico se soluciona encapsulando el cierre de la partida en una gestión robusta de excepciones. Esta acción correctiva deja una base limpia y altamente estable.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-Esta iteración estuvo dedicada casi exclusivamente a la refactorización visual del Frontend de la partida, a la corrección de múltiples anomalías funcionales derivadas de la complejidad del motor de cartas, y a dar soporte de resolución a la mecánica crítica de la carta \texttt{DECOY}.
+Esta iteración está dedicada casi exclusivamente a la refactorización visual del Frontend de la partida, a la corrección de múltiples anomalías funcionales derivadas de la complejidad del motor de cartas, y a dar soporte de resolución a la mecánica crítica de la carta \texttt{DECOY}.
 
 \textbf{2. Diseño} \\
-Se rediseñó el formateador de salida de estado (\texttt{saveAndFormatGameState()}) para que actúe como un interceptor pasivo. Cuando esta función empaca el estado para guardarlo y enviarlo, debe analizar de oficio si existen detonantes automáticos (como el Rey robando el \texttt{DECOY} infiltrado), forzando una pausa en el juego y un cambio de turno reactivo para que el oponente ejecute el efecto.
+Se rediseña el formateador de salida de estado (\texttt{saveAndFormatGameState()}) para que actúe como un interceptor pasivo. Cuando esta función empaca el estado para guardarlo y enviarlo, debe analizar de oficio si existen detonantes automáticos (como el Rey robando el \texttt{DECOY} infiltrado), forzando una pausa en el juego y un cambio de turno reactivo para que el oponente ejecute el efecto.
 
 \textbf{3. Implementación} \\
-Se corrigieron validaciones en el Frontend, como impedir multiselecciones accidentales en cartas como \texttt{EXECUTOR}, prohibir seleccionar la propia carta ejecutada (error de \texttt{RAT}), arreglar opacidades gráficas (\textit{alpha channels}) en cartas no reveladas e impedir que los botones de menú se rendericen durante el bloqueo de una Acción Pendiente. En paralelo, la lógica del \texttt{DECOY} se empotró en el formateador del estado, ejecutándose silenciosamente tras cada robo del Rey.
+Se corrigen validaciones en el Frontend, como impedir multiselecciones accidentales en cartas como \texttt{EXECUTOR}, prohibir seleccionar la propia carta ejecutada (error de \texttt{RAT}), arreglar opacidades gráficas (\textit{alpha channels}) en cartas no reveladas e impedir que los botones de menú se rendericen durante el bloqueo de una Acción Pendiente. En paralelo, la lógica del \texttt{DECOY} se empotra en el formateador del estado, ejecutándose silenciosamente tras cada robo del Rey.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Con las reparaciones en las tarjetas de lógica compleja, el motor de juego probó ser altamente estable frente a interacciones de usuario erróneas. No fue necesaria ninguna replanificación de calendario.
+Con las reparaciones en las tarjetas de lógica compleja, el motor de juego prueba ser altamente estable frente a interacciones de usuario erróneas. No es necesaria ninguna replanificación de calendario.
 
 \subsection{Iteración 15: Notificaciones Globales, Reconexión Activa y Alertas de Partida}
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo técnico fue interceptar eventos asíncronos críticos transversales (como la finalización oficial de una partida o el abandono de salas de espera) y comunicarlos de forma inmediata mediante modales reactivos, mejorando el \textit{feedback} global.
+El objetivo técnico es interceptar eventos asíncronos críticos transversales (como la finalización oficial de una partida o el abandono de salas de espera) y comunicarlos de forma inmediata mediante modales reactivos, mejorando el \textit{feedback} global.
 
 \textbf{2. Diseño de la Solución} \\
-Dando cumplimiento al requisito de usabilidad, el diseño propuso la creación del componente \texttt{AnnouncementModal.tsx}. La arquitectura planificó inyectarlo en la capa superior de la aplicación para interceptar los estados tanto en \texttt{Game.tsx} como en \texttt{LobbyRoom.tsx}, manteniéndolo oculto por defecto.
+Dando cumplimiento al requisito de usabilidad, el diseño propone la creación del componente \texttt{AnnouncementModal.tsx}. La arquitectura planifica inyectarlo en la capa superior de la aplicación para interceptar los estados tanto en \texttt{Game.tsx} como en \texttt{LobbyRoom.tsx}, manteniéndolo oculto por defecto.
 
 \textbf{3. Detalles de Implementación} \\
-La integración se programó ampliando el estado global en los \textit{hooks} personalizados para escuchar de forma activa las interrupciones de \textit{Socket.io}. Al emitirse una notificación de victoria o abandono, el motor reactivo de estado dispara el modal, bloqueando la interfaz subyacente para forzar la navegación del usuario hacia una zona segura (como el menú principal) e invalidando las interacciones residuales.
+La integración se programa ampliando el estado global en los \textit{hooks} personalizados para escuchar de forma activa las interrupciones de \textit{Socket.io}. Al emitirse una notificación de victoria o abandono, el motor reactivo de estado dispara el modal, bloqueando la interfaz subyacente para forzar la navegación del usuario hacia una zona segura (como el menú principal) e invalidando las interacciones residuales.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-El seguimiento de la implementación reportó conflictos de renderizado: el modal retenía información obsoleta tras salidas abruptas de los \textit{Lobbies}. La solución requirió replanificar el ciclo de vida de desmontaje en \textit{React}, añadiendo lógicas estrictas para purgar las suscripciones a \textit{WebSockets} antes de destruir la vista. Tras esto, las notificaciones funcionaron de forma impecable.
+El seguimiento de la implementación reporta conflictos de renderizado: el modal retenía información obsoleta tras salidas abruptas de los \textit{Lobbies}. La solución requiere replanificar el ciclo de vida de desmontaje en \textit{React}, añadiendo lógicas estrictas para purgar las suscripciones a \textit{WebSockets} antes de destruir la vista. Tras esto, las notificaciones funcionan de forma impecable.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-La meta fue endurecer la resiliencia del juego ante la inestabilidad de red de los usuarios, gestionando salidas abruptas, \textit{timeouts} y facilitando un retorno seguro a las salas o partidas en curso. Además, se buscó unificar el sistema de \textit{Modales} (ventanas emergentes) en React, eliminando los modales nativos del navegador.
+La meta es endurecer la resiliencia del juego ante la inestabilidad de red de los usuarios, gestionando salidas abruptas, \textit{timeouts} y facilitando un retorno seguro a las salas o partidas en curso. Además, se busca unificar el sistema de \textit{Modales} (ventanas emergentes) en React, eliminando los modales nativos del navegador.
 
 \textbf{2. Diseño} \\
-Se diseñó un doble sistema de protección y reconexión activa para dar respuesta definitiva al riesgo crítico de pérdida de estado por desconexión abrupta (\textbf{RT-02}). Si un usuario se desconecta de una partida, se dispara un cronómetro de gracia de 2 minutos visible para el oponente. Si el tiempo expira, la victoria se adjudica automáticamente. Para la sala de espera (\textit{Lobby}), se diseñó un \textit{hook} de validación que detecta si el usuario ya pertenece a una sesión activa y renderiza un panel de "Reconexión Rápida".
+Se diseña un doble sistema de protección y reconexión activa para dar respuesta definitiva al riesgo crítico de pérdida de estado por desconexión abrupta (\textbf{RT-02}). Si un usuario se desconecta de una partida, se dispara un cronómetro de gracia de 2 minutos visible para el oponente. Si el tiempo expira, la victoria se adjudica automáticamente. Para la sala de espera (\textit{Lobby}), se diseña un \textit{hook} de validación que detecta si el usuario ya pertenece a una sesión activa y renderiza un panel de "Reconexión Rápida".
 
 \textbf{3. Implementación} \\
-Se generó un \texttt{useEffect()} anclado al objeto de sesión del usuario en la pantalla de inicio y listado. Si el servidor confirma la vinculación a una \texttt{LobbyId}, se renderizan componentes flotantes de acceso directo en lugar de procesar los botones estándar de creación. Los temporizadores del servidor se acoplaron a la desconexión del \textit{socket}, mutando el estado de victoria (\texttt{winner: id}) transcurridos los 120000 milisegundos de inactividad.
+Se genera un \texttt{useEffect()} anclado al objeto de sesión del usuario en la pantalla de inicio y listado. Si el servidor confirma la vinculación a una \texttt{LobbyId}, se renderizan componentes flotantes de acceso directo en lugar de procesar los botones estándar de creación. Los temporizadores del servidor se acoplan a la desconexión del \textit{socket}, mutando el estado de victoria (\texttt{winner: id}) transcurridos los 120000 milisegundos de inactividad.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Estas adiciones eliminaron los bloqueos severos donde los usuarios perdían el control de su sesión tras un refresco de la página. El flujo de contingencia cumple exitosamente con los estándares de usabilidad modernos.
+Estas adiciones eliminan los bloqueos severos donde los usuarios perdían el control de su sesión tras un refresco de la página. El flujo de contingencia cumple exitosamente con los estándares de usabilidad modernos.
 
 \subsection{Iteración 16: Automatización de Pruebas, Cobertura de Código y Despliegue Final}
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo de este \textit{sprint} se centró en asegurar la calidad del software mediante la automatización de pruebas, blindando la \textit{lógica de negocio} del motor asimétrico y las interfaces, garantizando así la fiabilidad (\textbf{RNF-FIA}) del producto.
+El objetivo de este \textit{sprint} se centra en asegurar la calidad del software mediante la automatización de pruebas, blindando la \textit{lógica de negocio} del motor asimétrico y las interfaces, garantizando así la fiabilidad (\textbf{RNF-FIA}) del producto.
 
 \textbf{2. Diseño de la Solución} \\
-Se diseñó una \textit{suite} de pruebas utilizando el motor \textit{Jest}. La arquitectura de validación simuló servicios de usuarios y el \textit{Game Service} operando contra bases de datos aisladas en memoria. En \textit{frontend}, el diseño abarcó pruebas de componentes mediante DOM virtual para verificar los flujos de inicio de sesión y gestión de perfil.
+Se diseña una \textit{suite} de pruebas utilizando el motor \textit{Jest}. La arquitectura de validación simula servicios de usuarios y el \textit{Game Service} operando contra bases de datos aisladas en memoria. En \textit{frontend}, el diseño abarca pruebas de componentes mediante DOM virtual para verificar los flujos de inicio de sesión y gestión de perfil.
 
 \textbf{3. Detalles de Implementación} \\
-Las pruebas automatizadas lograron exponer fragilidades en lógicas de cascada (como \textit{Revolt}). La refactorización exigió aislar las mutaciones de poder en buffers temporales. Se codificó una resolución en cascada estricta, asegurando que los eventos masivos no sobreescribieran referencias de memoria. Esta aproximación garantizó que, si el sistema asíncrono detectaba un fallo, la operación atómica abortara preservando la partida intacta.
+Las pruebas automatizadas logran exponer fragilidades en lógicas de cascada (como \textit{Revolt}). La refactorización exige aislar las mutaciones de poder en buffers temporales. Se codifica una resolución en cascada estricta, asegurando que los eventos masivos no sobrescriban referencias de memoria. Esta aproximación garantiza que, si el sistema asíncrono detecta un fallo, la operación atómica aborte preservando la partida intacta.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Durante el monitoreo de la \textit{suite}, el sistema reportó discrepancias graves en \textit{Redis}: mecánicas letales (\textit{Strike}) no aplicaban el daño correctamente. El equipo pausó la creación de nuevos \textit{tests} y replanificó el esfuerzo para reescribir parte de la lógica en los \textit{pendingActions} defectuosos. Tras iterar sobre el código, la tasa de éxito de las pruebas alcanzó el 100\%, validando la estabilidad definitiva del software.
+Durante el monitoreo de la \textit{suite}, el sistema reporta discrepancias graves en \textit{Redis}: mecánicas letales (\textit{Strike}) no aplican el daño correctamente. El equipo pausa la creación de nuevos \textit{tests} y replanifica el esfuerzo para reescribir parte de la lógica en los \textit{pendingActions} defectuosos. Tras iterar sobre el código, la tasa de éxito de las pruebas alcanza el 100\%, validando la estabilidad definitiva del software.
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-Como sprint final de la infraestructura global, los objetivos apuntaron a garantizar la calidad y despliegue final: implementar pruebas unitarias (Tests) sobre los módulos de salas, reparar bugs de lógica de negocio profunda y configurar correctamente los pobladores de la base de datos (\textit{seeders}) en producción.
+Como sprint final de la infraestructura global, los objetivos apuntan a garantizar la calidad y despliegue final: implementar pruebas unitarias (Tests) sobre los módulos de salas, reparar bugs de lógica de negocio profunda y configurar correctamente los pobladores de la base de datos (\textit{seeders}) en producción.
 
 \textbf{2. Diseño} \\
-Se definió como meta de calidad técnica alcanzar al menos un 80\% de cobertura de código en los archivos de gestión de \textit{Lobbies}. Por otro lado, se diseñó una regla de validación adicional en la mecánica del Rey para imposibilitar físicamente que supere el límite reglamentario de 3 guardias desplegados.
+Se define como meta de calidad técnica alcanzar al menos un 80\% de cobertura de código en los archivos de gestión de \textit{Lobbies}. Por otro lado, se diseña una regla de validación adicional en la mecánica del Rey para imposibilitar físicamente que supere el límite reglamentario de 3 guardias desplegados.
 
 \textbf{3. Implementación} \\
-Se redactaron y ejecutaron los casos de prueba mediante Jest y Vitest, encontrando agujeros de seguridad (por ejemplo, permitir que un usuario se uniera a una sala estando ya en otra, lo cual se bloqueó añadiendo un \textit{middleware} validador en la API). Se añadió una función comprobatoria en \texttt{placeCardInTown} que interrumpe la inserción de guardias si el contador supera 3. Finalmente, se reescribió el \texttt{package.json} en la rutina de \textit{build} de Render para invocar \texttt{prisma db seed}, asegurando la carga obligatoria del catálogo de cartas oficial en el entorno en la nube.
+Se redactan y ejecutan los casos de prueba mediante Jest y Vitest, encontrando agujeros de seguridad (por ejemplo, permitir que un usuario se uniera a una sala estando ya en otra, lo cual se bloquea añadiendo un \textit{middleware} validador en la API). Se añade una función comprobatoria en \texttt{placeCardInTown} que interrumpe la inserción de guardias si el contador supera 3. Finalmente, se reescribe el \texttt{package.json} en la rutina de \textit{build} de Render para invocar \texttt{prisma db seed}, asegurando la carga obligatoria del catálogo de cartas oficial en el entorno en la nube.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-Los tests cumplieron su propósito revelando deficiencias de borde en las rutas HTTP. Con la base de datos de producción poblándose automáticamente y la cobertura de pruebas establecida, la robustez general de la aplicación quedó certificada y lista para su defensa y evaluación.
+Los tests cumplen su propósito revelando deficiencias de borde en las rutas HTTP. Con la base de datos de producción poblándose automáticamente y la cobertura de pruebas establecida, la robustez general de la aplicación queda certificada y lista para su defensa y evaluación.
 
 \subsection{Iteración 17: Redacción Técnica y Consolidación Documental}
 
 \textbf{1. Definición de Características} \\
-El objetivo primordial de este ciclo final consistió en intensificar la producción de la memoria técnica del proyecto, liberando ancho de banda y presión administrativa para afrontar la entrega definitiva.
+El objetivo primordial de este ciclo final consiste en intensificar la producción de la memoria técnica del proyecto, liberando ancho de banda y presión administrativa para afrontar la entrega definitiva.
 
 \textbf{2. Diseño de la Solución} \\
-La solución metodológica planteó detener el desarrollo de nuevas características y establecer un flujo de redacción concurrente. El diseño documental exigió justificar las decisiones arquitectónicas previas y estructurar todos los artefactos visuales (diagramas UML, tablas de análisis) generados a lo largo de los 16 \textit{sprints} anteriores.
+La solución metodológica plantea detener el desarrollo de nuevas características y establecer un flujo de redacción concurrente. El diseño documental exige justificar las decisiones arquitectónicas previas y estructurar todos los artefactos visuales (diagramas UML, tablas de análisis) generados a lo largo de los 16 \textit{sprints} anteriores.
 
 \textbf{3. Detalles de Implementación} \\
-La ejecución se centró en el trabajo sobre el proyecto \textit{LaTeX}. Se unificó el estilo narrativo del equipo y se resolvieron errores tipográficos y de compilación (\textit{Overfull hboxes}). La redacción se abordó con revisiones cruzadas constantes frente al repositorio de código fuente para garantizar que la memoria fuera un reflejo técnico exacto de la ingeniería de \textit{King and Peasant}.
+La ejecución se centra en el trabajo sobre el proyecto \textit{LaTeX}. Se unifica el estilo narrativo del equipo y se resuelven errores tipográficos y de compilación (\textit{Overfull hboxes}). La redacción se aborda con revisiones cruzadas constantes frente al repositorio de código fuente para garantizar que la memoria sea un reflejo técnico exacto de la ingeniería de \textit{King and Peasant}.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
-El control de la iteración no reportó bloqueos de software, pero evidenció la carga cognitiva de transicionar del código a la redacción académica. La gestión del tiempo se ajustó mediante sesiones cortas de validación, logrando completar la estructura de la memoria sin desviaciones temporales. El ciclo cerró el cronograma de iteraciones con un éxito rotundo.
+El control de la iteración no reporta bloqueos de software, pero evidencia la carga cognitiva de transicionar del código a la redacción académica. La gestión del tiempo se ajusta mediante sesiones cortas de validación, logrando completar la estructura de la memoria sin desviaciones temporales. El ciclo cierra el cronograma de iteraciones con un éxito rotundo.
