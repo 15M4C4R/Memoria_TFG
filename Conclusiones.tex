@@ -6,37 +6,45 @@ The good parts of a book may be only something a writer is lucky enough to overh
 \end{quotation}
 
 \begin{abstract}
-Resumen de lo que va a ocurrir en el capítulo. ¿Cuál es el objetivo que tenemos con este capítulo?
+Este capítulo presenta una evaluación final del Trabajo Fin de Grado y del proceso de desarrollo de \textit{King and Peasant}. El objetivo es realizar una reflexión crítica sobre los resultados obtenidos, analizando tanto los aciertos técnicos y organizativos como las dificultades encontradas a lo largo del ciclo de vida del proyecto. Finalmente, se expondrán las posibles líneas de investigación y desarrollo que podrían dar continuidad a este trabajo en el futuro.
 \end{abstract}
 
 \section{Informe post-mortem}
 
-Qué es un informe post-mortem
+El informe post-mortem constituye un ejercicio de retrospectiva fundamental en la ingeniería de software. Su propósito no es únicamente evaluar el producto final, sino analizar el proceso de desarrollo en su conjunto, identificando las prácticas que han aportado valor y aquellas áreas donde la planificación o ejecución no fueron óptimas. Esto permite extraer lecciones aprendidas aplicables a futuros proyectos en un entorno profesional.
 
 \subsection{Lo que ha ido bien}
 
 \begin{itemize}
-\item Argumento a favor 1.
+\item \textbf{Arquitectura y sincronización en tiempo real:} La integración de \textit{WebSockets} junto con Node.js y React ha demostrado ser un acierto absoluto. Se ha logrado una comunicación bidireccional fluida que mantiene la integridad del motor de reglas y proporciona la inmediatez requerida en un entorno multijugador asimétrico.
 
-\item Argumento a favor 2.
+\item \textbf{Trabajo en equipo y sinergia:} El desarrollo conjunto ha permitido abordar un proyecto de gran envergadura dividiendo la carga de forma eficaz. La colaboración activa y la comunicación constante han facilitado la resolución de problemas técnicos complejos y la implementación integral de las mecánicas del juego, demostrando la viabilidad y las ventajas del trabajo en equipo.
 
-\item Argumento a favor 3.
+\item \textbf{Metodología de trabajo y control de calidad:} La adopción de un enfoque iterativo propio ha resultado muy favorable. Además, el hecho de estipular un periodo de pruebas exclusivo e independiente en el calendario de planificación, en lugar de realizar testeos fragmentados por cada tarea, permitió concentrar los esfuerzos de validación de forma eficiente y asegurar la estabilidad global del sistema.
 \end{itemize}
 
 \subsection{Lo que ha ido mal}
 
 \begin{itemize}
-\item Argumento en contra 1.
+\item \textbf{Iteraciones sin descansos:} La planificación inicial no contempló intervalos de descanso estructurados (ya fuesen días libres dentro de las iteraciones o semanas de pausa entre las mismas). La exigencia del desarrollo continuo y sin pausas provocó una fatiga acumulada que, en determinados momentos, se tradujo en una bajada de la moral y del rendimiento general del equipo.
 
-\item Argumento en contra 2.
+\item \textbf{Gestión de estados asíncronos complejos:} La traducción de las reglas del juego de mesa físico al motor digital resultó más laboriosa de lo estimado. La gestión de estados concurrentes y las validaciones estables en el servidor generaron ciertos cuellos de botella técnicos durante las primeras fases de implementación de la partida.
 
-\item Argumento en contra 3.
+\item \textbf{Curva de aprendizaje inicial:} Aunque el resultado final es robusto, el dominio inicial de la programación orientada a eventos para el correcto flujo del patrón Modelo-Vista-Controlador (MVC) en tiempo real supuso un desafío temporal que ajustó los márgenes de desarrollo.
 \end{itemize}
 
 \subsection{Discusión}
 
-En función de lo anterior, qué cambiaría si empezara hoy el proyecto de nuevo.
+En función de lo anterior, si el proyecto comenzara hoy de nuevo, el principal cambio a nivel técnico radicaría en el diseño inicial de la arquitectura de eventos del servidor. Se invertiría más tiempo en una fase de diseño para estandarizar los mensajes entre cliente y servidor antes de comenzar la implementación del código. Por otro lado, a nivel organizativo, se modificaría drásticamente la planificación del calendario para incluir pausas y periodos de descanso obligatorios entre iteraciones, garantizando así un ritmo de trabajo más sostenible que preserve la motivación, la salud mental y la productividad a lo largo de todo el ciclo de vida del software.
 
 \section{Trabajos futuros}
 
-Enumera los puntos abiertos y que no se han resuelto. Indica si darían lugar a otro proyecto y de qué forma se podría acotar.
+El desarrollo de \textit{King and Peasant} ha establecido una base técnica sólida y escalable, pero existen diversas funcionalidades que, por viabilidad y delimitación del alcance, quedaron fuera del sistema actual. Entre los puntos abiertos destacan:
+
+\begin{itemize}
+    \item \textbf{Sistema competitivo (\textit{Ranked}) y Matchmaking:} Implementación de un sistema de emparejamiento basado en habilidades y puntuaciones de clasificación global (tipo Elo).
+    \item \textbf{Inteligencia Artificial (PvE):} Desarrollo de agentes autónomos que permitan a los usuarios jugar partidas en solitario para practicar estrategias sin necesidad de un rival humano.
+    \item \textbf{Desarrollo móvil nativo y Monetización:} Adaptación del entorno web a aplicaciones dedicadas para iOS y Android para captar un público más amplio, e integración de una economía virtual o pasarelas de pago.
+\end{itemize}
+
+Estas características darían lugar a una expansión natural del proyecto actual. Se podría acotar como el desarrollo de una versión 2.0 de la plataforma orientada a la fidelización de usuarios a largo plazo y la competición, tomando la actual arquitectura contenerizada, el sistema de perfiles y el motor de reglas base como el núcleo inalterable sobre el que construir y acoplar los nuevos microservicios.
