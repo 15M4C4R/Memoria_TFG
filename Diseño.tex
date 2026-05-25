@@ -1,0 +1,100 @@
+\chapter{Diseño de la Arquitectura y del Sistema}
+\label{sec:arquitectura}
+
+\begin{abstract}
+En este capítulo se describe la materialización técnica, el diseño arquitectónico y la infraestructura tecnológica adoptada para dar solución al sistema analizado previamente. Se detalla la estructura estructural global orientada a componentes bajo un modelo cliente-servidor desacoplado, la justificación de los patrones de diseño en cada subsistema, la topología de red para el tiempo real, así como el diseño de la persistencia híbrida y las medidas de seguridad para la transferencia asimétrica de datos.
+\end{abstract}
+
+\section{Diseño de la Arquitectura Global}
+
+El diseño de la arquitectura del sistema constituye el núcleo estructural del proyecto. Se basa en un modelo cliente-servidor fuertemente desacoplado pero integrado bajo un mismo flujo de desarrollo. En la Figura \ref{fig:arquitectura} se ilustra el esquema general del sistema y sus flujos de comunicación físicos.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/arquitectura.png}
+    \caption{Diagrama de Arquitectura global del sistema y flujos de comunicación.}
+    \label{fig:arquitectura}
+\end{figure}
+
+\subsection{Estrategia Organizativa: Monorepositorio}
+  
+En lugar de segregar el cliente y el servidor en repositorios de control de versiones independientes (polirepositorio), se toma la decisión arquitectónica de utilizar un Monorepositorio gestionado de forma nativa mediante \textit{npm workspaces}. 
+
+Esta alternativa se elige principalmente por su capacidad para unificar y simplificar la gestión del ciclo de vida del desarrollo. Al agrupar los módulos de \textit{client} y \textit{server} en un único entorno, se facilita la configuración de la infraestructura local (bases de datos en Docker) y se centraliza la orquestación de comandos. Esto permite que procesos como la instalación de dependencias, la ejecución de pruebas (\textit{testing}) y el despliegue local de toda la pila tecnológica (Frontend, Backend, MariaDB y Redis) se realicen con un solo comando desde el directorio raíz, reduciendo la fricción en el entorno de desarrollo y en los flujos de Integración Continua (CI/CD).
+
+\subsection{Arquitectura del Servidor (Backend)}
+
+El servidor se diseña huyendo del patrón de monolito tradicional, apostando por una Arquitectura por Capas estricta. Esta decisión fomenta el principio de responsabilidad única y facilita la creación de pruebas unitarias al aislar el enrutamiento de la lógica funcional. El flujo se divide en:
+
+\begin{enumerate}
+    \item \textbf{Capa de Enrutamiento:} Define los \textit{endpoints} HTTP utilizando Express.
+    \item \textbf{Capa de Controladores:} Procesa, sanea y valida técnicamente las peticiones.
+    \item \textbf{Capa de Servicios:} Encapsula toda la lógica de negocio compleja de forma agnóstica a la red y al transporte.
+\end{enumerate}
+
+\paragraph{Paradigma de Comunicación Bidireccional:}
+Para el ecosistema de juego, se descartan alternativas arquitectónicas como \textit{Short Polling} o \textit{Server-Sent Events} (SSE). El \textit{Polling} tradicional generaría una sobrecarga HTTP inasumible y latencia en un juego por turnos. Por ello, se justifica el uso exclusivo de WebSockets (\textit{Socket.io}), estableciendo un canal persistente, bidireccional y de muy baja latencia, crítico para sincronizar eventos como el robo de cartas o las notificaciones del chat en milisegundos.
+
+\subsection{Arquitectura del Cliente (Frontend)}
+
+El cliente se modela como una \textit{Single Page Application} (SPA) desarrollada en \textit{React}. En lugar de acoplar la lógica de negocio a la capa de vista, se opta por una arquitectura de componentes funcionales apoyada en Custom Hooks. 
+
+Para la propagación del estado de sesión y de la partida, se descarta el envío manual de propiedades en cascada (\textit{prop drilling}), adoptando el patrón Context API. Esto permite mantener un árbol de componentes limpio y optimizado, donde cada nodo accede únicamente a los datos que necesita, mejorando la mantenibilidad a largo plazo.
+
+\subsection{Arquitectura de Persistencia Híbrida}
+
+Para la persistencia de la información del sistema se diseña un modelo de datos relacional robusto, gestionado a través de \textit{Prisma ORM}. Este modelo soporta la lógica de negocio subyacente, garantizando la integridad referencial y facilitando las consultas complejas. El esquema de la base de datos (\textit{MariaDB}) gravita en torno a cinco entidades principales y sus relaciones, tal y como se ilustra en el diagrama Entidad-Relación de la Figura \ref{fig:modelo_er}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/ER.png}
+    \caption{Diagrama Entidad-Relación del sistema.}
+    \label{fig:modelo_er}
+\end{figure}
+
+\subsubsection{Entidades Relacionales Principales}
+
+\begin{itemize}
+    \item \textbf{Usuario (\textit{User}):} Es la entidad central del ecosistema. Además de almacenar las credenciales de acceso (correo y contraseña protegida), centraliza las estadísticas globales del jugador en la plataforma, manteniendo un conteo actualizado de partidas jugadas, victorias y derrotas. Actúa como nodo relacional para el resto de entidades del sistema.
+    
+    \item \textbf{Amistad (\textit{Friendship}):} Modela la red social del juego. En lugar de utilizar una relación binaria simple de existencia, se diseña con un patrón de estado mediante el enumerado \texttt{FriendshipStatus} (\textit{ACCEPTED, PENDING, DENIED}). Esto permite mantener un control transaccional sobre quién envió la petición (\textit{Sender}) y quién la recibió (\textit{Receiver}), habilitando la gestión asíncrona de invitaciones.
+    
+    \item \textbf{Sala (\textit{Lobby}):} Aunque la concurrencia y el estado en tiempo real de las salas se delega en la base de datos en memoria (\textit{Redis}) por motivos de latencia, esta entidad define la estructura persistente de la sala. Almacena metadatos críticos como el nivel de privacidad (\textit{PUBLIC/PRIVATE}), el estado actual (\textit{WAITING/ONGOING}) y la confirmación de preparación (\textit{Ready}) de los dos jugadores vinculados.
+    
+    \item \textbf{Carta (\textit{Card}):} Define los elementos jugables del sistema. Resulta destacable el enfoque de diseño asimétrico aplicado a esta entidad. Para optimizar el esquema y evitar la duplicidad de tablas entre las dos facciones del juego (Rey y Campesino), se opta por un modelo unificado. Cada registro contiene simultáneamente los atributos (nombre, tipo y descripción) de su variante como Rey y su variante como Campesino, centralizando la configuración de los mazos.
+    
+    \item \textbf{Partida (\textit{Game}):} Constituye el registro histórico del sistema. Relaciona a dos usuarios como oponentes y registra de forma inmutable el identificador del ganador, así como las marcas de tiempo de inicio y fin. 
+\end{itemize}
+
+\subsubsection{Estado en Memoria (Redis) y Estructura del \textit{GameState}}
+
+Mientras que \textit{MariaDB} gestiona los datos inmutables y a largo plazo, el núcleo de la partida en vivo reside en \textit{Redis}. El estado del juego (\textit{gameState}) es un objeto JSON complejo que actúa como la única fuente de verdad durante el transcurso de una partida.
+
+Este objeto almacena propiedades persistentes durante el encuentro (como el turno actual, la era, las puntuaciones y los mazos) y atributos volátiles u opcionales que modelan la lógica interna del servidor:
+\begin{itemize}
+    \item \texttt{pendingAction}: Objeto temporal que pausa el flujo principal de la partida cuando el sistema requiere una decisión asíncrona de un jugador (por ejemplo, seleccionar un objetivo tras jugar una carta de efecto).
+    \item Pila de resolución (\texttt{queuedKingMobilize} y \texttt{queuedPeasantDispatch}): Estructuras que permiten encadenar y resolver múltiples acciones secuenciales de forma ordenada.
+    \item \texttt{seenByKing}: Bandera booleana (\textit{flag}) introducida por mecánicas específicas de espionaje, que permite asimetría en la visibilidad de una misma carta.
+    \item \texttt{lastEvent}: Etiqueta temporal utilizada por el motor interno para procesar condiciones de victoria o cambios de fase, la cual se purga antes de emitir cualquier estado.
+\end{itemize}
+
+\subsubsection{Seguridad y Patrón de Transferencia de Datos (DTO)}
+
+Transmitir el \textit{gameState} crudo a los clientes supondría una vulnerabilidad crítica, ya que un jugador podría inspeccionar el tráfico de \textit{WebSockets} mediante las herramientas de desarrollador del navegador y descubrir las cartas ocultas de su oponente.
+
+Para mitigar este riesgo desde el diseño de la arquitectura, se implementa el patrón \textbf{Data Transfer Object (DTO)}. El backend nunca expone el estado original de \textit{Redis}. En su lugar, el servicio de juego clona el estado y ejecuta una función de transformación que genera dos vistas asimétricas: \texttt{dtoKing} y \texttt{dtoPeasant} (Figura \ref{fig:dto_pattern}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/dto_flujo.png}
+    \caption{Arquitectura de seguridad y filtrado de estado mediante el patrón DTO.}
+    \label{fig:dto_pattern}
+\end{figure}
+
+Las reglas de filtrado aplicadas por el servidor son estrictas:
+\begin{enumerate}
+    \item \textbf{Mazo Global (\textit{Deck}):} Cualquier carta no revelada (\texttt{isRevealed: false}) es censurada, transmitiendo al cliente únicamente su identificador único (\texttt{uid}).
+    \item \textbf{Censura Asimétrica:} El DTO del Rey recibe la mano y la ciudad del Campesino censurados, a menos que la carta haya sido revelada públicamente o interceptada (\texttt{seenByKing: true}). De forma recíproca, el DTO del Campesino recibe los datos del Rey completamente censurados si no cumplen las condiciones de visibilidad.
+\end{enumerate}
+
+Esta capa de transformación garantiza la integridad competitiva del sistema, asegurando que el cliente de React solo procese y renderice la información a la que tiene acceso legítimo.

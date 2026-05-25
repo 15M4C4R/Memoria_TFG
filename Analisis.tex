@@ -1,0 +1,55 @@
+\chapter{Análisis del Sistema}
+
+\begin{quotation}[Novelist]{Ernest Hemingway (1899--1961)}
+The good parts of a book may be only something a writer is lucky enough to overhear or it may be the wreck of his whole damn life -- and one is as good as the other.
+\end{quotation}
+
+\begin{abstract}
+En este capítulo se aborda el modelado conceptual y funcional del sistema. Tomando como base el catálogo de requisitos y las reglas del dominio definidos previamente en la fase de planificación, se delimita el comportamiento abstracto del sistema de juego mediante el análisis del impacto de sus reglas de negocio y la representación de sus interacciones a través de diagramas de Casos de Uso y de Secuencia lógicos, omitiendo cualquier condicionante de carácter tecnológico.
+\end{abstract}
+
+\section{Trazabilidad del Alcance y Restricciones del Dominio}
+
+El análisis funcional desarrollado en este capítulo se fundamenta de manera directa en el catálogo de requisitos funcionales (RF), requisitos no funcionales (RNF) y reglas de negocio (RN) detallados en la sección 5.1 (Gestión del Alcance) de esta memoria. Con el fin de evitar redundancias y mantener la coherencia metodológica del documento, este apartado se centra exclusivamente en el modelado del sistema desde la perspectiva del problema.
+
+No obstante, la naturaleza asimétrica de \textit{King and Peasant} impone restricciones críticas del dominio que condicionan directamente el comportamiento lógico del sistema. A continuación, se detalla cómo los requisitos de alto nivel del alcance impactan en las reglas lógicas que el sistema debe gobernar:
+
+\begin{itemize}
+    \item \textbf{Impacto de la estructura en Eras (RN-01):} Dado que la victoria global exige ganar 2 Eras, el sistema debe ser capaz de contabilizar las victorias acumuladas y orquestar el reinicio completo de los elementos de juego (tablero, mazos y manos) al finalizar una Era, manteniendo la vigencia de la reunión de juego (\textit{Lobby}) sin destruirla.
+    
+    \item \textbf{Impacto de la capacidad asimétrica (RN-02):} La restricción física del Rey (máximo 3 cartas de Guardia en el \textit{Town}) frente a la capacidad ilimitada del Campesino obliga a que las reglas de validación del sistema apliquen criterios asimétricos dependiendo de la facción del emisor antes de procesar cualquier acción.
+    
+    \item \textbf{Impacto de la restricción de infiltración (RN-03):} La exigencia de que las cartas objetivo del Campesino estén desplegadas boca abajo en el \textit{Town} para poder activar efectos obliga al sistema a rechazar cualquier intento de infiltración que provenga de la mano o de cartas ya reveladas, blindando el estado lógico del juego.
+    
+    \item \textbf{Impacto del flujo de turno asimétrico (RN-04):} El robo obligatorio del Rey al finalizar su turno frente al robo voluntario del Campesino exige que el secuenciador de juego sea capaz de inyectar acciones automáticas en la pila de resolución del Rey, manteniendo un sistema de interrupción manual para el Campesino.
+    
+    \item \textbf{Impacto de la atomicidad de victoria (RN-05):} La asimetría en las condiciones de fin de partida obliga al sistema a evaluar el estado tras cada modificación individual, interrumpiendo cualquier evento encolado si se dispara el criterio de victoria de una facción.
+\end{itemize}
+
+\section{Modelado Funcional del Sistema}
+
+Para representar gráficamente las interacciones del sistema, se utiliza el Lenguaje Unificado de Modelado (UML), estandarizando la comprensión de la arquitectura lógica.
+
+\subsection{Diagrama de Casos de Uso}
+
+En la Figura \ref{fig:casos_uso} se detalla el comportamiento del sistema desde el punto de vista del usuario. Se observa cómo el \textit{Jugador} tiene la capacidad de acceder al ecosistema central dado que tiene una sesión activa. Destaca la modularidad del caso de uso principal (``Jugar Partida''), el cual incluye (\textit{<<include>>}) obligatoriamente la mecánica de jugar cartas, y se extiende (\textit{<<extend>>}) de forma opcional con acciones como el chat en vivo o la rendición voluntaria.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/casos_uso.png}
+    \caption{Diagrama General de Casos de Uso del sistema.}
+    \label{fig:casos_uso}
+\end{figure}
+
+\subsection{Comportamiento Dinámico Conceptual: Flujo de Ejecución}
+
+Dado que los casos de uso estáticos no muestran el orden cronológico de las operaciones, se elabora un Diagrama de Secuencia Lógico (Figura \ref{fig:secuencia_juego}) que ilustra la travesía completa de un usuario desde una perspectiva puramente conceptual: desde que no tiene cuenta hasta que juega una carta.
+
+El diagrama describe las transiciones de estado del negocio y el intercambio de información entre los actores y los subsistemas lógicos (módulos de Autenticación, Gestión de Salas y Motor de Reglas). Al tratarse de un modelo de análisis, el flujo se centra en las interacciones conceptuales de la partida, omitiendo la definición de protocolos de red, componentes de software específicos o tecnologías de almacenamiento físicas, resolviendo la separación conceptual requerida.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/secuencia.png}
+    \caption{Diagrama de Secuencia Lógico: Flujo conceptual de registro, preparación de sala y ciclo de partida.}
+    \label{fig:secuencia_juego}
+\end{figure}
