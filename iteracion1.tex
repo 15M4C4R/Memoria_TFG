@@ -44,7 +44,7 @@ services:
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo primordial de esta primera iteración consiste en establecer los cimientos arquitectónicos e infraestructurales del proyecto \textit{King and Peasant}. Se busca preparar un entorno de desarrollo robusto que garantice la paridad entre los entornos de los distintos desarrolladores y sentar las bases de la metodología ágil que guiará el resto del ciclo de vida del software.
+El objetivo primordial de esta primera iteración consiste en establecer los cimientos arquitectónicos e infraestructurales del proyecto \textit{King and Peasant}. Se busca orquestar un entorno de desarrollo basado en un monorepositorio mediante \textit{npm workspaces}, permitiendo la gestión unificada del cliente (\textit{Vite/React}) y el servidor (\textit{Node.js}). Para garantizar la paridad entre los entornos de los distintos desarrolladores, se define la contenedorización de los servicios de infraestructura crítica, específicamente \textit{MariaDB} para la persistencia relacional y \textit{Redis} para el estado volátil en memoria. Asimismo, se pretende automatizar el flujo de arranque local integrando herramientas de ejecución concurrente que coordinen el despliegue de migraciones, la generación del cliente de base de datos y la inicialización sincronizada de los servicios de aplicación.
 
 \textbf{2. Diseño de la Solución} \\
 Para abordar estas características, el diseño se articula en torno a la orquestación inicial del entorno. A nivel de equipo, se diseña una estructura de monorepositorio y se redacta el documento de metodología en Markdown para estandarizar el flujo de trabajo (ramas, \textit{commits} y seguimiento de \textit{issues}). A nivel técnico, para satisfacer el requisito de arquitectura (\textbf{RNF-ARQ}), el diseño contempla el uso de \textit{Docker} y \textit{Docker Compose}. La creación de los archivos \texttt{Dockerfile} permite plantear un despliegue aislado de los entornos de ejecución base (véase la Figura \ref{fig:docker_topology}).
@@ -119,7 +119,7 @@ Las tareas se realizan correctamente y en el tiempo esperado. El establecimiento
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo establecido para este ciclo, centrado en las responsabilidades individuales de infraestructura y diseño visual, es sentar las bases de la identidad del proyecto \textit{King and Peasant} mediante la elaboración de \textit{mock-ups} detallados y la orquestación de las bases de datos en el entorno local.
+El objetivo establecido para este ciclo se centra en sentar las bases conceptuales y de almacenamiento necesarias para el desarrollo del proyecto. Por un lado, se busca definir la identidad visual y estructural de la aplicación mediante la creación de una guía de diseño que permita visualizar la navegación y la disposición de los elementos principales de la interfaz. Por otro lado, se establece como prioridad la organización de los servicios de datos en el entorno de desarrollo, asegurando que el sistema cuente con la infraestructura necesaria para gestionar tanto la información persistente de los usuarios como los datos dinámicos que requerirá el motor de juego en el futuro.
 
 \textbf{2. Diseño de la Solución} \\
 El diseño de la solución arranca con la elaboración de los \textit{mock-ups} completos de las pantallas clave del ecosistema, incluyendo los flujos de autenticación (Login/Registro), las salas de espera (\textit{Lobbies}), el perfil del usuario, el menu principal y el tablero de la partida asimétrica. Esta labor proporciona una visión estructural clara para el desarrollo en cliente, como se ilustra en la Figura \ref{fig:ui_gameboard}. A nivel de infraestructura, y en cumplimiento del requisito de rendimiento (\textbf{RNF-REN}), el diseño amplía la configuración de \textit{Docker Compose} para incluir el despliegue aislado de los servicios de \textit{MariaDB} y \textit{Redis}.
@@ -218,7 +218,7 @@ model User {
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo principal asignado para esta iteración se centra en la conceptualización teórica del dominio de datos, así como en el modelado formal del flujo que gobierna la asimetría de las partidas.
+El objetivo principal de esta iteración se centra en el diseño estructural de la información y en la definición lógica del ciclo de vida de las partidas. Se busca establecer un modelo de datos relacional robusto que soporte la persistencia de usuarios y sus interacciones sociales, complementándolo con un esquema de estado dinámico diseñado específicamente para gestionar la información volátil de la partida en tiempo real. Asimismo, se pretende modelar de forma exhaustiva el flujo operativo del sistema de juego, detallando las transiciones de estado, la secuencia de turnos asimétricos y el comportamiento de las cartas para garantizar que todas las reglas de negocio queden representadas en un diagrama de flujo integral que sirva de guía para la implementación técnica.
 
 \textbf{2. Diseño de la Solución} \\
 El diseño de esta etapa se articula en torno a la arquitectura de la información. Se elabora el modelo Entidad-Relación y el diagrama UML correspondiente a la base de datos relacional. De forma paralela, el equipo diseña los estados de la partida, los turnos intercalados y las mecánicas asimétricas plasmándolas en diagramas de flujo operativos.
@@ -246,7 +246,7 @@ Se detecta que el tiempo estimado para esta tarea fue excesivo dado su carácter
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo principal para esta iteración se basa en la implementación técnica del modelo de datos diseñado previamente en la base de datos relacional, haciendo uso del modelo Entidad-Relación y el diagrama UML correspondiente.
+El objetivo primordial de esta iteración consiste en materializar el diseño estructural del sistema en una arquitectura de datos técnica y funcional. Se busca trasladar los modelos conceptuales de la base de datos relacional al entorno de desarrollo, asegurando que el esquema físico sea capaz de soportar las relaciones complejas de usuarios y amistades mediante un sistema de gestión automatizado. Asimismo, se pretende integrar una capa de abstracción que facilite la interacción segura con la persistencia, garantizando la integridad de los datos y permitiendo que la infraestructura de contenedores esté en perfecta sincronía con la definición lógica de las entidades del proyecto.
 
 \textbf{2. Diseño de la Solución} \\
 En cumplimiento con el requisito de arquitectura (\textbf{RNF-ARQ}), el diseño de la solución dictamina que este modelo conceptual se traslade al entorno de desarrollo utilizando \textit{Prisma ORM}. Se diseña una estrategia basada en migraciones secuenciales sobre el despliegue aislado de \textit{MariaDB}, garantizando que el esquema de la base de datos esté en sincronía con el contenedor de Docker.
@@ -289,7 +289,7 @@ Las tareas se completan satisfactoriamente y dentro de los márgenes temporales 
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo primordial de este ciclo consiste en implementar de forma integral la capa de gestión de usuarios del ecosistema. Esto abarca tanto la seguridad del acceso (registro y autenticación de credenciales) como la administración de la identidad digital del jugador, proporcionando una zona privada para la edición de datos personales y la visualización de estadísticas de juego.
+El propósito de este ciclo es desarrollar el sistema de gestión de identidad que permite a los usuarios acceder de forma segura y personalizada al ecosistema de \textit{King and Peasant}. Se busca establecer los mecanismos para la creación de cuentas y el reconocimiento de usuarios mediante procesos de validación de identidad robustos que garanticen la protección de la información sensible. Asimismo, se pretende dotar al jugador de un espacio personal donde pueda administrar su información de perfil y consultar su progreso individual dentro de la plataforma. Esta etapa busca integrar la seguridad como un componente transversal, asegurando que tanto el acceso inicial como la navegación por las zonas privadas del sistema se realicen bajo un entorno de confianza y con una arquitectura que asegure la integridad de las sesiones.
 
 \textbf{2. Diseño de la Solución} \\
 El diseño de la solución aborda la construcción de las vistas operativas de \textit{Login}, \textit{Register} y el panel de \textit{Profile}. Dando cumplimiento al requisito de seguridad (\textbf{RNF-SEG}), el diseño de la lógica del servidor se basa en la emisión y validación de \textit{JSON Web Tokens} (JWT), asegurando el encriptado unidireccional de contraseñas. Para el cliente, se diseñan formularios reactivos integrados con un contexto global de autenticación para gobernar las rutas privadas.
@@ -361,7 +361,7 @@ const registerLobbyHandlers = (io, socket) => {
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo establecido para este ciclo es implementar el componente social del ecosistema, diseñando un sistema de amistades entre usuarios e introduciendo la base técnica para la comunicación bidireccional necesaria en la futura partida.
+El objetivo establecido para este ciclo consiste en desarrollar el componente social del ecosistema y sentar las bases tecnológicas para la interacción en tiempo real. Se busca implementar un sistema integral de gestión de amistades que permita a los usuarios conectarse entre sí, facilitando la creación de una red social dentro de la plataforma. Asimismo, se pretende transformar la arquitectura de comunicación del proyecto mediante la integración de un canal bidireccional permanente que garantice la propagación instantánea de eventos. Esta etapa busca asegurar que el sistema sea capaz de notificar cambios de estado de forma reactiva, eliminando la latencia en las interacciones sociales y preparando la infraestructura técnica necesaria para soportar la sincronización de las partidas en las fases posteriores.
 
 \textbf{2. Diseño de la Solución} \\
 El diseño se divide en dos frentes. Por un lado, se planifican los \textit{endpoints} y el modelo de entidad relacional para enviar, aceptar y rechazar amistades, junto con su vista (\textit{Dashboard}). Por otro lado, en cumplimiento del requisito de rendimiento (\textbf{RNF-REN}) y como escudo principal frente al riesgo de saturación del servidor por concurrencia (\textbf{RT-01}), se diseña la sustitución del protocolo HTTP tradicional por \textit{WebSockets} (\textit{Socket.io}) en el servidor. La justificación arquitectónica de esta decisión se detalla en la Tabla \ref{tab:ws_analisis}.
@@ -502,7 +502,7 @@ const resolvePendingAction = async (gameId, userId, targetData) => {
 \subsection{Iteración 7: Auditoría Interna, Reorganización Estructural y Planificación}
 
 \textbf{1. Definición de Características} \\
-El objetivo inicial de la iteración consiste en comenzar el desarrollo técnico del motor de juego y el chat en partida. Sin embargo, ante el rápido crecimiento del proyecto, el equipo decide estratégicamente pivotar los esfuerzos hacia una auditoría profunda del código existente, evaluando las funcionalidades implementadas hasta la fecha para identificar y catalogar la deuda técnica acumulada.
+El objetivo inicial de este ciclo consiste en iniciar el desarrollo técnico de las mecánicas nucleares y los sistemas de comunicación secundaria. No obstante, ante el volumen de funcionalidades implementadas y la complejidad técnica alcanzada, se establece como prioridad estratégica realizar una evaluación profunda de la integridad del sistema. Se busca identificar posibles ineficiencias en la arquitectura y catalogar la deuda técnica acumulada para asegurar que el crecimiento del proyecto sea sostenible. El propósito de esta etapa es garantizar que los cimientos de la aplicación mantengan los estándares de calidad necesarios antes de abordar la implementación de las mecánicas de juego más críticas.
 
 \textbf{2. Diseño de la Solución} \\
 Al paralizar el desarrollo de nuevas características, el diseño se centra en elaborar un plan de auditoría. Dando cumplimiento al requisito de mantenibilidad (\textbf{RNF-MAN}), se diseña un protocolo de revisión de los flujos de datos entre cliente y servidor, con el fin de detectar problemas de escalabilidad visual y riesgos de sobreexposición de datos sensibles en red que podrían comprometer la arquitectura asimétrica futura.
@@ -517,7 +517,7 @@ El control de este \textit{sprint} representa un punto de inflexión crítico. L
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo de este \textit{sprint} es ejecutar la reestructuración profunda dictaminada en la auditoría previa para mejorar la legibilidad del código. Adicionalmente, se fija el hito de preparar la base de datos para la configuración del estado inicial de la partida (cartas y mazos).
+El propósito de este ciclo consiste en ejecutar el saneamiento técnico del sistema y en preparar la infraestructura necesaria para el inicio de las mecánicas de juego. Se busca reestructurar la base de código para mejorar su mantenibilidad y legibilidad, corrigiendo las deficiencias detectadas durante la fase de auditoría. Asimismo, se pretende implementar una arquitectura de intercambio de información que garantice la privacidad de los datos en un entorno asimétrico, asegurando que cada jugador reciba únicamente la información permitida por su rol. Finalmente, se establece como prioridad la configuración de los conjuntos de datos iniciales del juego, permitiendo que el sistema cuente con la información básica (mazos y cartas) necesaria para orquestar el despliegue de los componentes de la partida.
 
 \textbf{2. Diseño de la Solución} \\
 Para cumplir el requisito de mantenibilidad (\textbf{RNF-MAN}), el diseño de la refactorización dicta unificar la nomenclatura y extraer componentes reutilizables en \textit{React}. A nivel de arquitectura (\textbf{RNF-ARQ}), se diseña el uso del patrón \textit{Data Transfer Object} (DTO) para aislar la \textit{lógica de negocio} de los datos emitidos por red, asegurando la naturaleza "ciega" del juego asimétrico y neutralizando de forma activa la amenaza de alteración de lógica o inyección de trampas en el cliente (\textbf{RT-03}). Además, se planifican los \textit{seeders} de la base de datos.
@@ -584,7 +584,7 @@ Las tareas se completan satisfactoriamente en el tiempo estipulado. La implement
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo establecido consiste en dotar de vida al motor de \textit{King and Peasant}, centrándose en la implementación funcional de las cartas de acción y el complejo sistema de acciones pendientes (\textit{Pending Actions}) para manejar la interactividad asimétrica de la partida.
+El objetivo establecido para este ciclo consiste en dotar de funcionalidad al núcleo del motor de juego de \textit{King and Peasant}. Se busca implementar la lógica operativa de las cartas de acción, permitiendo que las decisiones de los jugadores tengan un impacto directo sobre el estado de la partida. Asimismo, se pretende desarrollar un sistema de gestión de eventos asíncronos que sea capaz de interrumpir el flujo normal del turno para requerir interacciones adicionales, garantizando que el motor pueda procesar resoluciones complejas de forma ordenada. Esta etapa busca asegurar que la interactividad asimétrica sea fluida y que el sistema sea capaz de coordinar las respuestas de los jugadores con la actualización atómica del tablero.
 
 \textbf{2. Diseño de la Solución} \\
 El diseño de la solución aborda la creación de los servicios (\textit{Game Service}) y controladores encargados de procesar el uso de cartas, validando la capacidad asimétrica del tablero (\textbf{RN-02}) y automatizando el cierre de turno (\textbf{RN-04}). En el cliente, se diseñan las interfaces dinámicas para explorar la pila de descartes y el diccionario visual de acciones.
@@ -650,7 +650,7 @@ Se solventan con éxito los bloqueos arrastrados desde las etapas iniciales de l
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo es definir la finalización algorítmica de las partidas, estableciendo las condiciones de victoria asimétricas de cada facción (Guardias vs. Asesino/Revueltas) y puliendo mecánicas clave de final de juego.
+El propósito de este ciclo consiste en establecer los mecanismos que gobiernan la resolución y el desenlace de las partidas. Se busca definir de forma precisa las condiciones de victoria asimétricas de cada bando, permitiendo que el sistema identifique automáticamente el momento en que un jugador alcanza sus objetivos estratégicos. Asimismo, se pretende integrar una capa de auditoría continua sobre el estado del juego que valide cada acción realizada, garantizando que la transición hacia el cierre de la partida sea atómica y coherente. Esta etapa busca asegurar que el ciclo de vida del juego esté completo, desde el inicio del turno hasta la declaración definitiva de un ganador y la posterior consolidación de los resultados.
 
 \textbf{2. Diseño de la Solución} \\
 Para garantizar la atomicidad de victoria (\textbf{RN-05}), el diseño de la lógica de negocio exige que el motor compruebe de forma asíncrona la victoria tras cada movimiento. Se idea una orquestación transaccional para asegurar que, al detectar un ganador, \textit{MariaDB} refleje el cambio de estado, la caché en memoria se bloquee y el cliente renderice modales dinámicos de cierre.
@@ -723,7 +723,7 @@ describe('gameService', () => {
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo fundamental consiste en desarrollar la capa visual e interactiva del núcleo del juego, implementando el \textit{frontend} de las Cartas de Acción y el complejo sistema de Acciones Pendientes (\textit{Pending Actions}) para permitir a los jugadores reaccionar a eventos asimétricos.
+El objetivo principal de este ciclo consiste en desarrollar la capa de interacción visual que soporta las mecánicas avanzadas del motor de juego. Se busca implementar las interfaces reactivas necesarias para gestionar las decisiones de los jugadores, permitiendo que el sistema de juego sea capaz de solicitar información adicional de forma dinámica ante el uso de determinadas cartas. Asimismo, se pretende integrar un sistema de control de la interfaz que coordine la visualización de elementos interactivos con el estado global de la partida, asegurando que el flujo de juego se mantenga coherente y que las acciones pendientes se presenten de forma intuitiva para el usuario. Esta etapa busca consolidar la experiencia de juego en el cliente, proporcionando las herramientas visuales necesarias para manejar la complejidad asimétrica de las interacciones.
 
 \textbf{2. Diseño de la Solución} \\
 Para cumplir el requisito de rendimiento (\textbf{RNF-REN}), el diseño plantea traducir la lógica del servidor a una experiencia reactiva. Se proyecta un diccionario visual unificado (\texttt{pendingActionsUI.tsx}) capaz de instanciar modales específicos (como el ataque \textit{Strike} del Rey) congelando la interfaz general sin perder el contexto visual del tablero.
@@ -782,7 +782,7 @@ El diseño mediante diccionarios demuestra ser muy escalable. Aplicando criterio
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El propósito consiste en consolidar el abanico completo de funcionalidades mecánicas de las cartas de ambos bandos, asegurando que las acciones asimétricas complejas (como tácticas de guardias o emboscadas) se resuelvan de forma íntegra.
+El propósito de este ciclo consiste en completar y consolidar el conjunto de mecánicas operativas que componen el sistema de juego asimétrico. Se busca integrar la totalidad de las funcionalidades de las cartas de ambos bandos, garantizando que los efectos complejos y las acciones encadenadas se resuelvan de forma íntegra y sin ambigüedades. Asimismo, se pretende asegurar que el motor de juego sea capaz de gestionar mutaciones múltiples sobre el estado de la partida de forma atómica, manteniendo la coherencia de la información entre el cliente y el servidor en todo momento. Esta etapa busca finalizar la implementación de las reglas lógicas del juego, proporcionando una base funcional robusta que soporte la diversidad de estrategias disponibles para los jugadores.
 
 \textbf{2. Diseño de la Solución} \\
 Dando cumplimiento al requisito de funcionalidad (\textbf{RNF-FUN}), el diseño algorítmico orquesta rutinas para alterar el estado de las entidades, calcular daños, escudos y penalizaciones de forma atómica. En el \textit{frontend}, el diseño contempla la incorporación de modales dinámicos para visualizar mazos durante la partida.
@@ -816,7 +816,7 @@ La aplicación de este procedimiento resulta en un éxito técnico notable, logr
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo es completar la capa de presentación de la mecánica especial de Infiltración y garantizar la robustez algorítmica del bucle de partida (transiciones entre Eras y validaciones deterministas).
+El objetivo establecido para este ciclo consiste en estabilizar el ciclo de vida completo de las partidas y desarrollar las interfaces específicas para las mecánicas de infiltración. Se busca asegurar que el bucle de juego sea capaz de gestionar correctamente las transiciones críticas entre las distintas fases o Eras, garantizando que el estado del tablero se reinicie y se asigne de forma determinista. Asimismo, se pretende implementar los componentes visuales necesarios para permitir que el jugador interactúe con el bando rival de forma controlada, proporcionando una experiencia fluida en el manejo de la información efímera. Esta etapa busca dotar al sistema de la robustez necesaria para soportar partidas completas, eliminando cualquier inconsistencia en la progresión lógica del juego.
 
 \textbf{2. Diseño de la Solución} \\
 Para asegurar la fiabilidad (\textbf{RNF-FIA}), el diseño requiere crear un componente reactivo (\texttt{InfiltrateModal.tsx}) acoplado al diccionario de acciones, dotando al jugador de una vista controlada para examinar la mano rival. Paralelamente, se diseña la estabilización de los scripts de entorno local (\texttt{npm run start:local}) y del bloque de aserciones de victoria (\textit{Win Condition}) en el servidor.
@@ -865,7 +865,7 @@ Las tareas de automatización del flujo del Rey se completan con éxito, elimina
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El propósito central consiste en el pulido exhaustivo de las reglas del juego (Guardias, Revueltas, Asesino) y el arreglo de errores arrastrados. Además, se fija el objetivo de optimizar la mantenibilidad del código (\textbf{RNF-MAN}) del \textit{frontend}.
+El propósito central de este ciclo consiste en realizar un pulido exhaustivo de las reglas lógicas del motor de juego y en optimizar la estructura interna de la interfaz de usuario. Se busca perfeccionar los algoritmos de cálculo de las mecánicas principales, asegurando que la resolución de los enfrentamientos y los eventos de victoria se ejecuten con total precisión. Asimismo, se pretende llevar a cabo una reestructuración profunda de la arquitectura del \textit{frontend} para mejorar su escalabilidad y mantenibilidad, descomponiendo los elementos complejos en componentes más sencillos y reutilizables. Esta etapa busca elevar los estándares de calidad del software, corrigiendo anomalías funcionales y estableciendo un sistema de comunicación de errores más robusto que mejore la experiencia y la fiabilidad del sistema.
 
 \textbf{2. Diseño de la Solución} \\
 El diseño para refactorizar la excesiva complejidad del componente principal (\texttt{Game.tsx}) se fundamenta en tres pilares: extraer la lógica transaccional a \textit{Custom Hooks}, descomponer el árbol JSX en componentes atómicos (\texttt{PlayerArea.tsx}, \texttt{RivalArea.tsx}), y encapsular todas las interfaces de interrupción (\textit{Modals}) para mitigar re-renderizados.
@@ -893,7 +893,7 @@ Con las reparaciones en las tarjetas de lógica compleja, el motor de juego prue
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo técnico es interceptar eventos asíncronos críticos transversales (como la finalización oficial de una partida o el abandono de salas de espera) y comunicarlos de forma inmediata mediante modales reactivos, mejorando el \textit{feedback} global.
+El objetivo principal de este ciclo consiste en desarrollar un sistema integral de notificaciones globales que mejore la comunicación de eventos críticos hacia el usuario. Se busca implementar mecanismos reactivos capaces de interceptar sucesos transversales, como la finalización de una partida o el abandono inesperado de un oponente, proporcionando una respuesta visual inmediata que guíe al jugador en su navegación. Asimismo, se pretende integrar una capa de control que coordine el flujo de información entre los diferentes módulos de la aplicación, asegurando que las notificaciones se presenten de forma coherente con el estado actual de la sesión. Esta etapa busca reforzar el ecosistema de comunicación del proyecto, garantizando que el usuario reciba un \textit{feedback} claro y preciso ante cualquier cambio significativo en el entorno de juego.
 
 \textbf{2. Diseño de la Solución} \\
 Dando cumplimiento al requisito de usabilidad, el diseño propone la creación del componente \texttt{AnnouncementModal.tsx}. La arquitectura planifica inyectarlo en la capa superior de la aplicación para interceptar los estados tanto en \texttt{Game.tsx} como en \texttt{LobbyRoom.tsx}, manteniéndolo oculto por defecto.
@@ -921,7 +921,7 @@ Estas adiciones eliminan los bloqueos severos donde los usuarios perdían el con
 
 \subsubsection*{Desarrollo a cargo de Ismael}
 \textbf{1. Definición de Características} \\
-El objetivo de este \textit{sprint} se centra en asegurar la calidad del software mediante la automatización de pruebas, blindando la \textit{lógica de negocio} del motor asimétrico y las interfaces, garantizando así la fiabilidad (\textbf{RNF-FIA}) del producto.
+El propósito fundamental de este ciclo consiste en garantizar la calidad técnica y la fiabilidad del ecosistema de \textit{King and Peasant} mediante procesos de validación automatizados. Se busca establecer una infraestructura de pruebas que permita blindar la lógica operativa del motor de juego y de los componentes de la interfaz de usuario, asegurando que el sistema responda de forma correcta ante diversos escenarios de interacción. Asimismo, se pretende someter al \textit{software} a una evaluación continua que identifique posibles fragilidades en la gestión de eventos asíncronos y en la integridad de los datos, permitiendo una corrección proactiva de anomalías estructurales. Esta etapa busca certificar la estabilidad de la plataforma, consolidando un producto robusto y verificado en todas sus capas funcionales.
 
 \textbf{2. Diseño de la Solución} \\
 Se diseña una \textit{suite} de pruebas utilizando el motor \textit{Jest}. La arquitectura de validación simula servicios de usuarios y el \textit{Game Service} operando contra bases de datos aisladas en memoria. En \textit{frontend}, el diseño abarca pruebas de componentes mediante DOM virtual para verificar los flujos de inicio de sesión y gestión de perfil.
@@ -948,7 +948,7 @@ Los tests cumplen su propósito revelando deficiencias de borde en las rutas HTT
 \subsection{Iteración 17: Redacción Técnica y Consolidación Documental}
 
 \textbf{1. Definición de Características} \\
-El objetivo primordial de este ciclo final consiste en intensificar la producción de la memoria técnica del proyecto, liberando ancho de banda y presión administrativa para afrontar la entrega definitiva.
+El objetivo primordial de este ciclo consiste en finalizar la redacción técnica y realizar la consolidación documental de todo el proceso de ingeniería. Se busca integrar y refinar los registros técnicos y manuales generados de forma incremental durante las iteraciones previas, asegurando que la memoria técnica presente una estructura cohesiva y profesional. Asimismo, se pretende llevar a cabo una revisión exhaustiva de la trazabilidad entre los requisitos iniciales y la implementación final, verificando que todos los artefactos visuales y diagramas de diseño estén correctamente alineados con el estado actual del proyecto para su entrega definitiva.
 
 \textbf{2. Diseño de la Solución} \\
 La solución metodológica plantea detener el desarrollo de nuevas características y establecer un flujo de redacción concurrente. El diseño documental exige justificar las decisiones arquitectónicas previas y estructurar todos los artefactos visuales (diagramas UML, tablas de análisis) generados a lo largo de los 16 \textit{sprints} anteriores.
