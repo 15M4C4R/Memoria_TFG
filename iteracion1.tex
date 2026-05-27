@@ -90,7 +90,18 @@ Durante el seguimiento de la orquestación inicial, se detecta una desviación: 
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-Durante la primera iteración, el objetivo es establecer los cimientos organizativos del proyecto, preparando las herramientas de planificación e inicializando las metodologías de trabajo en equipo. Las tareas principales consisten en la creación del calendario inicial de desarrollo y la redacción del documento de metodología para el uso de GitHub, abarcando la gestión de ramas, \textit{issues} y \textit{commits}.
+Durante la primera iteración, el objetivo es establecer los cimientos organizativos del proyecto, preparando las herramientas de planificación e inicializando las metodologías de trabajo colaborativo. Las tareas principales consisten en la creación del calendario inicial de desarrollo y la redacción del documento de metodología para el uso de GitHub. A continuación, se detalla el contenido y el propósito de cada elemento:
+
+\begin{itemize}
+    \item \textbf{Calendario inicial de desarrollo:} Consiste en la elaboración de un cronograma estructurado que distribuye temporalmente los elementos del alcance del proyecto. En este documento se estiman los tiempos necesarios para implementar los distintos módulos, integrando el desarrollo de la lógica, la conexión entre sistemas y la redacción de la memoria. Lo que se busca con esta planificación es establecer una línea base que permita monitorizar el progreso real frente al esperado. El sentido de este calendario es identificar posibles desviaciones de tiempo de manera temprana, equilibrar la carga de trabajo a lo largo de las semanas y garantizar que el trabajo finaliza dentro de los plazos académicos establecidos.
+
+    \item \textbf{Documento de metodología para el uso de GitHub:} Se trata de una guía interna que estipula las normas de control de versiones que se aplican durante todo el ciclo de vida del software. Su propósito fundamental es evitar conflictos en el código al trabajar de manera simultánea y asegurar que la evolución del proyecto quede documentada de forma ordenada. Este documento define tres pilares esenciales:
+    \begin{itemize}
+        \item \textbf{Gestión de ramas (\textit{branches}):} Se establece una estructura que aísla los entornos. Se define cómo y cuándo se crean ramas independientes para desarrollar nuevas funcionalidades antes de integrarlas al proyecto principal. El objetivo es asegurar que la rama principal contenga siempre código estable y funcional.
+        \item \textbf{Gestión de \textit{issues}:} Se instaura el uso de \textit{issues} como sistema unificado para el registro de tareas pendientes, seguimiento de errores e implementación de nuevas características. El sentido de esta práctica es mantener un control centralizado del trabajo pendiente y facilitar la asignación equitativa de tareas.
+        \item \textbf{Nomenclatura de \textit{commits}:} Se fijan reglas estrictas para la redacción de los mensajes de confirmación de cambios en el repositorio. Lo que se busca es que cada modificación en la base de código sea descriptiva y fácilmente comprensible por ambos integrantes. Esto resulta vital para mantener la trazabilidad del desarrollo, identificar rápidamente cuándo se introdujo un cambio específico y facilitar la resolución de problemas si es necesario revertir una versión.
+    \end{itemize}
+\end{itemize}.
 
 \textbf{2. Diseño} \\
 El calendario inicial se diseña mediante la herramienta Obsidian para proporcionar una hoja de ruta clara de las tareas a realizar. Este se estructura en iteraciones de una semana, priorizando inicialmente la configuración y tareas sencillas para facilitar la toma de contacto con las tecnologías, dejando la lógica central para la fase media y un periodo final dedicado exclusivamente a pruebas y corrección de errores. Por otro lado, la metodología de GitHub se diseña para garantizar un desarrollo conjunto organizado, definiendo roles específicos para cada rama y reglas estrictas de integración de código que materializan la mitigación planificada frente al riesgo de conflictos en el repositorio (\textbf{RO-03}, véase la Tabla \ref{tab:matriz_riesgos}).
@@ -140,7 +151,13 @@ Durante el control de la integración del almacenamiento en memoria surgen bloqu
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-Esta iteración se centra en la creación de la infraestructura de calidad y despliegue técnico. Se requiere configurar las herramientas de \textit{testing} automatizado y establecer un entorno de Despliegue Continuo (CD) que permita visualizar los avances del proyecto en un entorno de ejecución real y accesible a través de la red.
+Esta iteración se centra en la consolidación de la infraestructura técnica de calidad y despliegue. El objetivo es automatizar los procesos de verificación y publicación del código para asegurar la estabilidad del sistema a lo largo de todo su desarrollo. Las tareas principales consisten en la configuración de las herramientas de \textit{testing} automatizado y el establecimiento de un flujo de Despliegue Continuo (CD). A continuación, se detalla el contenido y el propósito de cada elemento:
+
+\begin{itemize}
+    \item \textbf{Configuración de herramientas de \textit{testing} automatizado:} Consiste en la integración de \textit{frameworks} de pruebas dentro del entorno de desarrollo que permiten ejecutar comprobaciones sobre el código fuente de manera sistemática y desatendida. Lo que se busca con esta práctica es establecer una red de seguridad técnica. El sentido de implementar estas herramientas desde las etapas iniciales es garantizar que las nuevas funcionalidades desarrolladas no alteren ni quiebren el funcionamiento de los componentes ya existentes. De este modo, se reduce drásticamente el tiempo dedicado a la depuración manual y se asegura la integridad de cada módulo antes de fusionarlo con la rama principal.
+
+    \item \textbf{Establecimiento de un entorno de Despliegue Continuo (CD):} Se trata de la configuración de un proceso automatizado que, tras la validación exitosa del código, publica la versión más reciente del sistema en un servidor web. El propósito de este despliegue es disponer de una réplica exacta del entorno de producción donde la aplicación puede ser ejecutada de manera real y accesible a través de la red. El sentido de este entorno es doble: por un lado, facilita la validación técnica al operar bajo condiciones reales (gestión de variables de entorno, peticiones de red, etc.); por otro, permite visualizar los avances de forma tangible y continua, simplificando la evaluación del progreso sin necesidad de que los evaluadores o integrantes configuren el entorno localmente en sus equipos.
+\end{itemize}
 
 \textbf{2. Diseño} \\
 Se diseña un entorno de pruebas híbrido utilizando Jest para validar la lógica del servidor (Backend) y Vitest para los componentes de la interfaz de usuario (Frontend). Para el despliegue de la aplicación, se opta por la plataforma Render debido a su integración nativa con entornos Node.js. La elección de este servicio se fundamenta en la disponibilidad de un plan gratuito y en que se dispone de experiencia técnica previa en su configuración, lo que facilita la gestión de la infraestructura. El flujo de CD se diseña para activarse automáticamente mediante GitHub Actions cada vez que se integren cambios en la rama principal y en la rama \textit{trunk}.
@@ -231,7 +248,11 @@ El seguimiento de este \textit{sprint} arroja resultados óptimos. Los objetivos
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-El requerimiento central es la creación de la página de inicio (\textit{Landing Page}) y la definición inicial de los esquemas de datos que soportan la lógica de las partidas.
+Esta iteración se enfoca exclusivamente en el desarrollo de la interfaz inicial y de presentación del sistema. La tarea central y única de este ciclo consiste en la implementación de la página de inicio (\textit{Landing Page}). A continuación, se detalla el propósito y el sentido de este elemento:
+
+\begin{itemize}
+    \item \textbf{Creación de la página de inicio:} Consiste en el desarrollo y maquetación de la primera interfaz gráfica con la que interactúa el usuario al acceder a la aplicación. El propósito de esta pantalla es servir como punto de entrada centralizado, estableciendo la identidad visual del proyecto y proporcionando la navegación básica necesaria. El sentido de dedicar una iteración de forma exclusiva a esta vista es establecer, configurar y validar toda la estructura base del \textit{frontend} (enrutamiento, hojas de estilo globales y arquitectura de componentes), asegurando que el sistema cuenta con un marco de trabajo completamente funcional y robusto sobre el cual se irán integrando paulatinamente el resto de interfaces y lógicas más complejas.
+\end{itemize}
 
 \textbf{2. Diseño} \\
 El diseño se centra en el Frontend, traduciendo los \textit{mock-ups} visuales a componentes de React. Se plantea como una página estática de navegación que no requiere interacción con la base de datos, sirviendo únicamente como nodo central para redirigir al usuario hacia el registro, el login o la búsqueda de partidas.
@@ -259,7 +280,13 @@ Durante el control de calidad de la iteración no se reportan fallos en las tran
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-El objetivo central de esta fase es el desarrollo de una interfaz funcional que permita a los usuarios interactuar con el sistema de salas, permitiendo la visualización de los espacios disponibles, así como la creación de nuevos entornos de juego o la unión a los existentes. Adicionalmente, surge la necesidad de implementar una capa de abstracción para la base de datos mediante un sistema de mapeo objeto-relacional (ORM), lo que representa un requerimiento técnico adicional para facilitar el manejo de la persistencia.
+El objetivo central de esta iteración es habilitar la interacción multiusuario previa a las partidas y establecer una arquitectura robusta para la gestión de datos. Las tareas principales consisten en la implementación funcional del listado de salas y la integración de un sistema de mapeo objeto-relacional (ORM) en el servidor. A continuación, se detalla el propósito y el sentido de cada elemento:
+
+\begin{itemize}
+    \item \textbf{Implementación funcional del listado de salas:} Consiste en el desarrollo de la pantalla general de \textit{lobby} y la lógica cliente-servidor necesaria para gestionar la creación y el acceso a las partidas. Esto abarca la programación de un listado dinámico que muestra los espacios disponibles, así como la operatividad real para que un usuario pueda crear una nueva sala o unirse a una ya existente. Cabe destacar que el alcance de esta iteración se limita exclusivamente al listado y los accesos, quedando fuera el desarrollo de la vista interior de la sala de espera. El propósito de esta tarea es proporcionar un punto de encuentro interactivo que organice el flujo de jugadores. El sentido de acotar e implementar esta funcionalidad en este momento es asegurar que los mecanismos de conexión y agrupamiento de usuarios son sólidos antes de abordar la vista de detalle de las salas y las mecánicas de juego.
+
+    \item \textbf{Implementación de un ORM (Mapeo Objeto-Relacional):} Se trata de la integración de una capa de abstracción en el lado del servidor (\textit{backend}) que permite interactuar con la base de datos utilizando objetos del propio lenguaje de programación, en lugar de escribir consultas de manera manual. El propósito de esta tarea técnica es facilitar, asegurar y estandarizar el manejo de la persistencia de datos (como la información de las salas recién creadas).
+\end{itemize}
 
 \textbf{2. Diseño} \\
 Para garantizar la integridad y el correcto funcionamiento de las salas, se diseña un modelo de datos robusto. Se determina que la entidad encargada de las salas debe poseer atributos específicos, priorizando la unicidad del nombre para evitar duplicidades en los lobbys y la obligatoriedad de un jugador líder (Jugador 1), garantizando que no existan salas vacías sin un administrador de partida.
@@ -302,7 +329,11 @@ El seguimiento de la integración detecta desviaciones severas en el cliente y e
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-Esta iteración se centra en la implementación de la lógica interna de la sala de espera (\textit{Lobby Room}), permitiendo a los usuarios interactuar con el entorno antes del inicio de la partida. Los requisitos funcionales incluyen la capacidad de unirse a salas, actualizar el estado de preparación (listo/no listo) y abandonar la estancia. Sin embargo, debido a que el sistema de gestión de cuentas se encontraba en desarrollo simultáneo, se deben emplear identificadores de usuario estáticos de forma temporal para avanzar en la lógica de las salas.
+Esta iteración se centra en la implementación de la vista de detalle y la interactividad de la sala de espera (\textit{Lobby Room}). El objetivo es dotar a los usuarios de las herramientas necesarias para gestionar su participación en los instantes previos al inicio de la partida, resolviendo en paralelo las dependencias técnicas con otros módulos del sistema. A continuación, se detalla el propósito y el sentido de esta tarea:
+
+\begin{itemize}
+    \item \textbf{Desarrollo de la lógica interna de la sala de espera (\textit{Lobby}):} Consiste en la programación de la interfaz y las comunicaciones en tiempo real que operan dentro de una sala específica una vez que el jugador ha accedido a ella. Los requisitos funcionales abarcan la sincronización de la entrada de los usuarios, la capacidad de alternar el estado de preparación (listo/no listo) y la opción de abandonar la estancia. Como parte de la estrategia de desarrollo de esta tarea, se emplean temporalmente identificadores de usuario fijos (\textit{mocks}). El propósito de esta característica es crear el entorno de transición necesario entre el listado general y el tablero de juego para que los participantes confirmen su disposición. El sentido de abordar la implementación de esta manera, recurriendo a datos estáticos transitorios, es garantizar un avance continuo; se permite desarrollar y probar toda la sincronización de la sala sin que el progreso quede bloqueado a la espera de que el sistema real de cuentas de usuario esté finalizado.
+\end{itemize}
 
 \textbf{2. Diseño} \\
 Se diseña un sistema dinámico de gestión de estados para las salas para asegurar una experiencia de usuario coherente. La lógica principal contempla que el sistema reaccione de forma autónoma ante la salida de un jugador: si el líder abandona la sala pero existe un segundo jugador, este hereda automáticamente el liderazgo de la partida; en caso de que la sala quede vacía, se procede a su eliminación definitiva de la base de datos para optimizar los recursos. Asimismo, se plantea la necesidad de sincronización en tiempo real para visualizar la información de ambos participantes, aunque su implementación técnica definitiva se ve condicionada por la disponibilidad de las herramientas de comunicación bidireccional.
@@ -389,7 +420,11 @@ Durante el control de calidad de la comunicación, se detectan dificultades pers
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-El hito principal de esta iteración es establecer la base técnica y arquitectónica de la partida mediante comunicación bidireccional en tiempo real. Se busca crear los cimientos tanto en el \textit{frontend} como en el \textit{backend} para que el estado del juego se sincronice automáticamente entre los dispositivos de ambos jugadores cada vez que se realice una acción.
+Esta iteración se centra en establecer la infraestructura de red y la arquitectura base para el desarrollo de las partidas. El objetivo principal es habilitar la comunicación bidireccional en tiempo real para mantener la coherencia de los datos entre los usuarios. A continuación, se detalla el propósito y el sentido de esta tarea central:
+
+\begin{itemize}
+    \item \textbf{Implementación de la arquitectura de comunicación en tiempo real:} Consiste en la construcción de los cimientos técnicos, tanto en el cliente (\textit{frontend}) como en el servidor (\textit{backend}), necesarios para sostener el flujo de información de la partida. Esto abarca la configuración de un canal bidireccional que permite la transmisión y recepción instantánea de eventos. El propósito de esta implementación es asegurar que el estado del juego se sincronice automáticamente entre los dispositivos de ambos jugadores cada vez que uno de ellos ejecute una acción. El sentido de priorizar esta base técnica antes de programar las mecánicas concretas es garantizar una arquitectura sólida y libre de desajustes, asegurando que las futuras reglas del juego operen sobre un sistema de sincronización estable y fiable.
+\end{itemize}
 
 \textbf{2. Diseño} \\
 Para garantizar una experiencia de juego fluida, se diseña una arquitectura de baja latencia. Se decide utilizar Redis como base de datos en memoria para gestionar el estado volátil de la partida, evitando así la sobrecarga de consultas constantes a MariaDB. El modelo de datos de la partida se define mediante una estructura JSON que centraliza la información crítica: el turno activo (\textit{peasant} o \textit{king}), el mazo central, la pila de descartes y el estado individual (mano y pueblo) de cada participante. Asimismo, se diseña un sistema de salas mediante WebSockets para aislar los eventos de cada partida de forma independiente.
@@ -530,7 +565,13 @@ Durante la validación de la refactorización, el seguimiento revela brechas en 
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-El hito principal de esta fase es la estabilización y el saneamiento de las tecnologías integradas hasta la fecha. Debido a que la configuración inicial del entorno de despliegue se realizó de manera prematura, se hace necesario revisitar esta infraestructura para garantizar un funcionamiento correcto y robusto. Asimismo, se plantea la implementación de un canal de comunicación de texto en tiempo real (chat) exclusivo para los jugadores dentro de una misma sesión de juego, con el fin de mejorar la interactividad.
+Esta iteración presenta un enfoque dual: por un lado, la consolidación técnica de la infraestructura existente y, por otro, la ampliación de las herramientas de interacción entre los usuarios. Las tareas principales consisten en el saneamiento del entorno de despliegue y la implementación de un chat de texto integrado. A continuación, se detalla el propósito y el sentido de cada elemento:
+
+\begin{itemize}
+    \item \textbf{Saneamiento y estabilización del entorno de despliegue:} Consiste en la revisión, corrección y optimización de la infraestructura tecnológica configurada previamente para la publicación del proyecto. El propósito de esta tarea es solventar las deficiencias técnicas derivadas de una configuración inicial prematura, asegurando que el sistema opere de forma correcta y robusta en red. El sentido de pausar temporalmente la creación de mecánicas de juego para abordar esta refactorización es eliminar la deuda técnica acumulada; garantizar una base de despliegue estable es fundamental para que el resto del desarrollo no se vea comprometido por fallos estructurales subyacentes.
+
+    \item \textbf{Implementación de comunicación por texto en tiempo real (Chat):} Se trata del desarrollo de un canal de mensajería instantánea, exclusivo y privado, para los jugadores que se encuentran disputando una misma sesión de juego. El propósito de esta característica es habilitar el intercambio de mensajes directos durante el transcurso de la partida de forma sincronizada. El sentido de integrar esta herramienta dentro del propio entorno del juego es enriquecer notablemente la experiencia de usuario y fomentar la interactividad, ofreciendo a los participantes un medio de comunicación directo sin necesidad de recurrir a aplicaciones o plataformas de terceros.
+\end{itemize}
 
 \textbf{2. Diseño} \\
 Para el sistema de Despliegue Continuo (CD), se diseña una arquitectura de integración en dos fases secuenciales dentro de GitHub Actions. El objetivo es asegurar que ninguna versión con fallos técnicos llegue a los entornos de ejecución. La primera fase se encarga de la validación mediante tests unitarios y de integración; solo tras un éxito total, se activa la segunda fase de despliegue.
@@ -610,7 +651,13 @@ El control de la implementación reporta complicaciones severas al sincronizar l
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-El objetivo principal de esta iteración se centra en el pulido de la experiencia de usuario (UX) y en la corrección de errores arrastrados desde la Iteración 5 respecto al ciclo de vida de las salas de espera. Concretamente, se establece la necesidad de configurar los botones de las cartas en el \textit{frontend} para mostrar textos de acción dinámicos basados en el estado y ubicación de la carta seleccionada. Adicionalmente, se definen tres características críticas para las salas: aplicar \textit{Socket.io} para sincronizar los estados de preparación (listo/no listo), garantizar la redirección simultánea de ambos jugadores a la pantalla de partida al iniciarla el líder, y expulsar automáticamente a cualquier usuario que abandone la sala por desconexión o cambio de URL.
+Esta iteración se centra en el perfeccionamiento de la experiencia de usuario (UX) y en la resolución de deficiencias técnicas arrastradas desde la Iteración 5, relativas al ciclo de vida de las salas de espera. Las tareas principales consisten en añadir dinamismo a la interfaz de las cartas y en robustecer la sincronización de las salas mediante \textit{Socket.io}. A continuación, se detalla el propósito y el sentido de cada elemento:
+
+\begin{itemize}
+    \item \textbf{Configuración dinámica de las acciones de las cartas:} Consiste en la modificación de la interfaz de cliente (\textit{frontend}) para que los botones de interacción de las cartas muestren textos que se adaptan en tiempo real. Esta variación de los textos de acción depende directamente del estado actual de la carta seleccionada y de su ubicación dentro del tablero de juego. El propósito de esta mejora visual es proporcionar una retroalimentación clara e inmediata al usuario. El sentido de implementar este nivel de pulido en la experiencia de usuario (UX) es reducir la carga cognitiva del jugador y evitar confusiones, garantizando que siempre sea evidente qué acciones están permitidas en función del contexto exacto de la partida.
+
+    \item \textbf{Estabilización y sincronización del ciclo de vida de las salas:} Se trata de la corrección de errores previos y la implementación de tres mecanismos críticos de control utilizando comunicaciones en tiempo real (\textit{Socket.io}): la sincronización de los estados de preparación (listo/no listo) entre clientes, la redirección simultánea de ambos jugadores a la pantalla de partida cuando el líder decide iniciarla, y la expulsión automática de aquellos usuarios que sufran una desconexión o abandonen la URL. El propósito de esta tarea es dotar de total fiabilidad a la antesala del juego. El sentido de reforzar esta lógica es evitar la generación de estados inconsistentes (como partidas iniciadas sin oponentes o jugadores atrapados en salas abandonadas), asegurando que la transición hacia el inicio del juego sea completamente segura, coordinada e infalible para ambos participantes.
+\end{itemize}
 
 \textbf{2. Diseño} \\
 Para la interfaz de las cartas, se diseña un componente reactivo (\texttt{ActionCard}) parametrizable, capaz de recibir la descripción, el texto del botón y la ruta de redirección como propiedades, adaptándose al contexto de la partida. En cuanto a la gestión de salas, se diseña un sistema estricto de redirección sincronizada emitido desde el servidor. Para el control de presencia, se diseña un mecanismo de tolerancia a desconexiones breves: si un cliente pierde conexión o navega fuera de la vista, se inicia una cuenta atrás de 5 segundos antes de considerar el abandono como definitivo y proceder a la expulsión.
@@ -663,7 +710,17 @@ Durante las pruebas de transición final, el equipo de control detecta errores d
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-Una vez establecida la comunicación bidireccional estable, el objetivo de esta fase es la inmersión en el núcleo funcional del juego. Se definen e implementan las acciones fundamentales que componen el turno de un jugador: jugar cartas de tipo guardia y rebelde, gestionar el paso de turno, el robo de cartas y la mecánica exclusiva del Rey denominada ``Condenar a un Rebelde''. Para dar soporte a estas funcionalidades, se desarrollan diversos puntos de acceso en la API junto con sus lógicas de negocio correspondientes en las capas de controladores y servicios.
+Una vez garantizada la estabilidad en la comunicación bidireccional, esta iteración se centra en el desarrollo del núcleo funcional del juego. El objetivo principal es implementar las mecánicas básicas que estructuran el desarrollo de las partidas, programando tanto la interacción visual como su correspondiente validación interna. A continuación, se detalla el propósito y el sentido de cada una de las acciones implementadas:
+
+\begin{itemize}
+    \item \textbf{Jugar cartas de facción (Guardia y Rebelde):} Consiste en la mecánica de despliegue de unidades en la zona de juego. El propósito de esta acción es permitir a los jugadores colocar sus cartas de de facción (Guardia y Rebelde) de su mano a la zona de \texttt{pueblo} y ejecutar su efecto una vez colocadas.
+
+    \item \textbf{Gestión del paso de turno:} Se trata del sistema que transfiere el control activo de la partida de un jugador a su oponente. El propósito de esta tarea es delimitar las fases de acción de cada participante. El sentido de esta implementación es estructurar el flujo temporal del juego de forma estricta, garantizando un ritmo ordenado, equitativo y libre de colisiones o desincronizaciones en la ejecución de acciones.
+
+    \item \textbf{Mecánica de robo de cartas:} Consiste en el sistema que permite a los jugadores extraer nuevos recursos desde el mazo principal hacia su mano.
+
+    \item \textbf{Mecánica exclusiva del Rey (``Condenar a un Rebelde''):} Consiste en la programación de una habilidad única y asimétrica reservada exclusivamente para el jugador que ostenta este rol. Mediante la cual se selecciona una carta enemiga o la primera carta del mazo para decidir el final de la ronda.
+\end{itemize}
 
 \textbf{2. Diseño} \\
 Se diseña una arquitectura de servicios modular para gestionar el uso de cartas, discriminando el flujo mediante un parámetro \texttt{isHand}. Si la carta se juega desde la mano, el sistema debe evaluar si es una carta de acción (ejecución inmediata) o un personaje (colocación en el pueblo). Si se juega desde el pueblo, la lógica se vuelve asimétrica: los guardias activan sus efectos, mientras que los rebeldes pueden ser devueltos a la mano si están revelados, intentar una infiltración o activar su habilidad especial.
@@ -736,7 +793,11 @@ Durante el acoplamiento del diccionario, el control de la interfaz detecta desaj
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-La característica crítica a abordar es el sistema de "Acciones Pendientes": situaciones de juego donde el efecto de una carta interrumpe el flujo normal y exige que el jugador seleccione objetivos adicionales (cartas enemigas, zonas) antes de finalizar el turno.
+Esta iteración se centra en la resolución de interacciones complejas dentro del ciclo de la partida, abordando concretamente la implementación del sistema de "Acciones Pendientes". A continuación, se detalla el propósito y el sentido de esta característica crítica:
+
+\begin{itemize}
+    \item \textbf{Sistema de "Acciones Pendientes":} Consiste en la programación de estados transitorios durante el turno en los que el efecto de una carta interrumpe el flujo normal del juego. En estas situaciones, la resolución de la jugada no es inmediata, sino que pausa el progreso habitual para exigir al usuario una interacción adicional, como la selección de objetivos específicos (cartas enemigas, zonas del tablero) antes de dar por finalizada la acción o el turno. El propósito de esta funcionalidad es permitir la ejecución de mecánicas avanzadas y efectos concatenados que requieren una toma de decisiones contextual por parte del jugador.
+\end{itemize}
 
 \textbf{2. Diseño} \\
 Se diseña una arquitectura basada en diccionarios emparejados (Cliente-Servidor). En el Frontend (\texttt{pendingActionsUI}), se define qué instrucciones mostrar, qué zonas son clicables y qué validaciones previas existen antes de confirmar. En el Backend, los diccionarios (\texttt{rebelPendingCards} y \texttt{guardPendingCards}) capturan el \textit{payload} (ej. identificador de la carta objetivo), ejecutan la mutación del estado y cambian el turno.
@@ -795,7 +856,7 @@ El control de calidad evidencia fricciones temporales al enlazar el diccionario 
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-El objetivo es la implementación exhaustiva y validación funcional de todas las cartas de personaje restantes en el juego. El objetivo central consiste en integrar estas mecánicas dentro del sistema de diccionarios de Acciones Pendientes y efectos simples construido previamente, asegurando que el abanico completo de interacciones asimétricas esté disponible y operativo para el transcurso de las partidas.
+El objetivo es la implementación exhaustiva y validación funcional de todas las cartas de tipo \textit{Guardia y Rebelde} restantes en el juego. El objetivo central consiste en integrar estas mecánicas dentro del sistema de diccionarios de Acciones Pendientes y efectos simples construido previamente, asegurando que el abanico completo de interacciones asimétricas esté disponible y operativo para el transcurso de las partidas.
 
 \textbf{2. Diseño} \\
 Para abordar el volumen de trabajo de forma eficiente, se opta por un enfoque metodológico riguroso basado en una matriz de control de calidad. Se diseña un documento de seguimiento donde se listan pormenorizadamente todas las cartas que componen el juego junto a cada una de sus acciones y efectos posibles. Este diseño permite estructurar el desarrollo no como una tarea abierta, sino como un proceso sistemático de verificación y cierre de requisitos funcionales mediante una activación, prueba y corrección procedimental.
@@ -829,7 +890,13 @@ Las pruebas del bucle final de juego levantan una alerta crítica: la invocació
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-El objetivo de esta iteración se centra en perfeccionar el flujo de turnos mediante la automatización del robo de cartas para el bando del Rey y en el diseño conceptual de la mecánica de infiltración. Se busca que el Rey reciba una carta de forma obligatoria al finalizar sus acciones, asegurando la progresión del mazo real. Asimismo, se inicia el estudio técnico sobre cómo permitir que el bando rebelde inyecte cartas en el mazo enemigo, evaluando la viabilidad de diferentes interfaces para el usuario.
+Esta iteración se enfoca en perfeccionar el flujo de turnos de la partida mediante la automatización de procesos clave. El objetivo central es garantizar que la progresión del mazo real sea constante y fluida. A continuación, se detalla el propósito y el sentido de la característica abordada:
+
+\begin{itemize}
+    \item \textbf{Automatización del robo de cartas (Bando del Rey):} Consiste en la programación de un evento de sistema integrado en la lógica de fin de turno. Este mecanismo, de manera automática y sin requerir la intervención manual del usuario, extrae una carta del mazo del jugador que asume el rol del Rey y la añade a su mano una vez que ha finalizado sus acciones permitidas.
+
+    \item \textbf{Diseño conceptual de la mecánica de infiltración:} Consiste en el estudio técnico preliminar para habilitar que el bando rebelde inyecte cartas directamente en el mazo enemigo. El propósito de esta tarea investigativa es evaluar la viabilidad de diferentes interfaces y flujos de interacción para el usuario antes de proceder a la escritura del código.
+\end{itemize}
 
 \textbf{2. Diseño} \\
 Para el robo automático, se diseña una lógica de interceptación en la transición de turnos. En lugar de una simple alternancia de roles, se proyecta una función de envoltura que evalúa el estado saliente: si el jugador que finaliza es el Rey, el sistema debe invocar la lógica de robo antes de actualizar el turno en Redis.
@@ -878,7 +945,13 @@ Durante las pruebas de estrés de este ciclo, el control de errores caza un fall
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-Esta iteración está dedicada casi exclusivamente a la refactorización visual del Frontend de la partida, a la corrección de múltiples anomalías funcionales derivadas de la complejidad del motor de cartas, y a dar soporte de resolución a la mecánica crítica de la carta \texttt{DECOY}.
+Esta iteración está dedicada fundamentalmente a la estabilización técnica del entorno de juego, así como a la implementación de interacciones avanzadas para cartas específicas. A continuación, se detalla el propósito y el sentido de cada área de trabajo abordada:
+
+\begin{itemize}
+    \item \textbf{Corrección de anomalías en el motor de cartas:} Se trata de un proceso exhaustivo de depuración enfocado en solventar múltiples fallos funcionales (\textit{bugs}) surgidos a raíz de la creciente complejidad de las interacciones lógicas entre los componentes del juego. El propósito de esta tarea es sanear y robustecer el núcleo del sistema. El sentido de dedicar un esfuerzo intensivo a esta estabilización es garantizar que el motor aplique las reglas de manera estricta e infalible, evitando que las casuísticas imprevistas o los efectos cruzados entre distintas cartas rompan el flujo técnico de la partida.
+
+    \item \textbf{Soporte y resolución de la mecánica de la carta \texttt{DECOY}:} Consiste en la programación de la lógica de negocio y las adaptaciones de interfaz necesarias para ejecutar de manera integral la habilidad asociada a esta carta. El propósito de esta tarea es materializar su efecto táctico particular dentro del ecosistema del juego. El sentido de abordar esta mecánica de forma individualizada radica en su alta complejidad técnica; al ser una carta que interactúa de forma directa e inusual con la resolución de objetivos de otras acciones, requiere un desarrollo específico para asegurar que se integra de manera limpia y consistente con el sistema de "Acciones Pendientes".
+\end{itemize}
 
 \textbf{2. Diseño} \\
 Se rediseña el formateador de salida de estado (\texttt{saveAndFormatGameState()}) para que actúe como un interceptor pasivo. Cuando esta función empaca el estado para guardarlo y enviarlo, debe analizar de oficio si existen detonantes automáticos (como el Rey robando el \texttt{DECOY} infiltrado), forzando una pausa en el juego y un cambio de turno reactivo para que el oponente ejecute el efecto.
@@ -906,7 +979,11 @@ El seguimiento de la implementación reporta conflictos de renderizado: el modal
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-La meta es endurecer la resiliencia del juego ante la inestabilidad de red de los usuarios, gestionando salidas abruptas, \textit{timeouts} y facilitando un retorno seguro a las salas o partidas en curso. Además, se busca unificar el sistema de \textit{Modales} (ventanas emergentes) en React, eliminando los modales nativos del navegador.
+Esta iteración se centra en una única tarea principal: dotar al sistema de robustez frente a problemas de conectividad, asegurando la continuidad de la experiencia de juego ante factores técnicos externos. A continuación, se detalla el propósito y el sentido de esta característica:
+
+\begin{itemize}
+    \item \textbf{Gestión de inestabilidad de red y sistema de reconexión a la partida:} Consiste en la implementación de mecanismos de control en el servidor para gestionar de forma integral las deficiencias de conectividad de los usuarios. Esto abarca la detección y manejo de salidas abruptas y tiempos de espera excedidos (\textit{timeouts}), así como el desarrollo de una lógica de persistencia temporal que facilita el retorno seguro e inmediato del jugador a la sala de espera o a la partida en curso tras una caída de red. El propósito de esta tarea técnica es proteger la integridad de la sesión, evitando que el flujo del juego quede bloqueado indefinidamente por la inactividad de un participante. El sentido de establecer este sistema unificado de resiliencia es mitigar la frustración derivada de la inestabilidad de las infraestructuras, garantizando que una interrupción transitoria no penalice injustamente a los jugadores ni provoque la pérdida irreversible del progreso de la partida.
+\end{itemize}
 
 \textbf{2. Diseño} \\
 Se diseña un doble sistema de protección y reconexión activa para dar respuesta definitiva al riesgo crítico de pérdida de estado por desconexión abrupta (\textbf{RT-02}). Si un usuario se desconecta de una partida, se dispara un cronómetro de gracia de 2 minutos visible para el oponente. Si el tiempo expira, la victoria se adjudica automáticamente. Para la sala de espera (\textit{Lobby}), se diseña un \textit{hook} de validación que detecta si el usuario ya pertenece a una sesión activa y renderiza un panel de "Reconexión Rápida".
@@ -934,7 +1011,15 @@ Durante el monitoreo de la \textit{suite}, el sistema reporta discrepancias grav
 
 \subsubsection*{Desarrollo a cargo de Guillermo}
 \textbf{1. Definición de Características} \\
-Como sprint final de la infraestructura global, los objetivos apuntan a garantizar la calidad y despliegue final: implementar pruebas unitarias (Tests) sobre los módulos de salas, reparar bugs de lógica de negocio profunda y configurar correctamente los pobladores de la base de datos (\textit{seeders}) en producción.
+Como iteración final dedicada a la infraestructura global del proyecto, el objetivo principal es garantizar la calidad del producto y preparar el entorno para su despliegue definitivo. A continuación, se detalla el propósito y el sentido de cada una de las tareas clave abordadas en esta fase de cierre:
+
+\begin{itemize}
+    \item \textbf{Implementación de pruebas unitarias (\textit{Tests}) en el módulo de salas:} Consiste en el desarrollo y ejecución de rutinas automáticas de verificación que evalúan el comportamiento aislado de las funciones y métodos que gestionan las salas de espera. El propósito de esta tarea es certificar que la lógica de conexión y agrupamiento opera sin errores bajo diferentes escenarios. El sentido de aplicar estas pruebas en la fase final es asegurar la máxima fiabilidad del código, garantizando que el sistema cumple con los estándares de calidad exigidos antes de su entrega técnica.
+
+    \item \textbf{Resolución de errores complejos en la lógica de negocio (\textit{Bugs}):} Se trata de un proceso intensivo de depuración enfocado en localizar y solventar anomalías profundas en el núcleo de las reglas del juego.
+
+    \item \textbf{Configuración de los pobladores de base de datos (\textit{seeders}) en producción:} Consiste en la adaptación y ejecución de \textit{scripts} automáticos encargados de inyectar los datos iniciales e indispensables (tales como la información base de las cartas o configuraciones predeterminadas) en la base de datos del entorno de despliegue real. El sentido de asegurar este proceso en el entorno de producción es garantizar que la aplicación se inicializa de forma autónoma y es completamente funcional desde el primer momento, evitando la necesidad de realizar cargas de información manuales tras su publicación.
+\end{itemize}
 
 \textbf{2. Diseño} \\
 Se define como meta de calidad técnica alcanzar al menos un 80\% de cobertura de código en los archivos de gestión de \textit{Lobbies}. Por otro lado, se diseña una regla de validación adicional en la mecánica del Rey para imposibilitar físicamente que supere el límite reglamentario de 3 guardias desplegados.
