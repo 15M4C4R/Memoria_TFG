@@ -1,0 +1,63 @@
+\part{Ejecución: Interacciones Sociales y Red Asíncrona}
+
+\chapter{Introducción Técnica al Canal Bidireccional}
+
+Para resolver la latencia en la interacción social (sistema de amigos y futuras mecánicas de partida), se sustituye el modelo tradicional de \textit{HTTP Polling} por una conexión persistente bidireccional basada en el protocolo \textit{WebSockets} utilizando \textit{Socket.io}. La arquitectura se modela mediante un \textit{Socket Manager} en el servidor, implementado bajo un patrón \textit{Singleton}, que gentiona la emisión de eventos (\textit{Broadcast}) a salas específicas y propaga notificaciones en tiempo real a los clientes conectados.
+
+\textbf{Estructura de Directorios} \\
+\begin{verbatim}
+packages/server/src/
+|-- controllers/
+|   +-- FriendshipController.js
++-- sockets/
+    +-- LobbySocket.js
+\end{verbatim}
+
+\textbf{Snippets Estratégicos de Código} \\
+\begin{lstlisting}[language=Java]
+// packages/server/src/sockets/LobbySocket.js
+const registerLobbyHandlers = (io, socket) => {
+  socket.on("createLobby", async (lobbyName, isPrivate) => {
+    // Logica interna compartida
+  });
+}
+\end{lstlisting}
+
+\chapter{Iteración 6: Interacciones Sociales, WebSockets y Base Técnica de la Partida}
+
+\section{Definición de Características}
+El objetivo establecido para este ciclo consiste en desarrollar el componente social del ecosistema, sentar las bases tecnológicas para la interacción en tiempo real y crear el esqueleto de la partida sobre el que se construirá a lo largo de las iteraciones. Se busca implementar un sistema integral de gestión de amistades que permita a los usuarios conectarse entre sí, facilitando la creación de una red social dentro de la plataforma. Asimismo, se pretende transformar la arquitectura de comunicación del proyecto mediante la integración de un canal bidireccional permanente que garantice la propagación instantánea de eventos. Esta etapa busca asegurar que el sistema sea capaz de notificar cambios de estado de forma reactiva, eliminando la latencia en las interacciones sociales y preparando la infraestructura técnica necesaria para soportar la sincronización de las partidas en las fases posteriores.
+
+\section{Diseño de la Solución}
+El diseño se divide en dos frentes. Por un lado, se planifican los \textit{endpoints} y el modelo de entidad relacional para enviar, aceptar y rechazar amistades, junto con su vista (\textit{Dashboard}). Por otro lado, en cumplimiento del requisito de rendimiento (\textbf{RNF-REN}) y como escudo principal frente al riesgo de saturación del servidor por concurrencia (\textbf{RT-01}), se diseña la sustitución del protocolo HTTP tradicional por \textit{WebSockets} (\textit{Socket.io}) en el servidor. La justificación arquitectónica de esta decisión se detalla en la Tabla \ref{tab:ws_analisis}.
+
+\begin{table}[H]
+\centering
+\begin{coolTable}{p{4cm}p{\textwidth-4.5cm}}{2}
+{Análisis de valor: Comunicación por WebSockets}
+\textbf{Propuesta}&Sustitución del paradigma HTTP tradicional (REST) por un canal persistente bidireccional basado en Socket.io.\\
+\midrule
+\textbf{Valor}&Garantiza latencia casi nula para la sincronización de las mecánicas de partida y notificaciones de amistad.\\
+\textbf{Coste}&Aumenta la complejidad de la infraestructura al requerir un \textit{Socket Manager} y mayor consumo de memoria por conexiones abiertas.\\
+\textbf{Opciones}&\textit{HTTP Long Polling} o \textit{Server-Sent Events (SSE)}, descartadas por sobrecarga de red y limitación unidireccional respectivamente.\\
+\textbf{Riesgos}&Riesgo crítico de fugas de memoria (\textit{memory leaks}) ante desconexiones no gestionadas de los clientes.\\
+\textbf{Deuda técnica}&Obliga a implementar lógicas manuales de reconexión y ciclos de limpieza (\textit{cleanup}) en el frontend (React).\\
+\end{coolTable}
+\caption{Análisis de valor aportado sobre la arquitectura de comunicación mediante WebSockets. \label{tab:ws_analisis}}
+\end{table}
+
+Para garantizar una experiencia de juego fluida, se diseña una arquitectura de baja latencia. Se decide utilizar Redis como base de datos en memoria para gestionar el estado volátil de la partida, evitando así la sobrecarga de consultas constantes a MariaDB. El modelo de datos de la partida se define mediante una estructura JSON que centraliza la información crítica: el turno activo (\textit{peasant} o \textit{king}), el mazo central, la pila de descartes y el estado individual (mano y pueblo) de cada participante. Asimismo, se diseña un sistema de salas mediante WebSockets para aislar los eventos de cada partida de forma independiente.
+
+\section{Detalles de Implementación}
+El principal desafío de implementación consiste en mantener una única fuente de verdad sincronizada. El algoritmo desarrollado opera estableciendo un mapa en memoria en el servidor que vincula el \texttt{userId} con su \texttt{socket.id}. Tras completarse una transacción en \textit{MariaDB} (ej. aceptar una solicitud), el controlador invoca al gestor de \textit{Sockets}. Éste emite un evento tipado (\textit{Broadcast} dirigido) enviando el nuevo estado del \textit{Dashboard}, forzando a la vista \textit{React} a re-renderizarse de forma reactiva sin necesidad de sondeo.
+
+De cara a la implementación inicial de la partida, se comienza con el desarrollo de una pantalla de partida estática en el \textit{frontend} para validar la sincronización. Se integra una función de recuperación de estado asistida por un \textit{hook} \texttt{useEffect()} y gestionada mediante \texttt{useState()}.
+
+Para la comunicación en tiempo real, se configura un \textit{socket} encargado de emitir el evento \texttt{joinGame} al cargar la página, suscribiendo al cliente a una sala específica. Simultáneamente, se establece un escucha para el evento \texttt{action}, el cual dispara la recarga del estado cada vez que el servidor notifica un cambio.
+
+En el \textit{backend}, se desarrolla la capa de servicio \texttt{gameService.js} para orquestar la persistencia en Redis.
+
+Finalmente, se implementa la lógica de cambio de turnos en el servidor. Al procesar una acción, el controlador emite una señal a todos los clientes conectados en la sala mediante \texttt{socket.io.to(game:\{id\}).emit('action')}, garantizando que ambos jugadores vean reflejado el movimiento instantáneamente.
+
+\section{Seguimiento, Control y Replanificación}
+Durante el control de calidad de la comunicación, se detectan dificultades de conexión. La desviación se mitiga replanificando la lógica del cliente e implementando retornos de limpieza (\textit{cleanup}) en los \textit{hooks} de \textit{React} para forzar la desconexión explícita. El ciclo concluye exitosamente, dejando el motor de comunicación listo para iniciar el flujo principal de la partida.

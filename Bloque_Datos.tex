@@ -1,0 +1,113 @@
+\part{Ejecución: Gestión de Datos e Identidad}
+
+\chapter{Introducción Técnica al Modelo de Persistencia}
+
+El flujo de autenticación implementa el patrón de diseño \textit{Context API} en el \textit{frontend} para inyectar globalmente el estado de sesión del usuario. A nivel de \textit{backend}, se utiliza \textit{Prisma ORM} como intermediario transaccional con la base de datos relacional. Las peticiones a rutas protegidas se validan mediante \textit{middlewares} que decodifican \textit{JSON Web Tokens (JWT)}, logrando una arquitectura de seguridad robusta y desacoplada.
+
+\textbf{Estructura de Directorios} \\
+\begin{verbatim}
+packages/
+|-- client/src/
+|   +-- context/
+|       +-- AuthContext.ts
++-- server/
+    |-- prisma/
+    |   +-- schema.prisma
+    +-- src/controllers/
+        +-- UserController.js
+\end{verbatim}
+
+\textbf{Snippets Estratégicos de Código} \\
+\begin{lstlisting}[language=Java]
+// packages/client/src/context/AuthContext.ts
+interface AuthContextType {
+  user: User | null;
+  isLogin: boolean;
+  login: (userData: User) => void;
+  socket: Socket | null;
+}
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+\end{lstlisting}
+
+\chapter{Iteración 3: Modelado Estructural, Flujo de Negocio y Pantalla de Inicio}
+
+\section{Definición de Características}
+El objetivo principal de esta iteración consiste en el diseño estructural de la información, en la definición lógica del ciclo de vida de las partidas y la implementación de la página de inicio (\textit{Landing Page}). A continuación, se detalla el propósito y el sentido de este elemento:
+
+\begin{itemize}
+    \item \textbf{Diseño de diagrama de flujo de la partida:} Se pretende modelar de forma exhaustiva el flujo operativo del sistema de juego, detallando las transiciones de estado, la secuencia de turnos asimétricos y el comportamiento de las cartas para garantizar que todas las reglas de negocio queden representadas en un diagrama de flujo integral que sirva de guía para la implementación técnica.
+    \item \textbf{Diseño de diagrama UML de la dase de datos:} Consiste en representar los datos de la aplicación, sus atributos y las relaciones entre ellos. De forma, que se facilite la implementación de los distintos módulos de la aplicación y esta sea coherente. Evitando errores y problemas futuros.
+    \item \textbf{Implementación de sistema de Inicio Sesion / Registro de usuarios:} Se busca establecer un modelo de datos relacional robusto que soporte la persistencia de usuarios y sus interacciones sociales, complementándolo con un esquema de estado dinámico diseñado específicamente para gestionar la información volátil de la partida en tiempo real.
+    \item \textbf{Creación de la página de inicio:} Consiste en el desarrollo y maquetación de la primera interfaz gráfica con la que interactúa el usuario al acceder a la aplicación. El propósito de esta pantalla es servir como punto de entrada centralizado, estableciendo la identidad visual del proyecto y proporcionando la navegación básica necesaria. El sentido de dedicar una iteración de forma exclusiva a esta vista es establecer, configurar y validar toda la estructura base del \textit{frontend} (enrutamiento, hojas de estilo globales y arquitectura de componentes), asegurando que el sistema cuenta con un marco de trabajo completamente funcional y robusto sobre el cual se irán integrando paulatinamente el resto de interfaces y lógicas más complejas.
+\end{itemize}
+
+\section{Diseño de la Solución}
+El diseño de esta etapa se articula en torno a la arquitectura de la información. Se elabora el modelo Entidad-Relación y el diagrama UML correspondiente a la base de datos relacional. De forma paralela, el equipo diseña los estados de la partida, los turnos intercalados y las mecánicas asimétricas plasmándolas en diagramas de flujo operativos.
+
+Por otro lado, el diseño de la página de inicio se centra en el Frontend, traduciendo los \textit{mock-ups} visuales a componentes de React. Se plantea como una página estática de navegación que no requiere interacción con la base de datos, sirviendo únicamente como nodo central para redirigir al usuario hacia el registro, el login o la búsqueda de partidas.
+
+\section{Detalles de Implementación}
+El diseño estructural requiere abstraer la asimetría del juego a un modelo de datos cohesivo. El esquema relacional implementa entidades independientes para \texttt{User}, \texttt{Friendship}, \texttt{Lobby} y \texttt{Game}. La complejidad se centra en la entidad \texttt{Card}, la cual se codifica para contener tanto los atributos del bando del Rey (\texttt{nameKing}, \texttt{typeKing}) como los del Campesino (\texttt{namePeasant}, \texttt{typePeasant}) en un mismo registro. Esto facilitó enormemente la futura gestión del mazo único compartido. Las relaciones múltiples reflexivas en la entidad \texttt{User} (como \texttt{gamesAsPlayer1} o \texttt{friendshipsSent}) se implementan para permitir consultas eficientes de historiales y marcadores.
+A su vez, se desarrolla la interfaz de usuario asegurando la fidelidad visual con los diseños previos. Se implementan los sistemas de rutas internas para dejar preparados los accesos a funcionalidades que se desarrollan en fases posteriores.
+
+\section{Seguimiento, Control y Replanificación}
+El seguimiento de este \textit{sprint} arroja resultados óptimos. Los objetivos de modelado de datos y flujos lógicos se alcanzan con éxito, sin registrarse desviaciones temporales ni bloqueos técnicos que obliguen a replanificar. El diseño queda certificado y listo para ser trasladado al ORM en la siguiente iteración.
+
+
+\chapter{Iteración 4: Implementación del Modelo Estructural, Gestión de Usuarios y Listado de Salas}
+
+\section{Definición de Características}
+El objetivo primordial de esta iteración consiste en la implementación funcional del listado de salas y materializar el diseño estructural del sistema en una arquitectura de datos técnica y funcional. Se busca trasladar los modelos conceptuales de la base de datos relacional al entorno de desarrollo, asegurando que el esquema físico sea capaz de soportar las relaciones complejas de usuarios y amistades mediante un sistema de gestión automatizado. Asimismo, se pretende integrar una capa de abstracción que facilite la interacción segura con la persistencia, garantizando la integridad de los datos y permitiendo que la infraestructura de contenedores esté en perfecta sincronía con la definición lógica de las entidades del proyecto.
+A continuación, se detalla el propósito y el sentido de cada elemento:
+
+\begin{itemize}
+    \item \textbf{Implementación funcional del listado de salas:} Consiste en el desarrollo de la pantalla general de \textit{lobby} y la lógica cliente-servidor necesaria para gestionar la creación y el acceso a las partidas. Esto abarca la programación de un listado dinámico que muestra los espacios disponibles, así como la operatividad real para que un usuario pueda crear una nueva sala o unirse a una ya existente. Cabe destacar que el alcance de esta iteración se limita exclusivamente al listado y los accesos, quedando fuera el desarrollo de la vista interior de la sala de espera. El propósito de esta tarea es proporcionar un punto de encuentro interactivo que organice el flujo de jugadores. El sentido de acotar e implementar esta funcionalidad en este momento es asegurar que los mecanismos de conexión y agrupamiento de usuarios son sólidos antes de abordar la vista de detalle de las salas y las mecánicas de juego.
+    \item \textbf{Implementación de un ORM (Mapeo Objeto-Relacional):} Se trata de la integración de una capa de abstracción en el lado del servidor (\textit{backend}) que permite interactuar con la base de datos utilizando objetos del propio lenguaje de programación, en lugar de escribir consultas de manera manual. El propósito de esta tarea técnica es facilitar, asegurar y estandarizar el manejo de la persistencia de datos (como la información de las salas recién creadas).
+\end{itemize}
+
+\section{Diseño de la Solución}
+En cumplimiento con el requisito de arquitectura (\textbf{RNF-ARQ}), el diseño de la solución dictamina que este modelo conceptual se traslade al entorno de desarrollo utilizando \textit{Prisma ORM}. Se diseña una estrategia basada en migraciones secuenciales sobre el despliegue aislado de \textit{MariaDB}, garantizando que el esquema de la base de datos esté en sincronía con el contenedor de Docker.
+
+Para garantizar la integridad y el correcto funcionamiento de las salas, se diseña un modelo de datos robusto. Se determina que la entidad encargada de las salas debe poseer atributos específicos, priorizando la unicidad del nombre para evitar duplicidades en los lobbys y la obligatoriedad de un jugador líder (Jugador 1), garantizando que no existan salas vacías sin un administrador de partida.
+
+\section{Detalles de Implementación}
+La transición del modelo a la infraestructura real se codifica definiendo el esquema en \texttt{schema.prisma}. Esta implementación genera automáticamente un cliente tipado para \textit{Node.js}, proporcionando autocompletado y seguridad de tipos en la capa de controladores. La ejecución de las migraciones (\texttt{prisma migrate}) actúa como un sistema de control de versiones sobre \textit{MariaDB}, garantizando que cualquier cambio en la estructura de tablas o índices (como \texttt{@@unique([idSender, idReceiver])} en las amistades) se aplique de forma atómica.
+
+En la capa de \textit{frontend}, se procede a la maquetación y desarrollo de la pantalla de listado de salas, asegurando la fidelidad técnica respecto a los diseños establecidos in los \textit{mock-ups}. En el servidor, se estructura la lógica de negocio mediante la creación de los archivos correspondientes a rutas, servicios y controladores. Para optimizar las fases de prueba, se desarrollan \textit{seeders} encargados de poblar el sistema con salas predefinidas, permitiendo validar la interfaz de usuario de forma cómoda.
+
+La estructura de la sala en la base de datos se define bajo los siguientes requisitos técnicos:
+\begin{enumerate}
+    \item \textbf{id:} identificativo único de la sala, no nulo.
+    \item \textbf{nombre:} único y no nulo para evitar duplicidad de nombres en los lobbys.
+    \item \textbf{Fecha de creación:} no nulo. Incluido para el análisis de datos o la purga automática de salas inactivas.
+    \item \textbf{Estatus:} no nulo. Enumerado que indica si la sala se encuentra en espera de jugadores o con una partida en curso.
+    \item \textbf{Privacidad:} no nulo. Enumerado que define si el acceso es libre o requiere invitación.
+    \item \textbf{Id del jugador 1:} no nulo. Identifica al líder de la sala y responsable de iniciar la partida.
+    \item \textbf{Id del jugador 2:} identificador opcional del segundo participante.
+\end{enumerate}
+
+\section{Seguimiento, Control y Replanificación}
+Durante el control de calidad de la iteración no se reportaron fallos en las transacciones de las migraciones. El modelo de datos se materializó en los contenedores locales sin desviaciones, cerrando la iteración en el tiempo estipulado y permitiendo continuar con la capa de seguridad.
+
+
+\chapter{Iteración 5: Gestión de Identidad, Perfiles y Lógica Interna de Salas de Espera}
+
+\section{Definición de Características}
+El primer propósito de este ciclo es desarrollar el sistema de gestión de identidad que permite a los usuarios acceder de forma segura y personalizada al ecosistema de \textit{King and Peasant}. Se busca establecer los mecanismos para la creación de cuentas y el reconocimiento de usuarios mediante procesos de validación de identidad robustos que garanticen la protección de la información sensible. Asimismo, se pretende dotar al jugador de un espacio personal donde pueda administrar su información de perfil y consultar su progreso individual dentro de la plataforma. Esta etapa busca integrar la seguridad como un componente transversal, asegurando que tanto el acceso inicial como la navegación por las zonas privadas del sistema se realicen bajo un entorno de confianza y con una arquitectura que asegure la integridad de las sesiones.
+
+El segundo objetivo de esta iteración es la implementación de la vista de detalle y la interactividad de la sala de espera (\textit{Lobby Room}). El objetivo es dotar a los usuarios de las herramientas necesarias para gestionar su participación en los instantes previos al inicio de la partida, resolviendo en paralelo las dependencias técnicas con otros módulos del sistema. Esta tarea consiste en la programación de la interfaz y las comunicaciones en tiempo real que operan dentro de una sala específica una vez que el jugador ha accedido a ella. Los requisitos funcionales abarcan la sincronización de la entrada de los usuarios, la capacidad de alternar el estado de preparación (listo/no listo) y la opción de abandonar la estancia.
+
+\section{Diseño de la Solución}
+El diseño de la solución aborda la construcción de las vistas operativas de \textit{Login}, \textit{Register} y el panel de \textit{Profile}. Dando cumplimiento al requisito de seguridad (\textbf{RNF-SEG}), el diseño de la lógica del servidor se basa en la emisión y validación de \textit{JSON Web Tokens} (JWT), asegurando el encriptado unidireccional de contraseñas. Para el cliente, se diseñan formularios reactivos integrados con un contexto global de autenticación para gobernar las rutas privadas.
+
+De cara a la pantalla de sala, se diseña un sistema dinámico de gestión de estados para las salas para asegurar una experiencia de usuario coherente. La lógica principal contempla que el sistema reaccione de forma autónoma ante la salida de un jugador: si el líder abandona la sala pero existe un segundo jugador, este hereda automáticamente el liderazgo de la partida; en caso de que la sala quede vacía, se procede a su eliminación definitiva de la base de datos para optimizar los recursos. Asimismo, se plantea la necesidad de sincronización en tiempo real para visualizar la información de ambos participantes, aunque su implementación técnica definitiva se ve condicionada por la disponibilidad de las herramientas de comunicación bidireccional.
+
+\section{Detalles de Implementación}
+El núcleo de la seguridad se implementa codificando la ofuscación de contraseñas con \textit{bcrypt} durante el registro. En la autenticación exitosa, el \textit{backend} firma un JWT empaquetando el identificador del usuario. El \textit{frontend} inyecta este \textit{token} como cabecera en cada petición HTTP protegida. Un \textit{middleware} programado en \textit{Node.js} intercepta estas peticiones, verificando la validez criptográfica de la firma antes de permitir el acceso a controladores restringidos mediante \textit{Prisma ORM}.
+
+Se desarrolla la interfaz de usuario de la sala siguiendo fielmente los diseños previos, integrando indicadores visuales para los jugadores y su estado de preparación. Para la salida de la estancia, se implementa un botón en el \textit{frontend} que invoca el punto de acceso de la API encargado de ejecutar la función \texttt{leaveLobby}
+
+Debido a que la configuración de \textit{Socket.io} no se pudo completar durante esta fase, la actualización visual del estado de los jugadores se resuelve mediante una solución técnica provisional de \textit{polling} en el \textit{frontend}. Se utiliza un \texttt{useEffect()} configurado para realizar consultas automáticas a la API cada 2 segundos, garantizando que la información se vea reflejada periódicamente a la espera de la integración definitiva de WebSockets.
+
+\section{Seguimiento, Control y Replanificación}
+El seguimiento de la integración detecta desviaciones severas en el cliente y el servidor. En el \textit{frontend}, surgen dificultades con la persistencia del estado de sesión; se replanifica implementando un \textit{AuthContext} en \textit{React}. En el \textit{backend}, el diseño inicial de los controladores mezclaba validaciones con persistencia. Se aplica una refactorización correctiva orientada a la separación de responsabilidades. Tras estas acciones de control, la iteración concluye satisfactoriamente unificando los flujos de acceso.

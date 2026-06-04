@@ -1,0 +1,140 @@
+\part{Ejecución: Arquitectura del Motor de Juego Asimétrico}
+
+\chapter{Introducción Técnica al Motor de Reglas}
+
+El núcleo funcional del proyecto delega el estado asimétrico de las partidas a un servicio especializado (\textit{Game Service}) que interactúa con la base de datos en memoria \textit{Redis} para minimizar la latencia. El intercambio de información entre servidor y cliente se rige por Objetos de Transferencia de Datos (\textit{DTO}), filtrando atributos confidenciales antes de emitir actualizaciones por \textit{WebSockets}. Las mecánicas asíncronas, como \textit{Pending Actions}, pausan y retoman el hilo de ejecución mediante identificadores únicos.
+
+\textbf{Estructura de Directorios} \\
+\begin{verbatim}
+packages/
+|-- client/src/pages/game/
+|   +-- components/
+|       +-- GameService.tsx
++-- server/src/
+    |-- services/
+    |   +-- GameService.js
+    +-- controllers/
+        +-- GameController.js
+\end{verbatim}
+
+\textbf{Snippets Estratégicos de Código} \\
+\begin{lstlisting}[language=Java]
+// packages/server/src/services/GameService.js
+const playActionCard = async (gameId, targetData, playedCard, userRol, gameState) => {
+  // Logica interna omitida para optimizar espacio
+}
+\end{lstlisting}
+
+\chapter{Iteración 7: Auditoría Interna, Reorganización Estructural y Planificación}
+
+\section{Definición de Características}
+El objetivo inicial de este ciclo consiste en iniciar el desarrollo técnico de las mecánicas nucleares y los sistemas de comunicación secundaria. No obstante, ante el volumen de funcionalidades implementadas y la complejidad técnica alcanzada, se establece como prioridad estratégica realizar una evaluación profunda de la integridad del sistema. Se busca identificar posibles ineficiencias en la arquitectura y catalogar la deuda técnica acumulada para asegurar que el crecimiento del proyecto sea sostenible. El propósito de esta etapa es garantizar que los cimientos de la aplicación mantengan los estándares de calidad necesarios antes de abordar la implementación de las mecánicas de juego más críticas.
+
+\section{Diseño de la Solución}
+Al paralizar el desarrollo de nuevas características, el diseño se centra en elaborar un plan de auditoría. Dando cumplimiento al requisito de mantenibilidad (\textbf{RNF-MAN}), se diseña un protocolo de revisión de los flujos de datos entre cliente y servidor, con el fin de detectar problemas de escalabilidad visual y riesgos de sobreexposición de datos sensibles en red que podrían comprometer la arquitectura asimétrica futura.
+
+\section{Detalles de Implementación}
+Durante este periodo, la ejecución técnica se limita a tareas de inspección de código estático y análisis de tráfico de red. Se identifican vulnerabilidades estructurales en la serialización de datos enviados por \textit{WebSockets} y un alto nivel de acoplamiento en los componentes de \textit{React}, documentando exhaustivamente cada hallazgo en el sistema de control de versiones (\textit{Issues}).
+
+\section{Seguimiento, Control y Replanificación}
+El control de este \textit{sprint} representa un punto de inflexión crítico. La auditoría demuestra que es inasumible continuar el desarrollo sin sanear el núcleo del sistema debido al incremento de la deuda técnica por la asimetría del código (\textbf{RT-04}). Como medida de replanificación, el equipo modifica la lista de tareas, arrastrando el desarrollo del chat y priorizando una refactorización masiva para el siguiente ciclo. Se asume el riesgo consciente de que ciertas características menores queden fuera del alcance del proyecto a cambio de garantizar la integridad de la arquitectura central.
+
+
+\chapter{Iteración 8: Refactorización, Estado Inicial de Partida y Chat en Tiempo Real}
+
+\section{Definición de Características}
+El propósito de este ciclo consiste en ejecutar el saneamiento técnico del sistema y en preparar la infraestructura necesaria para el inicio de las mecánicas de juego. Se busca reestructurar la base de código para mejorar su mantenibilidad y legibilidad, corrigiendo las deficiencias detectadas durante la fase de auditoría. Asimismo, se pretende implementar una arquitectura de intercambio de información que garantice la privacidad de los datos en un entorno asimétrico, asegurando que cada jugador reciba únicamente la información permitida por su rol. En paralelo, se establece como objetivo la obtención de estabilidad del entorno de despliegue. Esto consiste en la revisión, corrección y optimización de la infraestructura tecnológica configurada previamente para la publicación del proyecto. El propósito de esta tarea es solventar las deficiencias técnicas derivadas de una configuración inicial prematura, asegurando que el sistema opere de forma correcta y robusta en red. Finalmente, se establece como prioridad la configuración de los conjuntos de datos iniciales del juego, permitiendo que el sistema cuente con la información básica (mazos y cartas) necesaria para orquestar el despliegue de los componentes de la partida, así como la implementación de comunicación por texto en tiempo real (Chat). Esta última tarea se trata del desarrollo de un canal de mensajería instantánea, exclusivo y privado, para los jugadores que se encuentran disputando una misma sesión de juego. El propósito de esta característica es habilitar el intercambio de mensajes directos durante el transcurso de la partida de forma sincronizada.
+
+\section{Diseño de la Solución}
+Para cumplir el requisito de mantenibilidad (\textbf{RNF-MAN}), el diseño de la refactorización dicta unificar la nomenclatura y extraer componentes reutilizables en \textit{React}. A nivel de arquitectura (\textbf{RNF-ARQ}), se diseña el uso del patrón \textit{Data Transfer Object} (DTO) para aislar la \textit{lógica de negocio} de los datos emitidos por red, asegurando la naturaleza "ciega" del juego asimétrico y neutralizando de forma activa la amenaza de alteración de lógica o inyección de trampas en el cliente (\textbf{RT-03}). Además, se planifican los \textit{seeders} de la base de datos.
+
+Para el sistema de Despliegue Continuo (CD), se diseña una arquitectura de integración en dos fases secuenciales dentro de GitHub Actions. El objetivo es asegurar que ninguna versión con fallos técnicos llegue a los entornos de ejecución. La primera fase se encarga de la validación mediante tests unitarios y de integración; solo tras un éxito total, se activa la segunda fase de despliegue.
+
+Para el chat de partida, se diseña un modelo de comunicación bidireccional apoyado en WebSockets. Para garantizar la privacidad y el rendimiento, se proyecta un aislamiento lógico basado en el identificador único de la partida almacenado en Redis. De esta forma, los mensajes se difunden únicamente a los usuarios conectados a la misma instancia de juego, evitando interferencias entre sesiones concurrentes.
+
+\section{Detalles de Implementación}
+La vulnerabilidad estructural descubierta se mitiga codificando funciones adaptadoras (\textit{mappers}) puras. Estas rutinas reciben el estado absoluto del juego desde \textit{Redis} y construyen un nuevo objeto purgado para el \textit{socket} receptor. De este modo, propiedades sensibles como la mano del rival se procesan y se envían únicamente como conteos de longitud (números enteros), garantizando que el cliente no pueda inspeccionar el tráfico para obtener ventajas ilícitas.
+
+De cara al despliegue, se reescribe íntegramente el flujo de trabajo en GitHub Actions (\texttt{CI/CD Deploy Pipeline}). Este \textit{workflow} se activa automáticamente ante cualquier subida de código a las ramas \texttt{main} y \texttt{trunk}. La implementación técnica se divide en dos \textit{jobs}:
+\begin{enumerate}
+    \item \textbf{test}: Se instancia una máquina virtual con Ubuntu y Node.js 20. Se instalan las dependencias y se ejecutan los tests de la aplicación.
+    \item \textbf{deploy}: Este trabajo depende de la finalización exitosa del anterior (\texttt{needs: test}). Se implementa una lógica condicional para discriminar el entorno de destino: si los cambios provienen de \texttt{trunk}, se lanzan peticiones \texttt{curl} a los \textit{webhooks} de \textit{Staging} en Render; si provienen de \texttt{main}, se notifican los \textit{hooks} de producción.
+\end{enumerate}
+
+En cuanto al chat, se desarrolla la interfaz de usuario integrada visualmente en la pantalla de partida del \textit{frontend}. En el \textit{backend}, se configuran los eventos de WebSockets para el envío y recepción de mensajes, asegurando que la comunicación sea instantánea y esté confinada al canal específico de la sesión activa en Redis.
+
+\section{Seguimiento, Control y Replanificación}
+Durante la validación de la refactorización, el seguimiento revela brechas en el filtrado de datos, que siguen exponiendo información privada. El control de calidad fuerza a replanificar la serialización JSON, introduciendo validadores estrictos en los \textit{mappers}. Tras superar este reto, la base de código queda notablemente robusta y lista para iniciar el sistema funcional de cartas.
+
+
+\chapter{Iteración 9: Desarrollo del Motor de Juego, UX Dinámica y Sincronización de Salas}
+
+\section{Definición de Características}
+El objetivo establecido para este ciclo consiste en dotar de funcionalidad al núcleo del motor de juego de \textit{King and Peasant}. Se busca implementar la lógica operativa de las cartas de acción, permitiendo que las decisiones de los jugadores tengan un impacto directo sobre el estado de la partida. Asimismo, se pretende desarrollar un sistema de gestión de eventos asíncronos que sea capaz de interrumpir el flujo normal del turno para requerir interacciones adicionales, garantizando que el motor pueda procesar resoluciones complejas de forma ordenada. Esta etapa busca asegurar que la interactividad asimétrica sea fluida y que el sistema sea capaz de coordinar las respuestas de los jugadores con la actualización atómica del tablero.
+
+Por otro lado, esta iteración se centra en el perfeccionamiento de la experiencia de usuario (UX) y en la resolución de deficiencias técnicas arrastradas desde la Iteración 5, relativas al ciclo de vida de las salas de espera. Las tareas principales consisten en añadir dinamismo a la interfaz de las cartas y en robustecer la sincronización de las salas mediante \textit{Socket.io}. A continuación, se detalla el contenido y el propósito de cada elemento:
+
+\begin{itemize}
+    \item \textbf{Configuración dinámica de las acciones de las cartas:} Consiste en la modificación de la interfaz de cliente (\textit{frontend}) para que los botones de interacción de las cartas muestren textos que se adaptan en tiempo real. Esta variación de los textos de acción depende directamente del estado actual de la carta seleccionada y de su ubicación dentro del tablero de juego. El propósito de esta mejora visual es proporcionar una retroalimentación clara e inmediata al usuario. El sentido de implementar este nivel de pulido en la experiencia de usuario (UX) es reducir la carga cognitiva del jugador y evitar confusiones, garantizando que siempre sea evidente qué acciones están permitidas en función del contexto exacto de la partida.
+    \item \textbf{Estabilización y sincronización del ciclo de vida de las salas:} Se trata de la transformación de errores previos y la implementación de tres mecanismos críticos de control utilizando comunicaciones en tiempo real (\textit{Socket.io}): la sincronización de los estados de preparación (listo/no listo) entre clientes, la redirección simultánea de ambos jugadores a la pantalla de partida cuando el líder decide iniciarla, y la expulsión automática de aquellos usuarios que sufran una desconexión o abandonen la URL. El propósito de esta tarea es dotar de total fiabilidad a la antesala del juego. El sentido de reforzar esta lógica es evitar la generación de estados inconsistentes (como partidas iniciadas sin oponentes o jugadores atrapados en salas abandonadas), asegurando que la transición hacia el inicio del juego sea completamente segura, coordinada e infalible para ambos participantes.
+\end{itemize}
+
+\section{Diseño de la Solución}
+El diseño de la solución aborda la creación de los servicios (\textit{Game Service}) y controladores encargados de procesar el uso de cartas, validando la capacidad asimétrica del tablero (\textbf{RN-02}) y automatizando el cierre de turno (\textbf{RN-04}). En el cliente, se diseñan las interfaces dinámicas para explorar la pila de descartes y el diccionario visual de acciones.
+
+Para la interfaz de las cartas, se diseña un componente reactivo (\texttt{ActionCard}) parametrizable, capaz de recibir la descripción, el texto del botón y la ruta de redirección como propiedades, adaptándose al contexto de la partida. En cuanto a la gestión de salas, se diseña un sistema estricto de redirección sincronizada emitido desde el servidor. Para el control de presencia, se diseña un mecanismo de tolerancia a desconexiones breves: si un cliente pierde conexión o navega fuera de la vista, se inicia una cuenta atrás de 5 segundos antes de considerar el abandono como definitivo y proceder a la expulsión.
+
+\section{Detalles de Implementación}
+El problema computacional reside en congelar el estado del motor de forma segura delegando el contexto a \textit{Redis}. El sistema de cola de acciones (\textit{Pending Actions}) se implementa generando un objeto \texttt{pendingAction} que bloquea algorítmicamente el turno global. Cuando el cliente envía la resolución, un despachador dinámico invoca la función específica requerida, aplica las mutaciones, purga la acción y reactiva el turno, tal y como se formaliza en la Tabla \ref{tab:pending_actions}.
+
+\begin{table}[htbp]
+\centering
+\begin{asigResponsabilidad}{game-001}{Resolución Pending Actions}
+{[Object] resolvePendingAction (gameId:String, userId:Int, targetData:Object)}
+\pasoPseudo{Recuperar el estado actual (\texttt{gameState}) almacenado en Redis mediante el \texttt{gameId}.}
+\pasoPseudo{Validar que el \texttt{userId} de la petición coincide con el jugador que tiene el foco activo en el objeto \texttt{pendingAction}.}
+\pasoPseudo{Invocar al despachador de cartas para aplicar el efecto mecánico sobre el \texttt{targetData}.}
+\pasoPseudo{Si la resolución es exitosa, aplicar las mutaciones y purgar el objeto \texttt{pendingAction} del estado general.}
+\pasoPseudo{Transicionar el foco y guardar el nuevo estado atómico en Redis.}
+\end{asigResponsabilidad}
+\caption{Descripción algorítmica de la resolución de acciones asíncronas en el servidor. \label{tab:pending_actions}}
+\end{table}
+
+En el cliente, el componente \texttt{ActionCard} se implementa utilizando el \textit{hook} \texttt{useNavigate} para manejar las acciones de enrutamiento dinámico al pulsar el botón de la carta. En el servidor, se integra plenamente \textit{Socket.io} para reemplazar el sistema de consultas temporales (\textit{polling}) anterior. Se codifica la lógica en \texttt{LobbySocket.js}, donde se interceptan los eventos de salida explícita e interrupción de conexión (\texttt{disconnecting}). 
+
+Cuando ocurre una desconexión no controlada, se ejecuta una función auxiliar que establece un \texttt{setTimeout} de 5000 milisegundos. Si el usuario no se reconecta cancelando dicho temporizador, se ejecuta el borrado en base de datos mediante \texttt{lobbyService.leaveLobby} y se emite la actualización al resto de clientes.
+
+\section{Seguimiento, Control y Replanificación}
+El control de la implementación reporta complicaciones severas al sincronizar las mecánicas asíncronas del servidor con la vista. Al aplicar reglas estrictas (\textbf{RN-03}), se originan bloqueos en la selección de cartas. La desviación obliga a replanificar el control de flujo en \textit{React}, aislando la resolución de las promesas del ciclo de vida de los modales. Solventado esto, el hito crítico se alcanza, permitiendo la interactividad en mesa.
+
+
+\chapter{Iteración 10: Lógica Base de Turnos, Interacciones de Cartas y Condiciones de Victoria}
+
+\section{Definición de Características}
+El propósito de este ciclo consiste en establecer los mecanismos que gobiernan la resolución y el desenlace de las partidas. Se busca definir de forma precisa las condiciones de victoria asimétricas de cada bando, permitiendo que el sistema identifique automáticamente el momento en que un jugador alcanza sus objetivos estratégicos. Asimismo, se pretende integrar una capa de auditoría continua sobre el estado del juego que valide cada acción realizada, garantizando que la transición hacia el cierre de la partida sea atómica y coherente. Esta etapa busca asegurar que el ciclo de vida del juego esté completo, desde el inicio del turno hasta la declaración definitiva de un ganador y la posterior consolidación de los resultados.
+
+Por otro lado, se establece como objetivo implementar las mecánicas básicas que estructuran el desarrollo de las partidas, programando tanto la interacción visual como su correspondiente validación interna. A continuación, se detalla el propósito y el sentido de cada una de las acciones implementadas:
+
+\begin{itemize}
+    \item \textbf{Jugar cartas de facción (Guardia y Rebelde):} Consiste en la mecánica de despliegue de unidades en la zona de juego. El propósito de esta acción es permitir a los jugadores colocar sus cartas de de facción (Guardia y Rebelde) de su mano a la zona de \texttt{pueblo} y ejecutar su efecto una vez colocadas.
+    \item \textbf{Gestión del paso de turno:} Se trata del sistema que transfiere el control activo de la partida de un jugador a su oponente. El propósito de esta tarea es delimitar las fases de acción de cada participante. El sentido de esta implementación es estructurar el flujo temporal del juego de forma estricta, garantizando un ritmo ordenado, equitativo y libre de colisiones o desincronizaciones en la ejecución de acciones.
+    \item \textbf{Mecánica de robo de cartas:} Consiste en el sistema que permite a los jugadores extraer nuevos recursos desde el mazo principal hacia su mano.
+    \item \textbf{Mecánica exclusiva del Rey (``Condenar a un Rebelde''):} Consiste en la programación de una habilidad única y asimétrica reservada exclusivamente para el jugador que ostenta este rol. Mediante la cual se selecciona una carta enemiga o la primera carta del mazo para decidir el final de la ronda.
+\end{itemize}
+
+\section{Diseño de la Solución}
+Para garantizar la atomicidad de victoria (\textbf{RN-05}), el diseño de la lógica de negocio exige que el motor compruebe de forma asíncrona la victoria tras cada movimiento. Se idea una orquestación transaccional para asegurar que, al detector un ganador, \textit{MariaDB} refleje el cambio de estado, la caché en memoria se bloquee y el cliente renderice modales dinámicos de cierre.
+
+Se diseña una arquitectura de servicios modular para gestionar el uso de cartas. Si la carta se juega desde la mano, el sistema debe evaluar si es una carta de acción (ejecución inmediata) o un personaje (colocación en el pueblo). Si se juega desde el pueblo, la lógica se vuelve asimétrica: los guardias activan sus efectos, mientras que los rebeldes pueden ser devueltos a la mano si están revelados, intentar una infiltración o activar su habilidad especial.
+
+Para la gestión de efectos, se proyecta el uso de diccionarios (\texttt{guardCards} y \texttt{rebelCards}) que asocian el identificador de cada carta con su función lógica específica, facilitando la escalabilidad del mazo. Asimismo, se diseña la acción de condena del Rey como una apuesta de victoria inmediata basada en la identificación del \texttt{ASSASSIN} enemigo.
+
+\section{Detalles de Implementación}
+La complejidad se aborda programando un interceptor central de validación. Tras cualquier mutación en \textit{Redis}, el algoritmo evalúa en paralelo las condiciones absolutas del Campesino frente a las del Rey. Si una aserción retorna un estado ganador válido, el motor consolida el estado en \textit{MariaDB} dentro de una misma transacción de \textit{Prisma}, y envía un código de interrupción por \textit{WebSockets} que destruye el hilo de memoria para evitar condiciones de carrera.
+
+En el \texttt{gameService.js}, se sustituye la lógica genérica por funciones especializadas. El método \texttt{playHandCard} valida la propiedad y el turno antes de derivar a \texttt{playActionCard} o \texttt{placeCardInTown}. Por su parte, \texttt{playTownCard} implementa el control de flujo para las cartas ya desplegadas:
+
+Se implementa el método \texttt{peasantDrawCard} utilizando la función \texttt{pop()} sobre el mazo almacenado en Redis para añadir la carta a la mano del campesino. En contraste, se configura que el Rey robe automáticamente al finalizar su turno. Para la acción \texttt{condemnRebel()}, se desarrolla una lógica que evalúa si la carta seleccionada (del pueblo rival o del mazo) coincide con el objetivo de victoria, permitiendo al bando real finalizar la partida con éxito.
+
+\section{Seguimiento, Control y Replanificación}
+Durante las pruebas de transición final, el equipo de control detecta errores de concurrencia que desencadenaban un Error 500 en el servidor al intentar actualizar el estado y destruir el hilo simultáneamente. LaFranklin la corrección requiere replanificar el \texttt{GameController}, encapsulando las sentencias en un barra transaccional \textit{try/catch} con \textit{await}. Tras la corrección, el motor logró determinar a un ganador de forma robusta.
