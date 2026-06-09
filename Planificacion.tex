@@ -8,6 +8,19 @@ The good parts of a book may be only something a writer is lucky enough to overh
 En este capítulo se expone la planificación temporal del proyecto, estructurada mediante la metodología ágil definida previamente. Se detalla el cronograma de ejecución a través de hitos mensuales y \textit{Sprints} semanales, abarcando desde la configuración inicial de la arquitectura hasta el despliegue final del sistema. Asimismo, se documentan las desviaciones surgidas durante el ciclo de vida del desarrollo y se analizan las medidas correctivas adoptadas por el equipo para garantizar el cumplimiento de los plazos.
 \end{abstract}
 
+Para estructurar la gestión de este proyecto se ha tomado como referencia la Guía de los Fundamentos para la Dirección de Proyectos (PMBOK), cuyos principios han sido estudiados a lo largo del Grado en Ingeniería Informática del Software. Dado que este estándar propone un marco de trabajo exhaustivo pensado para proyectos de gran envergadura empresarial, se ha realizado una adaptación a las necesidades y dimensiones de un equipo de desarrollo reducido que opera bajo un ciclo de vida iterativo.
+
+A lo largo de este capítulo se abordan exclusivamente las áreas de conocimiento de PMBOK que resultan críticas para garantizar la viabilidad de este TFG. Concretamente, se desarrollarán:
+\begin{itemize}
+    \item \textbf{Gestión del Alcance:} Para delimitar rigurosamente los requisitos y fronteras del sistema.
+    \item \textbf{Gestión de los Recursos:} Para identificar la capacidad del equipo y la infraestructura necesaria.
+    \item \textbf{Gestión del Cronograma:} Para estructurar el tiempo, las iteraciones y los hitos de desarrollo.
+    \item \textbf{Gestión de Costes:} Para cuantificar el valor financiero y estimar el presupuesto real del producto.
+    \item \textbf{Gestión de los Riesgos:} Para anticipar y diseñar planes de mitigación frente a obstáculos técnicos o temporales.
+\end{itemize}
+
+Por otro lado, se han omitido deliberadamente ciertas áreas de conocimiento del estándar por considerarse irrelevantes para la naturaleza académica de este proyecto. La \textbf{Gestión de las Comunicaciones} y la de los \textbf{Interesados} (\textit{Stakeholders}) resulta innecesaria dada la comunicación directa, constante e informal entre los dos únicos miembros del equipo y la tutoría. La \textbf{Gestión de las Adquisiciones} se descarta al no contemplarse la subcontratación externa ni la compra de licencias privativas. Finalmente, la \textbf{Gestión de la Calidad} no se omite, sino que se aborda desde una perspectiva de ingeniería de software en su propio capítulo técnico (Pruebas y Validación del Sistema) en lugar de tratarse como un mero trámite de gestión.
+
 \section{Gestión del Alcance}
 
 La gestión del alcance constituye el primer pilar de la fase de planificación definida en la metodología del proyecto. Su objetivo es delimitar con precisión qué funcionalidades se van a implementar y cuáles quedan excluidas, asegurando que el desarrollo se mantenga alineado con los recursos y el tiempo disponibles.
@@ -348,17 +361,7 @@ Se utiliza un tablero Kanban para visualizar este flujo y garantizar que el tiem
 
 \section{Gestión de Costes}
 
-Como parte de la fase de planificación del proyecto, se define una política de gestión financiera basada en las directrices de la disciplina de Gestión de Proyectos. El objetivo de este plan es establecer el marco de trabajo sobre el cual se valora económicamente el producto. 
-
-El desglose numérico, las estimaciones detalladas y el presupuesto final resultante de aplicar las directrices que se exponen a continuación, se encuentran desarrollados exhaustivamente en el capítulo correspondiente de esta memoria (véase el \autoref{cap:costes}: Costes).
-
-\subsection{Tipos de Coste}
-Para estructurar el presupuesto del proyecto, se planifican tres categorías fundamentales de gasto:
-\begin{itemize}
-    \item \textbf{Costes de Personal:} Comprenden la valoración económica del esfuerzo y tiempo invertido por los integrantes del equipo. Para reflejar fielmente la realidad del desarrollo, este coste se planifica dividiendo las horas en función de los distintos roles técnicos asumidos (tales como \textit{Desarrollador Full-Stack}, \textit{Tech Lead} y \textit{QA Engineer}), añadiendo a la base salarial los costes sociales obligatorios.
-    \item \textbf{Costes Materiales:} Engloban los gastos relativos a los recursos físicos necesarios para la ejecución del TFG. En este proyecto, se limitan a la amortización del equipamiento informático (hardware) empleado por los autores y descrito en la sección de recursos físicos de este capítulo.
-    \item \textbf{Costes Indirectos:} Categoría destinada a absorber los gastos operativos y estructurales de difícil asignación individual (como el consumo de energía eléctrica y la conexión a internet), calculados como un porcentaje fijo sobre los costes directos.
-\end{itemize}
+Como parte de la fase de planificación del proyecto, se define una política de gestión financiera basada en las directrices de la disciplina de Gestión de Proyectos. El objetivo de este plan es establecer el marco de trabajo sobre el cual se valora económicamente el producto, cuantificando su valor real en el mercado actual.
 
 \subsection{Supuestos y Restricciones}
 La planificación económica se fundamenta en los siguientes supuestos y limitaciones generales:
@@ -366,9 +369,58 @@ La planificación económica se fundamenta en los siguientes supuestos y limitac
     \item \textbf{Estabilidad de precios:} Se asume que los costes de los recursos humanos y materiales se mantienen estables y sin fluctuaciones imprevistas a lo largo de todo el ciclo de vida del proyecto.
     \item \textbf{Continuidad de suministros:} No se prevén incrementos significativos en los costes de servicios indirectos, tales como energía eléctrica o conectividad a internet.
     \item \textbf{Unidad monetaria:} Todas las estimaciones, presupuestos y transacciones se realizan exclusivamente en euros (€).
-    \item \textbf{Referencias externas:} Las estimaciones salariales se basan en guías profesionales de referencia para el sector tecnológico, ajustadas a la jornada laboral anual estándar.
+    \item \textbf{Referencias externas:} Las estimaciones salariales se basan en guías profesionales de referencia para el sector tecnológico en España editadas por \textit{Manfred} para el año 2026 \cite{manfred2026}, ajustadas a la jornada laboral anual estándar para perfiles de nivel de entrada (\textit{Junior}).
     \item \textbf{Marco legal de amortización:} La imputación por desgaste de activos materiales se restringe a los coeficientes y periodos de amortización legalmente establecidos por la normativa tributaria vigente.
 \end{itemize}
+
+\subsection{Resumen del Presupuesto}
+
+Aplicando las directrices anteriores, a continuación en la Tabla \ref{tabla:resumen_costes}, se presenta el desglose general de los costes del proyecto, estructurados en tres categorías fundamentales: costes de personal, costes materiales y costes indirectos.
+
+\begin{table*}[h!]
+    \centering
+    \begin{coolTable}{lr}{2}
+{Resumen del proyecto}
+    \textbf{Costes de personal}& 11.266,67 \euro\\
+    Sueldo bruto& 8.666,67 \euro\\
+    Costes sociales& 2.600,00 \euro\\
+    \textbf{Costes materiales}& 66,67 \euro\\
+    \textbf{Costes indirectos}& 1.133,33 \euro\\
+    \midrule
+    \textbf{TOTAL}&12.466,67 \euro\\
+    \end{coolTable}
+    \caption{Tabla resumen de costes}
+    \label{tabla:resumen_costes}
+\end{table*}
+
+\subsection{Costes de personal}
+
+Comprenden la valoración económica del esfuerzo y tiempo invertido por los integrantes del equipo. El equipo de desarrollo está compuesto por dos integrantes, quienes han de dedicar un esfuerzo individual de 300 horas, lo que supone un esfuerzo conjunto de 600 horas en total. 
+
+\textit{Nota metodológica:} Aunque el proyecto se ejecuta de forma equitativa por los dos autores, la asignación y división del tiempo en distintos perfiles permite presupuestar de forma rigurosa el valor de mercado de las diferentes actividades desarrolladas (gestión, programación y pruebas).
+
+Tomando como base una jornada laboral anual de 1.800 horas y extrapolando los salarios brutos anuales, se establecen los siguientes costes por hora:
+\begin{itemize}
+    \item \textbf{Desarrollador Full-Stack Junior (65\% del tiempo):} 390 horas. Salario base de 25.000 \euro/año (13,89 \euro/hora). Realiza tareas como la codificación de la interfaz, el servidor lógico y la integración de bases de datos.
+    \item \textbf{Tech Lead Junior (25\% del tiempo):} 150 horas. Salario base estimado de 30.000 \euro/año (16,67 \euro/hora). Realiza tareas como el diseño de la arquitectura del ecosistema, la toma de decisiones tecnológicas, la gestión del proyecto mediante tableros ágiles y la elaboración de la documentación técnica.
+    \item \textbf{QA Engineer Junior (10\% del tiempo):} 60 horas. Salario base de 22.500 \euro/año (12,50 \euro/hora). Realiza tareas como la automatización y ejecución de la batería de pruebas de integración y componentes.
+\end{itemize}
+
+El salario bruto total derivado de estas horas asciende a 8.666,67 \euro. A esta cantidad se le añaden los costes sociales obligatorios, estimados en un 30\% del salario bruto (2.600,00 \euro), lo que sitúa el coste de personal total en \textbf{11.266,67 \euro}.
+
+\subsection{Costes materiales}
+
+Engloban los gastos relativos a los recursos físicos necesarios para la ejecución del TFG. En este proyecto, se reducen al equipo informático utilizado para el desarrollo y la redacción de la memoria, dado que no se incurre en gastos externos de adquisición de dominios o alojamiento web (\textit{hosting}) de pago.
+
+El \textit{hardware} empleado consiste en dos ordenadores portátiles, con un precio de adquisición estimado de 800 \euro{} cada uno (1.600 \euro{} en total). Siguiendo las directrices de la Agencia Tributaria, los equipos informáticos se amortizan legalmente a razón de un 25\% anual, lo que equivale a una depreciación global de 400 \euro{} al año por ambos equipos.
+
+Dado que la dedicación al proyecto es de 300 horas por persona frente a las 1.800 horas de una jornada anual (es decir, una sexta parte del tiempo laboral del año), la amortización imputable al proyecto se calcula dividiendo la amortización anual entre seis. Por consiguiente, el coste material imputado asciende a \textbf{66,67 \euro}.
+
+\subsection{Costes indirectos}
+
+Categoría destinada a absorber los gastos operativos y estructurales de difícil asignación individual, tales como el consumo eléctrico o la conectividad a internet. Para este cálculo, se aplica un porcentaje de estimación estándar del 10\% sobre la suma total de los costes directos previamente expuestos (personal y materiales).
+
+Tomando como base de cálculo la cifra de 11.333,34 \euro{} (11.266,67 \euro{} + 66,67 \euro), la aplicación de dicho 10\% devuelve un coste indirecto total de \textbf{1.133,33 \euro}, conformando así el presupuesto íntegro y definitivo del proyecto.
 
 \section{Gestión de Riesgos}
 

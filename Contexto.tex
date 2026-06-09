@@ -17,9 +17,9 @@ A continuación, se detalla el contexto que da origen a este Trabajo Fin de Grad
 
 La motivación principal detrás de la elección de este TFG es el interés por la arquitectura de videojuegos y el deseo de invertir el esfuerzo académico en un producto creativo y estimulante, resultando así intrínsecamente gratificante durante su ciclo de construcción. A su vez, dado el carácter aislado que suelen tener los proyectos académicos, se tomó la decisión de realizar el desarrollo como un esfuerzo mediante un equipo compuesto por dos personas. Al plantearse como un trabajo colaborativo, el proyecto se convierte en un ejercicio de coordinación técnica y trabajo en equipo, simulando las dinámicas y exigencias de un entorno profesional real en la industria del software.
 
-\section{Análisis de viabilidad y acotación del alcance}
+\section{Análisis de viabilidad y acotación del proyecto}
 
-El planteamiento inicial de diseñar y desarrollar íntegramente un videojuego original fue descartado en las fases preliminares. La inversión en horas del diseño desde cero de mecánicas, el balanceo de reglas y la curva de aprendizaje presente en los motores gráficos actuales  excedían el alcance de un TFG. Dado que la viabilidad de un proyecto de ingeniería de software depende de la correcta alineación entre los objetivos y los recursos disponibles, se tomó la decisión de acotar el alcance funcional adoptando el motor de reglas de un juego de mesa físico ya existente, además de hacer uso de los conocimientos adquiridos a lo largo de la carrera en tecnologías de desarrollo web. 
+El planteamiento inicial de diseñar y desarrollar íntegramente un videojuego original fue descartado en las fases preliminares. La inversión en horas del diseño desde cero de mecánicas, el balanceo de reglas y la curva de aprendizaje presente en los motores gráficos actuales  excedían el alcance de un TFG. Dado que la viabilidad de un proyecto de ingeniería de software depende de la correcta alineación entre los objetivos y los recursos disponibles, se tomó la decisión de acotar los requisitos funcionales adoptando el motor de reglas de un juego de mesa físico ya existente, además de hacer uso de los conocimientos adquiridos a lo largo de la carrera en tecnologías de desarrollo web. 
 
 En consecuencia, se optó por la adaptación digital de \textit{King and Peasant}, un juego de mesa de tipo \textit{Print \& Play} con reglas ya consolidadas creado por la empresa nPipsGames \cite{npips_king_peasant}. Su diseño asimétrico está concebido para enfrentamientos de dos jugadores, con una duración estimada por sesión de entre 15 y 20 minutos. La versión implementada en este trabajo integra un mazo de 18 cartas, estructurado para ofrecer una experiencia dinámica que equilibra la inmediatez táctica con la toma de decisiones estratégicas profundas. Todo el sistema se articula bajo una identidad visual coherente con su ambientación en la Baja Edad Media, facilitando la inmersión del usuario en las mecánicas de juego propuestas. 
 
@@ -35,28 +35,22 @@ Finalmente, la coordinación de un equipo de desarrollo supone un desafío organ
 
 \section{Estructura de la memoria}
 
-El presente documento se ha estructurado de manera secuencial para guiar al lector a través de todo el ciclo de vida de la ingeniería del software aplicada al proyecto \textit{King and Peasant}. La memoria se divide en los siguientes capítulos:
+El presente documento se ha estructurado de manera secuencial para guiar al lector a través de todo el ciclo de vida de la ingeniería del software aplicada al proyecto \textit{King and Peasant}. Debido a la complejidad del ciclo de desarrollo incremental empleado, la memoria se divide en varios bloques temáticos que engloban sus respectivos capítulos:
 
 \begin{itemize}
-    \item \textbf{Capítulo 1. Introducción:} Presenta el contexto del proyecto, la motivación principal que impulsa su desarrollo, así como los objetivos generales y específicos que se pretenden alcanzar.
-    
-    \item \textbf{Capítulo 2. Estado del arte:} Analiza el panorama histórico y actual de los videojuegos de navegador, explorando las referencias lúdicas y la teoría detrás de los juegos de diseño asimétrico que sirven de base para este proyecto.
-    
-    \item \textbf{Capítulo 3. Entorno Tecnológico:} Justifica de manera técnica y arquitectónica la selección de las herramientas y lenguajes que componen el \textit{stack} de desarrollo (React, Node.js, Prisma, MariaDB, Redis, Socket.io y Docker).
-    
-    \item \textbf{Capítulo 4. Metodología de trabajo:} Describe las prácticas organizativas adoptadas por el equipo, detallando la adaptación de un marco de trabajo ágil e iterativo y las políticas de control de versiones empleadas en el repositorio.
-    
-    \item \textbf{Capítulo 5. Planificación:} Define el marco de gestión del proyecto (alcance, recursos, cronograma y costes) bajo el estándar PMBOK, detallando la jerarquía de la EDT, la asignación de roles y el calendario unificado de iteraciones.
-    
-    \item \textbf{Capítulo 6. Costes:} Cuantifica el valor financiero y el presupuesto real del producto. Desglosa analíticamente los costes directos de personal según perfiles técnicos, la amortización del hardware y los gastos indirectos derivados de la operativa.
-    
-    \item \textbf{Capítulo 7. Análisis y Diseño del Sistema:} Aborda el modelado técnico y estructural del software. Desarrolla el comportamiento dinámico mediante diagramas UML y justifica las decisiones de diseño por capas, la persistencia híbrida y el patrón de seguridad DTO.
-    
-    \item \textbf{Capítulo 8. Implementación y Desarrollo del Sistema:} Documenta la evolución técnica del software a lo largo de 16 iteraciones. Explica la resolución algorítmica de mecánicas complejas, el diseño de la comunicación en tiempo real y la refactorización arquitectónica.
-    
-    \item \textbf{Capítulo 9. Pruebas y Validación del Sistema:} Expone la estrategia de aseguramiento de calidad (QA) implementada, abarcando desde las pruebas de integración en el \textit{backend} hasta la orquestación del despliegue continuo (CI/CD).
-    
-    \item \textbf{Capítulo 10. Manual de Usuario:} Proporciona una guía visual y funcional sobre cómo interactuar con la plataforma final, ilustrando los flujos de registro, gestión social y el desarrollo de una partida.
-    
-    \item \textbf{Capítulo 11. Conclusiones y Trabajo Futuro:} Sintetiza los resultados obtenidos frente a los objetivos iniciales, evalúa las lecciones aprendidas durante el desarrollo cooperativo y propone líneas de evolución técnica para el sistema.
+    \item \textbf{Parte I. Introducción (Capítulos 1 y 2):} Presenta el contexto del proyecto, la motivación principal que impulsa su desarrollo, así como los objetivos generales y específicos que se pretenden alcanzar.
+
+    \item \textbf{Parte II. Organización del Proyecto (Capítulos 3 al 6):} Establece los fundamentos teóricos y organizativos. Analiza el marco tecnológico adoptado y el estado del arte de las tecnologías implicadas. Seguidamente, describe la metodología ágil, el marco de planificación bajo el estándar PMBOK (incluyendo la EDT y el cronograma), y cuantifica los costes directos, indirectos y de amortización del proyecto.
+
+    \item \textbf{Parte III. Desarrollo del Proyecto (Capítulos 7 al 31):} Constituye el núcleo técnico de la memoria. Se inicia con el análisis del sistema y el diseño de la arquitectura. A continuación, el proceso de construcción y refactorización se detalla de forma iterativa y progresiva a través de varios bloques, asignando capítulos independientes a las introducciones técnicas y al desarrollo de cada una de las 17 iteraciones del sistema. Estos bloques abarcan:
+    \begin{itemize}
+        \item \textit{Bloque Entorno:} Configuración base, \textit{testing} y despliegue continuo (CI/CD).
+        \item \textit{Bloque Datos:} Modelo de persistencia y gestión de identidades.
+        \item \textit{Bloque Social:} Canal bidireccional y mecánicas de interacción en tiempo real.
+        \item \textit{Bloque Motor:} Motor de reglas, condiciones de victoria y lógica asimétrica de cartas.
+        \item \textit{Bloque Calidad:} Validación de componentes y consolidación funcional.
+    \end{itemize}
+    Esta parte finaliza consolidando la estrategia de aseguramiento de calidad mediante pruebas y validación del sistema.
+
+    \item \textbf{Parte IV. Cierre del Proyecto (Capítulos 32 y 33):} Proporciona una guía funcional y visual en forma de Manual de Usuario para interactuar con la plataforma final. Concluye sintetizando los resultados obtenidos, evaluando las lecciones aprendidas durante el desarrollo y proponiendo líneas de evolución técnica para el sistema.
 \end{itemize}
