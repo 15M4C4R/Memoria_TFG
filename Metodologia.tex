@@ -10,34 +10,34 @@ En este capítulo se define el marco de trabajo y los procedimientos organizativ
 
 \section{Elección de la Metodología de Desarrollo}
 
-Para determinar el modelo de ciclo de vida más adecuado para la naturaleza de \textit{King and Peasant}, se realiza un análisis previo de las metodologías de ingeniería del software más consolidadas en la industria. A continuación, se exponen las alternativas tradicionales evaluadas y la justificación técnica detrás de la elección de un marco iterativo e incremental.
+Para determinar el modelo de ciclo de vida más adecuado para la naturaleza de \textit{King and Peasant}, se realizó un análisis previo de las metodologías de ingeniería del software más consolidadas en la industria. A continuación, se exponen las alternativas tradicionales evaluadas y la justificación técnica detras de la elección de un marco iterativo e incremental.
 
 \subsection{Análisis de alternativas tradicionales}
 
 \subsubsection{Modelo en Cascada (\textit{Waterfall})}
 Este enfoque predictivo clásico propone una secuencia puramente lineal de fases (Requisitos, Análisis, Diseño, Implementación, Pruebas y Mantenimiento). Bajo este paradigma, cada etapa debe finalizarse antes de poder comenzar la siguiente.
 
-\textbf{Motivo del descarte:} El desarrollo de un motor de juego conlleva una incertidumbre inherente respecto al balanceo y la experiencia final del usuario. El modelo en cascada resulta excesivamente rígido ante esta realidad; si durante la fase de pruebas se detecta que una mecánica asimétrica presenta fallos de diseño, el coste temporal de retroceder a la fase de análisis resulta inasumible. Este proyecto requiere de una estructura que permita pivotar y ajustar requisitos sobre la marcha basándose en el \textit{feedback} interactivo.
+\textbf{Motivo del descarte:} El desarrollo de un motor de juego conlleva una incertidumbre inherente respecto al balanceo y la experiencia final del usuario. El modelo en cascada resulta excesivamente rígido ante esta realidad; si durante la fase de pruebas se detecta que una mecánica asimétrica presenta fallos de diseño, el coste temporal de retroceder a la fase de análisis resulta inasumible. Este proyecto requería de una estructura que permitiera pivotar y ajustar requisitos sobre la marcha basándose en el \textit{feedback} interactivo.
 
 \subsubsection{Modelo en Espiral}
 Este modelo evolutivo se centra en la evaluación continua y la mitigación de riesgos mediante iteraciones concéntricas que combinan planificación, análisis de viabilidad y prototipado.
 
-\textbf{Motivo del descarte:} Aunque soluciona la rigidez del modelo lineal, el modelo en espiral introduce una carga de gestión burocrática y de documentación (\textit{overhead}) desproporcionada para un equipo compuesto por solo dos personas. El tiempo invertido en la evaluación formal de riesgos en cada iteración resta demasiados recursos a la fase de implementación efectiva de la lógica de negocio.
+\textbf{Motivo del descarte:} Aunque soluciona la rigidez del modelo lineal, el modelo en espiral introduce una carga de gestión burocrática y de documentación (\textit{overhead}) desproporcionada para un equipo compuesto por solo dos personas. El tiempo invertido en la evaluación formal de riesgos en cada iteración restaría demasiados recursos a la fase de implementación efectiva de la lógica de negocio.
 
 \subsection{Adopción: Marco Iterativo e Incremental}
 
-Tras descartar los modelos predictivos y evolutivos pesados, el presente proyecto se desarrolla bajo un marco de trabajo iterativo e incremental, diseñado específicamente para optimizar la colaboración estrecha del equipo y permitir una adaptación constante a las necesidades técnicas emergentes. Esta metodología se articula en torno a ciclos de trabajo semanales orientados a la entrega continua de valor.
+Tras descartar los modelos predictivos y evolutivos pesados, el presente proyecto se ha desarrollado utilizando una metodología basada en \textit{Scrum}. Este marco de trabajo iterativo e incremental está diseñado específicamente para optimizar la colaboración estrecha del equipo y permitir una adaptación constante a las necesidades técnicas emergentes. Dicha metodología se articula en torno a ciclos de trabajo semanales orientados a la entrega continua de valor.
 
 Esta aproximación metodológica proporciona dos ventajas clave que justifican su elección:
 
 \begin{enumerate}
-    \item \textbf{Entrega temprana de valor:} Trabajar mediante incrementos funcionales permite consolidar una visión clara del estado del producto desde las primeras semanas. Esto resulta vital en arquitecturas complejas, ya que permite validar técnicamente la integración bidireccional entre cliente y servidor sin tener que esperar a las fases finales de integración.
+    \item \textbf{Entrega temprana de valor:} Trabajar mediante incrementos funcionales permite consolidar una visión clara del estado del producto desde las primeras semanas. Esto resulta vital en arquitecturas complejas, ya que ha permitido validar técnicamente la integración bidireccional entre cliente y servidor sin tener que esperar a las fases finales de integración.
     \item \textbf{Adaptabilidad y tolerancia al cambio:} Facilita la experimentación continua. Permite comprobar empíricamente las reglas del juego, reestructurar la interfaz de usuario o alterar mecánicas complejas tras las pruebas de cada iteración, asimilando los cambios sin desestabilizar el cronograma global.
 \end{enumerate}
 
 \section{Estructura Organizacional y Toma de Decisiones}
 
-El desarrollo de \textit{King and Peasant} es llevado a cabo por un equipo compuesto exclusivamente por dos ingenieros. Dada esta limitación de recursos y la fuerte interdependencia técnica entre el cliente (\textit{Frontend}) y el motor (\textit{Backend}), se descartan las jerarquías verticales y la segregación estricta de dominios tecnológicos.
+El desarrollo de \textit{King and Peasant} ha sido llevado a cabo por un equipo compuesto exclusivamente por dos ingenieros. Dada esta limitación de recursos y la fuerte interdependencia técnica entre el cliente (\textit{Frontend}) y el motor (\textit{Backend}), se descartaron las jerarquías verticales y la segregación estricta de dominios tecnológicos.
 
 La autoría y responsabilidad del proyecto se distribuye de manera equitativa. Ambos integrantes asumen un perfil polivalente de categoría \textit{Junior}, desempeñando simultáneamente roles de \textit{Tech Lead}, Desarrollador \textit{Full-Stack} y \textit{QA}. Esta horizontalidad aporta dos beneficios directos a la operativa del equipo:
 
@@ -51,14 +51,14 @@ La autoría y responsabilidad del proyecto se distribuye de manera equitativa. A
 El ciclo de vida se articula en cuatro etapas consecutivas y complementarias, estableciendo un flujo de trabajo lógico desde la concepción hasta la entrega:
 
 \subsection{Fase de Planificación}
-Es la etapa fundacional del proyecto. Su propósito es establecer los cimientos organizativos y técnicos antes de iniciar la implementación. En esta fase se define el alcance global, se consolidan los requisitos funcionales, se selecciona el \textit{stack} tecnológico (\textit{React}, \textit{Node.js}, \textit{Redis}) y se estructura la Estructura de Desglose del Trabajo (EDT).
+Es la etapa fundacional del proyecto. Su propósito es establecer los cimientos organizativos y técnicos antes de iniciar la implementación. En esta fase se ha definido el alcance global, se han consolidado los requisitos funcionales, se ha seleccionado el \textit{stack} tecnológico (\textit{React}, \textit{Node.js}, \textit{Redis}) y se ha estructurado la Estructura de Desglose del Trabajo (EDT).
 
 \subsection{Fase de Ejecución}
 Comprende el desarrollo empírico del código fuente aplicando la metodología iterativa. La dinámica de trabajo semanal sigue un proceso estructurado para garantizar el avance:
 \begin{itemize}
-    \item \textbf{Selección de tareas:} Al inicio del ciclo, se extraen las tareas de la lista de tareas pendientes, definiendo el objetivo de la iteración.
+    \item \textbf{Selección de tareas:} Al inicio del ciclo, se extraen las tareas de la pila (\textit{Backlog}), definiendo el objetivo de la iteración.
     \item \textbf{Distribución del esfuerzo:} El trabajo se reparte equitativamente basándose en el criterio técnico conjunto, sin recurrir a métricas abstractas de estimación temporal.
-    \item \textbf{Criterios de finalización (\textit{Definition of Done}):} Una tarea solo se considera finalizada cuando el código está implementado, ha superado la revisión por pares y es fusionado sin conflictos en el repositorio común.
+    \item \textbf{Criterios de finalización (\textit{Definition of Done}):} Una tarea solo se considera finalizada cuando el código está implementado, ha superado la revisión por pares y ha sido fusionado sin conflictos en el repositorio común.
     \item \textbf{Retrospectiva:} Al cierre de la semana, se evalúa el rendimiento, se analizan bloqueos y se ajusta la planificación de la siguiente iteración.
 \end{itemize}
 
@@ -69,7 +69,7 @@ Tras finalizar el desarrollo de la lógica de negocio central, se establece un p
 La etapa final tiene como propósito la consolidación del proyecto. Comprende la refactorización final, la redacción y maquetación exhaustiva de la memoria técnica y la preparación del entorno para el despliegue y la defensa académica del trabajo.
 
 \section{Coordinación y Herramientas de Gestión}
-Para dar viabilidad a la metodología descrita y garantizar la trazabilidad de los desarrollos, el equipo se apoya en herramientas estándar del sector:
+Para dar viabilidad a la metodología descrita y garantizar la trazabilidad de los desarrollos, el equipo se ha apoyado en herramientas estándar del sector:
 
 \begin{itemize}
     \item \textbf{Sincronización (\textit{Daily Stand-up}):} Encuentros breves focalizados en la coordinación de la jornada y la identificación de impedimentos técnicos.
