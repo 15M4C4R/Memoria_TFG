@@ -26,13 +26,30 @@ No obstante, la naturaleza asimétrica de \textit{King and Peasant} impone restr
     \item \textbf{Impacto de la atomicidad de victoria (RN-05):} La asimetría en las condiciones de fin de partida obliga al sistema a evaluar el estado tras cada modificación individual, interrumpiendo cualquier evento encolado si se dispara el criterio de victoria de una facción.
 \end{itemize}
 
-\section{Modelado Funcional del Sistema}
+\section{Modelado Conceptual y Funcional del Sistema}
 
-Para representar gráficamente las interacciones del sistema, se utiliza el Lenguaje Unificado de Modelado (UML), estandarizando la comprensión de la arquitectura lógica.
+Para representar gráficamente la estructura y las interacciones del sistema, se utiliza el Lenguaje Unificado de Modelado (UML), estandarizando la comprensión de la arquitectura lógica y omitiendo, en esta fase, cualquier condicionante de carácter tecnológico o de implementación.
+
+\subsection{Modelo de Dominio Conceptual}
+
+Antes de definir los flujos de interacción de los usuarios, es imperativo establecer el esqueleto estructural del problema y el vocabulario del dominio de \textit{King and Peasant}. En la Figura \ref{fig:modelo_dominio} se presenta el Modelo de Dominio Conceptual, el cual abstrae las entidades principales y las reglas de negocio estáticas que rigen el sistema.
+
+El diagrama ilustra una clara separación lógica entre el ecosistema externo de la plataforma y el motor interno del juego. En la capa del sistema, un \textit{Usuario} puede mantener relaciones de amistad con otros y unirse a una \textit{Sala} de espera. Una vez que la \textit{Sala} aloja una \textit{Partida}, el usuario transiciona para actuar bajo la entidad \textit{Jugador}.
+
+Dentro del motor lógico, el modelo refleja de forma rigurosa las asimetrías y restricciones analizadas en la sección anterior. Se observa cómo la \textit{Partida} orquesta el ciclo de vida de hasta tres \textit{Eras}. Los jugadores asumen los roles de \textit{Rey} y \textit{Campesino}, compartiendo zonas de juego comunes como el \textit{Mazo}, el \textit{Descarte} y el \textit{Town}, pero manteniendo su propia \textit{Mano}. Asimismo, la multiplicidad de las relaciones consolida la restricción física crítica del dominio: el \textit{Rey} está limitado a desplegar un máximo de tres cartas de tipo \textit{Guardia} en el \textit{Town}, mientras que el \textit{Campesino} carece de esta limitación al desplegar \textit{Rebeldes}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/Modelo_Entidades.png}
+    \caption{Modelo de Dominio Conceptual: Entidades lógicas y reglas estructurales del sistema.}
+    \label{fig:modelo_dominio}
+\end{figure}
 
 \subsection{Diagrama de Casos de Uso}
 
-En la Figura \ref{fig:casos_uso} se detalla el comportamiento del sistema desde el punto de vista del usuario. Se observa cómo el \textit{Jugador} tiene la capacidad de acceder al ecosistema central dado que tiene una sesión activa. Destaca la modularidad del caso de uso principal (``Jugar Partida''), el cual incluye (\textit{<<include>>}) obligatoriamente la mecánica de jugar cartas, y se extiende (\textit{<<extend>>}) de forma opcional con acciones como el chat en vivo o la rendición voluntaria.
+Una vez definida la estructura estática de la información, en la Figura \ref{fig:casos_uso} se detalla el comportamiento dinámico del sistema desde el punto de vista de las funcionalidades ofrecidas. Se observa cómo el \textit{Jugador} tiene la capacidad de acceder al ecosistema central dado que tiene una sesión activa. 
+
+Destaca la modularidad del caso de uso principal (``Jugar Partida''), el cual incluye (\textit{<<include>>}) obligatoriamente la mecánica fundamental de jugar cartas, y se extiende (\textit{<<extend>>}) de forma opcional con acciones accesorias como el chat en vivo o la rendición voluntaria durante el transcurso de la era.
 
 \begin{figure}[H]
     \centering
@@ -41,15 +58,16 @@ En la Figura \ref{fig:casos_uso} se detalla el comportamiento del sistema desde 
     \label{fig:casos_uso}
 \end{figure}
 
-\subsection{Comportamiento Dinámico Conceptual: Flujo de Ejecución}
+%
+%\subsection{Comportamiento Dinámico Conceptual: Flujo de Ejecución}
 
-Dado que los casos de uso estáticos no muestran el orden cronológico de las operaciones, se elabora un Diagrama de Secuencia Lógico (Figura \ref{fig:secuencia_juego}) que ilustra la travesía completa de un usuario desde una perspectiva puramente conceptual: desde que no tiene cuenta hasta que juega una carta.
+%Dado que los casos de uso estáticos no muestran el orden cronológico de las operaciones, se elabora un Diagrama de Secuencia Lógico (Figura \ref{fig:secuencia_juego}) que ilustra la travesía completa de un usuario desde una perspectiva puramente conceptual: desde que no tiene cuenta hasta que juega una carta.
 
-El diagrama describe las transiciones de estado del negocio y el intercambio de información entre los actores y los subsistemas lógicos (módulos de Autenticación, Gestión de Salas y Motor de Reglas). Al tratarse de un modelo de análisis, el flujo se centra en las interacciones conceptuales de la partida, omitiendo la definición de protocolos de red, componentes de software específicos o tecnologías de almacenamiento físicas, resolviendo la separación conceptual requerida.
+%El diagrama describe las transiciones de estado del negocio y el intercambio de información entre los actores y los subsistemas lógicos (módulos de Autenticación, Gestión de Salas y Motor de Reglas). Al tratarse de un modelo de análisis, el flujo se centra en las interacciones conceptuales de la partida, omitiendo la definición de protocolos de red, componentes de software específicos o tecnologías de almacenamiento físicas, resolviendo la separación conceptual requerida.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{figures/secuencia.png}
-    \caption{Diagrama de Secuencia Lógico: Flujo conceptual de registro, preparación de sala y ciclo de partida.}
-    \label{fig:secuencia_juego}
-\end{figure}
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.9\textwidth]{figures/secuencia.png}
+%    \caption{Diagrama de Secuencia Lógico: Flujo conceptual de registro, preparación de sala y ciclo de partida.}
+%    \label{fig:secuencia_juego}
+%\end{figure}
