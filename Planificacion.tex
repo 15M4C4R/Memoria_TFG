@@ -290,75 +290,84 @@ Para materializar la planificación temporal, el trabajo se fragmenta en \textit
 
 Se utiliza un tablero Kanban para visualizar este flujo y garantizar que el tiempo dedicado a la arquitectura, el desarrollo y la redacción de la memoria esté cubierto. Con el fin de optimizar el espacio, en la columna de responsables se utilizan las siglas \textbf{I} (Ismael), \textbf{G} (Guillermo) y \textbf{A} (Ambos).
 
-{
+Para ilustrar la disposición temporal del proyecto, la Figura \ref{fig:gantt_planificacion} presenta el cronograma visual del desarrollo mediante un Diagrama de Gantt. Esta representación temporal mapea la ejecución de las tareas a lo largo de los meses, evidenciando el paralelismo de las fases de trabajo y diferenciando mediante un código de colores la asignación de responsabilidades.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/Cronograma.png}
+    \caption{Cronograma visual de iteraciones y asignación de responsabilidades (Diagrama de Gantt).}
+    \label{fig:gantt_planificacion}
+\end{figure}
+
+Complementando la perspectiva visual, la Tabla \ref{tab:tabla_tiempos} actúa como una tabla de tiempos y esfuerzo. En este desglose analítico se especifican los objetivos técnicos exactos de cada iteración, el responsable principal de su ejecución y la cuantificación en horas de cada tarea, demostrando de forma transparente la trazabilidad de las 600 horas totales requeridas para la culminación del sistema.
+
 \renewcommand{\arraystretch}{1.3}
 \small
-\begin{longtable}{|c|c|p{8cm}|c|}
-\caption{Cronograma unificado de iteraciones y asignación de responsabilidades.}
-\label{tab:cronograma_unificado} \\
+\begin{longtable}{|c|c|p{7cm}|c|c|}
+\caption{Tabla de tiempos y esfuerzo estimado por iteración.}
+\label{tab:tabla_tiempos} \\
 \hline
-\textbf{Mes} & \textbf{Sprint} & \textbf{Objetivos Técnicos y Tareas} & \textbf{Resp.} \\
+\textbf{Mes} & \textbf{Sprint} & \textbf{Objetivos Técnicos y Tareas} & \textbf{Resp.} & \textbf{Horas} \\
 \hline
 \endfirsthead
 
-\multicolumn{4}{c}%
+\multicolumn{5}{c}%
 {{\bfseries \tablename\ \thetable{} -- Continuación de la página anterior}} \\
 \hline
-\textbf{Mes} & \textbf{Sprint} & \textbf{Objetivos Técnicos y Tareas} & \textbf{Resp.} \\
+\textbf{Mes} & \textbf{Sprint} & \textbf{Objetivos Técnicos y Tareas} & \textbf{Resp.} & \textbf{Horas} \\
 \hline
 \endhead
 
-\hline \multicolumn{4}{|r|}{{\textit{Continúa en la siguiente página...}}} \\ \hline
+\hline \multicolumn{5}{|r|}{{\textit{Continúa en la siguiente página...}}} \\ \hline
 \endfoot
 
 \hline
 \endlastfoot
 
         \textbf{Enero} 
-        & \multirow{2}{*}{5 - 11} & Inicialización de repositorio, \textit{Set up} \textit{Docker}, \textit{Frontend}/\textit{Backend} & I \\ \cline{3-4}
-        & & Calendario Inicial, Metodología Git y Diagramas UML & G \\ \cline{2-4}
-        & \multirow{2}{*}{12 - 18} & Configuración de Bases de Datos y \textit{Mock-ups} de interfaz & I \\ \cline{3-4}
-        & & \textit{Set up} Despliegue Continuo y Tests iniciales & G \\ \cline{2-4}
-        & 19 - 25 & Desarrollo de Pantalla de Inicio & G \\ \cline{2-4}
-        & \multirow{2}{*}{26 - 1 Feb} & Desarrollo de Pantalla de \textit{Login} y Registro & I \\ \cline{3-4}
-        & & Desarrollo de Pantalla de Listado de Salas & G \\
+        & \multirow{2}{*}{5 - 11} & Inicialización de repositorio, \textit{Set up} \textit{Docker}, \textit{Frontend}/\textit{Backend} & I & 24 \\ \cline{3-5}
+        & & Calendario Inicial, Metodología Git y Diagramas UML & G & 16 \\ \cline{2-5}
+        & \multirow{2}{*}{12 - 18} & Configuración de Bases de Datos y \textit{Mock-ups} de interfaz & I & 25 \\ \cline{3-5}
+        & & \textit{Set up} Despliegue Continuo y Tests iniciales & G & 16 \\ \cline{2-5}
+        & 19 - 25 & Desarrollo de Pantalla de Inicio & G & 16 \\ \cline{2-5}
+        & \multirow{2}{*}{26 - 1 Feb} & Desarrollo de Pantalla de \textit{Login} y Registro & I & 15 \\ \cline{3-5}
+        & & Desarrollo de Pantalla de Listado de Salas & G & 14 \\
         \hline
         \textbf{Febrero} 
-        & \multirow{2}{*}{2 - 8} & Desarrollo de Pantalla de Usuario (Editar) & I \\ \cline{3-4}
-        & & Desarrollo de Pantalla de Sala & G \\ \cline{2-4}
-        & 9 - 15 & Sistema de Amistad y Salas & I \\ \cline{2-4}
-        & \multirow{2}{*}{16 - 22} & Pantalla de Partida Básica & G \\ \cline{3-4}
-        & & Chat de Partida en tiempo real & G \\ \cline{2-4}
-        & \multirow{2}{*}{23 - 1 Mar} & Sistema de Barajas, Cartas e Inspección de roles & I \\ \cline{3-4}
-        & & Flujo de estados y gestión de turnos & G \\
+        & \multirow{2}{*}{2 - 8} & Desarrollo de Pantalla de Usuario (Editar) & I & 15 \\ \cline{3-5}
+        & & Desarrollo de Pantalla de Sala & G & 16 \\ \cline{2-5}
+        & 9 - 15 & Sistema de Amistad y Salas & I & 32 \\ \cline{2-5}
+        & \multirow{2}{*}{16 - 22} & Pantalla de Partida Básica & G & 15 \\ \cline{3-5}
+        & & Chat de Partida en tiempo real & G & 16 \\ \cline{2-5}
+        & \multirow{2}{*}{23 - 1 Mar} & Sistema de Barajas, Cartas e Inspección de roles & I & 15 \\ \cline{3-5}
+        & & Flujo de estados y gestión de turnos & G & 16 \\
         \hline
         \textbf{Marzo} 
-        & \multirow{2}{*}{2 - 8} & \textit{Set up} Inicio de Partida & I \\ \cline{3-4}
-        & & Desarrollo de Acciones Simples & G \\ \cline{2-4}
-        & \multirow{2}{*}{9 - 15} & Desarrollo de Fin de Era y Partida & I \\ \cline{3-4}
-        & & Implementación de Condiciones finales & G \\ \cline{2-4}
-        & 16 - 22 & Accionar cartas y UI extra de partida & I \\ \cline{2-4}
-        & 23 - 29 & Implementación de Acciones Complejas 1 & G \\
+        & \multirow{2}{*}{2 - 8} & \textit{Set up} Inicio de Partida & I & 15 \\ \cline{3-5}
+        & & Desarrollo de Acciones Simples & G & 16 \\ \cline{2-5}
+        & \multirow{2}{*}{9 - 15} & Desarrollo de Fin de Era y Partida & I & 15 \\ \cline{3-5}
+        & & Implementación de Condiciones finales & G & 16 \\ \cline{2-5}
+        & 16 - 22 & Accionar cartas y UI extra de partida & I & 32 \\ \cline{2-5}
+        & 23 - 29 & Implementación de Acciones Complejas 1 & G & 32 \\
         \hline
         \textbf{Abril} 
-        & \multirow{2}{*}{30 - 5} & Implementación de Acciones Complejas 2 & G \\ \cline{3-4}
-        & & Pantalla de Ganador y vuelta a la sala & I \\ \cline{2-4}
-        & 6 - 12 & Mover cartas (\textit{Drag \& Drop}) e hito de animaciones & A \\ \cline{2-4}
-        & 13 - 19 & Test Lógica de Juego 1 y Test de Salas & A \\ \cline{2-4}
-        & 20 - 26 & Test Lógica de Juego 2, Test Usuarios y Rediseño estético & A \\ \cline{2-4}
-        & 27 - 3 May & Refactorización general y solución de errores (\textit{Bugfixing}) & A \\
+        & \multirow{2}{*}{30 - 5} & Implementación de Acciones Complejas 2 & G & 15 \\ \cline{3-5}
+        & & Pantalla de Ganador y vuelta a la sala & I & 16 \\ \cline{2-5}
+        & 6 - 12 & Mover cartas (\textit{Drag \& Drop}) e hito de animaciones & A & 32 \\ \cline{2-5}
+        & 13 - 19 & Test Lógica de Juego 1 y Test de Salas & A & 32 \\ \cline{2-5}
+        & 20 - 26 & Test Lógica de Juego 2, Test Usuarios y Rediseño estético & A & 32 \\ \cline{2-5}
+        & 27 - 3 May & Refactorización general y solución de errores (\textit{Bugfixing}) & A & 32 \\
         \hline
         \textbf{Mayo} 
-        & 4 - 10 & Pruebas finales, solución de errores e integración final & A \\ \cline{2-4}
-        & 11 - 15 & Finalización y revisión de la memoria técnica & A \\
+        & 4 - 10 & Pruebas finales, solución de errores e integración final & A & 34 \\ \cline{2-5}
+        & 11 - 15 & Finalización y revisión de la memoria técnica & A & 30 \\ \hline
+        \multicolumn{4}{|r|}{\textbf{Total de horas invertidas:}} & \textbf{600} \\ \hline
 \end{longtable}
-}
 
 \begin{center}
     \footnotesize
     \textbf{Leyenda de Responsables:} \textbf{I}: Ismael Carrasco | \textbf{G}: Guillermo | \textbf{A}: Ambos integrantes (Trabajo conjunto)
 \end{center}
-
 \section{Gestión de Costes}
 
 Como parte de la fase de planificación del proyecto, se define una política de gestión financiera basada en las directrices de la disciplina de Gestión de Proyectos. El objetivo de este plan es establecer el marco de trabajo sobre el cual se valora económicamente el producto, cuantificando su valor real en el mercado actual.
