@@ -15,7 +15,7 @@ packages/
 \end{verbatim}
 
 \textbf{Snippets Estratégicos de Código} \\
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}[language=Java,breaklines=true]
 // packages/server/tests/gameService.test.mjs
 describe('gameService', () => {
   test('startGame inicializa la partida correctamente', async () => {
@@ -37,7 +37,7 @@ El diccionario dinámico se implementa mapeando las claves de acción del servid
 
 Se implementó de manera robusta la sincronización de estas interfaces. A continuación, se muestra cómo se modela el comportamiento de la carta \texttt{THUG} tanto en el cliente para recolectar el objetivo, como en el servidor para resolver su lógica:
 
-\begin{lstlisting}[basicstyle=\scriptsize\ttfamily,caption={Validación de UI para la carta THUG en el Frontend},label={cod:pendingActionsUI1}]
+\begin{lstlisting}[basicstyle=\scriptsize\ttfamily,caption={Validación de UI para la carta THUG en el Frontend},label={cod:pendingActionsUI1},breaklines=true]
 "THUG": {
     instructionText: "Selecciona 1 guardia en el pueblo rival para descartarlo",
     allowedZones: ['rivalTown'],
@@ -51,7 +51,7 @@ Se implementó de manera robusta la sincronización de estas interfaces. A conti
 }
 \end{lstlisting}
 
-\begin{lstlisting}[basicstyle=\scriptsize\ttfamily,caption={Resolución del efecto de THUG en el Backend},label={cod:rebelPendingActions1}]
+\begin{lstlisting}[basicstyle=\scriptsize\ttfamily,caption={Resolución del efecto de THUG en el Backend},label={cod:rebelPendingActions1},breaklines=true]
 "THUG": (gameState, targetData) => {
     const { targetUid } = targetData; 
     const cardIndex = gameState.players.king.town.findIndex(card => card.uid === targetUid);
@@ -114,7 +114,7 @@ El componente \textit{React} se programa para capturar el DTO efímero y congela
 
 La implementación técnica principal consiste en el desarrollo de la función auxiliar de cambio de turno en la capa de servicios. Esta función sustituye al método básico anterior, integrando una comprobación de rol y la llamada a \texttt{drawCardFromDeck} específicamente para el Rey.
 
-\begin{lstlisting}[language=Java,basicstyle=\scriptsize\ttfamily,caption={Logica de cambio de turno con robo automático para el bando real},label={cod:king_draw_logic}]
+\begin{lstlisting}[language=Java,basicstyle=\scriptsize\ttfamily,caption={Logica de cambio de turno con robo automático para el bando real},label={cod:king_draw_logic},breaklines=true]
 const changeTurnWithDraw = async (gameState) => {
     if (gameState.turn === 'king') {
         drawCardFromDeck(gameState, 'king');
@@ -143,7 +143,7 @@ Se rediseña el formateador de salida de estado (\texttt{saveAndFormatGameState(
 \section{Detalles de Implementación}
 A nivel de reglas, se programan las correcciones matemáticas en los cálculos de letalidad. En la capa de \textit{frontend}, la refactorización se materializa separando el estado global de suscripciones a \textit{WebSockets} hacia \texttt{useGameActions.ts} y \texttt{useGameData.ts}. Adicionalmente, se codifica un nuevo sistema de notificaciones (\texttt{ErrorToast.tsx}) para interceptar y renderizar los errores enviados por el servidor.
 
-Se corrigen validaciones en el Frontend, como impedir multiselecciones accidentales en cartas como \texttt{EXECUTOR}, prohibir seleccionar la propia carta ejecutada (error de \texttt{RAT}), arreglar opacidades gráficas (\textit{alpha channels}) en cartas no reveladas e impedir que los botones de menú se rendericen durante el bloqueo de una Acción Pendiente. En paralelo, la lógica del \texttt{DECOY} se empotra en el formateador del estado, ejecutándose silenciosamente tras cada robo del Rey.
+Se corrigen validaciones en el \textit{frontend}, como impedir multiselecciones accidentales en cartas como \texttt{EXECUTOR}, prohibir seleccionar la propia carta ejecutada (error de \texttt{RAT}), arreglar opacidades gráficas (\textit{alpha channels}) en cartas no reveladas e impedir que los botones de menú se rendericen durante el bloqueo de una Acción Pendiente. En paralelo, la lógica del \texttt{DECOY} se empotra en el formateador del estado, ejecutándose silenciosamente tras cada robo del Rey.
 
 \section{Seguimiento, Control y Replanificación}
 Durante las pruebas de estrés de este ciclo, el control de errores caza un fallo 500 no controlado en el cierre de sesiones. Este defecto crítico se soluciona encapsulando el cierre de la partida en una gestión robusta de excepciones. Esta acción correctiva deja una base limpia y altamente estable. Con las reparaciones en las tarjetas de lógica compleja, el motor de juego probó ser altamente estable frente a interacciones de usuario erróneas. No fue necesaria ninguna replanificación de calendario.

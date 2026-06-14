@@ -325,7 +325,7 @@ Complementando la perspectiva visual, la Tabla \ref{tab:tabla_tiempos} actúa co
 \endlastfoot
 
         \textbf{Enero} 
-        & \multirow{2}{*}{5 - 11} & Inicialización de repositorio, \textit{Set up} \textit{Docker}, \textit{Frontend}/\textit{Backend} & I & 24 \\ \cline{3-5}
+        & \multirow{2}{*}{5 - 11} & Inicialización de repositorio, \textit{Set up} \textit{Docker}, \textit{frontend}/\textit{backend} & I & 24 \\ \cline{3-5}
         & & Calendario Inicial, Metodología Git y Diagramas UML & G & 16 \\ \cline{2-5}
         & \multirow{2}{*}{12 - 18} & Configuración de Bases de Datos y \textit{Mock-ups} de interfaz & I & 25 \\ \cline{3-5}
         & & \textit{Set up} Despliegue Continuo y Tests iniciales & G & 16 \\ \cline{2-5}
@@ -447,7 +447,7 @@ Para asegurar la viabilidad del proyecto frente a eventos imprevistos, se lleva 
     \textbf{Mitigación (Probabilidad: Alta | Impacto: Alto):} Se implementa un sistema de persistencia de sesión acoplado a tokens JWT almacenados de forma temporal en \textit{Redis}. Al reconectarse, el cliente envía su token y el servidor le reasigna de manera automática el socket activo en el \textit{Lobby} correspondiente, restaurando su vista de juego sin penalizaciones.
     
     \item \textbf{RT-03. Inyección de trampas y alteración de la lógica en el cliente:} Al tratarse de un entorno web abierto, un usuario avanzado podría inspeccionar el tráfico de red o modificar el estado local de \textit{React} para visualizar las cartas ocultas del rival. \\
-    \textbf{Mitigación (Probabilidad: Alta | Impacto: Alto):} Se aplica un patrón de Servidor Autoritativo. El cliente de \textit{React} actúa como una mera capa de representación visual sin poder de decisión lógica. Adicionalmente, el backend filtra toda la información sensible mediante el patrón DTO antes de transmitir el estado, garantizando que el emisor reciba únicamente los datos visibles para su facción.
+    \textbf{Mitigación (Probabilidad: Alta | Impacto: Alto):} Se aplica un patrón de Servidor Autoritativo. El cliente de \textit{React} actúa como una mera capa de representación visual sin poder de decisión lógica. Adicionalmente, el \textit{backend} filtra toda la información sensible mediante el patrón DTO antes de transmitir el estado, garantizando que el emisor reciba únicamente los datos visibles para su facción.
     
     \item \textbf{RT-04. Incremento de la deuda técnica por la asimetría del código:} La naturaleza asimétrica del juego exige duplicar lógicas de validación en el servidor, lo que puede elevar la complejidad ciclomática del código y dificultar el mantenimiento. \\
     \textbf{Mitigación (Probabilidad: Alta | Impacto: Medio):} La planificación bloquea el \textit{Sprint} 8 de forma exclusiva para labores de refactorización profunda, limpieza de código muerto y abstracción de controladores comunes, evitando el acoplamiento temprano antes del desarrollo de las acciones complejas.

@@ -28,7 +28,7 @@ KingAndPeasant/
 \end{verbatim}
 
 \textbf{Snippets Estratégicos de Código} \\
-\begin{lstlisting}
+\begin{lstlisting}[breaklines=true]
 # docker-compose.yml
 version: '3.8'
 services:
@@ -146,7 +146,7 @@ El diseño de la solución arranca con la elaboración de los \textit{mock-ups} 
 \end{center}
 \end{figure}
 
-Se diseña un entorno de pruebas híbrido utilizando Jest para validar la lógica del servidor (Backend) y Vitest para los componentes de la interfaz de usuario (Frontend). Para el despliegue de la aplicación, se opta por la plataforma Render debido a su integración nativa con entornos Node.js. La elección de este servicio se fundamenta en la disponibilidad de un plan gratuito y en que se dispone de experiencia técnica previa en su configuración, lo que facilita la gestión de la infraestructura. El flujo de CD se diseña para activarse automáticamente mediante GitHub Actions cada vez que se integren cambios en la rama principal y en la rama \textit{trunk}.
+Se diseña un entorno de pruebas híbrido utilizando Jest para validar la lógica del servidor (\textit{backend}) y Vitest para los componentes de la interfaz de usuario (\textit{frontend}). Para el despliegue de la aplicación, se opta por la plataforma Render debido a su integración nativa con entornos Node.js. La elección de este servicio se fundamenta en la disponibilidad de un plan gratuito y en que se dispone de experiencia técnica previa en su configuración, lo que facilita la gestión de la infraestructura. El flujo de CD se diseña para activarse automáticamente mediante GitHub Actions cada vez que se integren cambios en la rama principal y en la rama \textit{trunk}.
 
 \textbf{3. Detalles de Implementación} \\
 La integración de múltiples motores de bases de datos exige un desarrollo cauteloso en el archivo \texttt{docker-compose.yml}. Se implementan volúmenes persistentes (\textit{Volumes}) tanto para \textit{MariaDB} (\texttt{/var/lib/mysql}) como para \textit{Redis} (\texttt{/data}), asegurando que la reinicialización de los contenedores no provoque la pérdida de información crítica. Adicionalmente, se ejecutan comprobaciones de estado (\textit{healthchecks}) con comandos nativos como \textit{mysqladmin ping} y \textit{redis-cli ping}, garantizando que los servicios de \textit{backend} dependientes (\textit{depends\_on}) no intenten establecer conexiones hasta que los motores estén operativos.
@@ -179,7 +179,7 @@ packages/
 \end{verbatim}
 
 \textbf{Snippets Estratégicos de Código} \\
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}[language=Java,breaklines=true]
 // packages/client/src/context/AuthContext.ts
 interface AuthContextType {
   user: User | null;
@@ -191,7 +191,7 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 \end{lstlisting}
 
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}[language=Java,breaklines=true]
 // packages/server/prisma/schema.prisma
 model User {
   idUser   Int      @id @default(autoincrement())
@@ -219,7 +219,7 @@ El objetivo principal de esta iteración consiste en el diseño estructural de l
 \textbf{2. Diseño de la Solución} \\
 El diseño de esta etapa se articula en torno a la arquitectura de la información. Se elabora el modelo Entidad-Relación y el diagrama UML correspondiente a la base de datos relacional. De forma paralela, el equipo diseña los estados de la partida, los turnos intercalados y las mecánicas asimétricas plasmándolas en diagramas de flujo operativos.
 
-Por otro lado, el diseño de la página de inicio se centra en el Frontend, traduciendo los \textit{mock-ups} visuales a componentes de React. Se plantea como una página estática de navegación que no requiere interacción con la base de datos, sirviendo únicamente como nodo central para redirigir al usuario hacia el registro, el login o la búsqueda de partidas.
+Por otro lado, el diseño de la página de inicio se centra en el \textit{frontend}, traduciendo los \textit{mock-ups} visuales a componentes de React. Se plantea como una página estática de navegación que no requiere interacción con la base de datos, sirviendo únicamente como nodo central para redirigir al usuario hacia el registro, el login o la búsqueda de partidas.
 
 \textbf{3. Detalles de Implementación} \\
 El diseño estructural requiere abstraer la asimetría del juego a un modelo de datos cohesivo. El esquema relacional implementa entidades independientes para \texttt{User}, \texttt{Friendship}, \texttt{Lobby} y \texttt{Game}. La complejidad se centra en la entidad \texttt{Card}, la cual se codifica para contener tanto los atributos del bando del Rey (\texttt{nameKing}, \texttt{typeKing}) como los del Campesino (\texttt{namePeasant}, \texttt{typePeasant}) en un mismo registro. Esto facilita enormemente la futura gestión del mazo único compartido. Las relaciones múltiples reflexivas en la entidad \texttt{User} (como \texttt{gamesAsPlayer1} o \texttt{friendshipsSent}) se implementan para permitir consultas eficientes de historiales y marcadores.
@@ -301,7 +301,7 @@ packages/server/src/
 \end{verbatim}
 
 \textbf{Snippets Estratégicos de Código} \\
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}[language=Java,breaklines=true]
 // packages/server/src/sockets/LobbySocket.js
 const registerLobbyHandlers = (io, socket) => {
   // ... configuracion interna omitida para resumir el contenido
@@ -329,7 +329,7 @@ El diseño se divide en dos frentes. Por un lado, se planifican los \textit{endp
 \textbf{Coste}&Aumenta la complejidad de la infraestructura al requerir un \textit{Socket Manager} y mayor consumo de memoria por conexiones abiertas.\\
 \textbf{Opciones}&\textit{HTTP Long Polling} o \textit{Server-Sent Events (SSE)}, descartadas por sobrecarga de red y limitación unidireccional respectivamente.\\
 \textbf{Riesgos}&Riesgo crítico de fugas de memoria (\textit{memory leaks}) ante desconexiones no gestionadas de los clientes.\\
-\textbf{Deuda técnica}&Obliga a implementar lógicas manuales de reconexión y ciclos de limpieza (\textit{cleanup}) en el frontend (React).\\
+\textbf{Deuda técnica}&Obliga a implementar lógicas manuales de reconexión y ciclos de limpieza (\textit{cleanup}) en el \textit{frontend} (React).\\
 \end{coolTable}
 \caption{Análisis de valor aportado sobre la arquitectura de comunicación mediante WebSockets. \label{tab:ws_analisis}}
 \end{table}
@@ -369,7 +369,7 @@ packages/
 \end{verbatim}
 
 \textbf{Snippets Estratégicos de Código} \\
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}[language=Java,breaklines=true]
 // packages/server/src/services/GameService.js
 const playActionCard = async (gameId, targetData, playedCard, userRol, gameState) => {
   // ... logica interna de validacion y estado en Redis omitida
@@ -521,7 +521,7 @@ packages/
 \end{verbatim}
 
 \textbf{Snippets Estratégicos de Código} \\
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}[language=Java,breaklines=true]
 // packages/server/tests/gameService.test.mjs
 describe('gameService', () => {
   test('startGame inicializa la partida correctamente con las reglas de King and Peasant', async () => {
@@ -597,7 +597,7 @@ Se rediseña el formateador de salida de estado (\texttt{saveAndFormatGameState(
 \textbf{3. Detalles de Implementación} \\
 A nivel de reglas, se programan las correcciones matemáticas en los cálculos de letalidad. En la capa de \textit{frontend}, la refactorización se materializa separando el estado global de suscripciones a \textit{WebSockets} hacia \texttt{useGameActions.ts} y \texttt{useGameData.ts}. Adicionalmente, se codifica un nuevo sistema de notificaciones (\texttt{ErrorToast.tsx}) para interceptar y renderizar los errores enviados por el servidor.
 
-Se corrigen validaciones en el Frontend, como impedir multiselecciones accidentales en cartas como \texttt{EXECUTOR}, prohibir seleccionar la propia carta ejecutada (error de \texttt{RAT}), arreglar opacidades gráficas (\textit{alpha channels}) en cartas no reveladas e impedir que los botones de menú se rendericen durante el bloqueo de una Acción Pendiente. En paralelo, la lógica del \texttt{DECOY} se empotra en el formateador del estado, ejecutándose silenciosamente tras cada robo del Rey.
+Se corrigen validaciones en el \textit{frontend}, como impedir multiselecciones accidentales en cartas como \texttt{EXECUTOR}, prohibir seleccionar la propia carta ejecutada (error de \texttt{RAT}), arreglar opacidades gráficas (\textit{alpha channels}) en cartas no reveladas e impedir que los botones de menú se rendericen durante el bloqueo de una Acción Pendiente. En paralelo, la lógica del \texttt{DECOY} se empotra en el formateador del estado, ejecutándose silenciosamente tras cada robo del Rey.
 
 \textbf{4. Seguimiento, Control y Replanificación} \\
 Durante las pruebas de estrés de este ciclo, el control de errores caza un fallo 500 no controlado en el cierre de sesiones. Este defecto crítico se soluciona encapsulando el cierre de la partida en una gestión robusta de excepciones. Esta acción correctiva deja una base limpia y altamente estable.

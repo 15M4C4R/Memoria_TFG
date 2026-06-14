@@ -18,7 +18,7 @@ packages/
 \end{verbatim}
 
 \textbf{Snippets Estratégicos de Código} \\
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}[language=Java,breaklines=true]
 // packages/client/src/context/AuthContext.ts
 interface AuthContextType {
   user: User | null;
@@ -44,7 +44,7 @@ El objetivo principal de esta iteración consiste en el diseño estructural de l
 \section{Diseño de la Solución}
 El diseño de esta etapa se articula en torno a la arquitectura de la información. Se elabora el modelo Entidad-Relación y el diagrama UML correspondiente a la base de datos relacional. De forma paralela, el equipo diseña los estados de la partida, los turnos intercalados y las mecánicas asimétricas plasmándolas en diagramas de flujo operativos.
 
-Por otro lado, el diseño de la página de inicio se centra en el Frontend, traduciendo los \textit{mock-ups} visuales a componentes de React. Se plantea como una página estática de navegación que no requiere interacción con la base de datos, sirviendo únicamente como nodo central para redirigir al usuario hacia el registro, el login o la búsqueda de partidas.
+Por otro lado, el diseño de la página de inicio se centra en el \textit{frontend}, traduciendo los \textit{mock-ups} visuales a componentes de React. Se plantea como una página estática de navegación que no requiere interacción con la base de datos, sirviendo únicamente como nodo central para redirigir al usuario hacia el registro, el login o la búsqueda de partidas.
 
 \section{Detalles de Implementación}
 El diseño estructural requiere abstraer la asimetría del juego a un modelo de datos cohesivo. El esquema relacional implementa entidades independientes para \texttt{User}, \texttt{Friendship}, \texttt{Lobby} y \texttt{Game}. La complejidad se centra en la entidad \texttt{Card}, la cual se codifica para contener tanto los atributos del bando del Rey (\texttt{nameKing}, \texttt{typeKing}) como los del Campesino (\texttt{namePeasant}, \texttt{typePeasant}) en un mismo registro. Esto facilitó enormemente la futura gestión del mazo único compartido. Las relaciones múltiples reflexivas en la entidad \texttt{User} (como \texttt{gamesAsPlayer1} o \texttt{friendshipsSent}) se implementan para permitir consultas eficientes de historiales y marcadores.

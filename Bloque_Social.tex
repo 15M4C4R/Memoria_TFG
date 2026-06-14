@@ -14,7 +14,7 @@ packages/server/src/
 \end{verbatim}
 
 \textbf{Snippets Estratégicos de Código} \\
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}[language=Java,breaklines=true]
 // packages/server/src/sockets/LobbySocket.js
 const registerLobbyHandlers = (io, socket) => {
   socket.on("createLobby", async (lobbyName, isPrivate) => {
@@ -41,7 +41,7 @@ El diseño se divide en dos frentes. Por un lado, se planifican los \textit{endp
 \textbf{Coste}&Aumenta la complejidad de la infraestructura al requerir un \textit{Socket Manager} y mayor consumo de memoria por conexiones abiertas.\\
 \textbf{Opciones}&\textit{HTTP Long Polling} o \textit{Server-Sent Events (SSE)}, descartadas por sobrecarga de red y limitación unidireccional respectivamente.\\
 \textbf{Riesgos}&Riesgo crítico de fugas de memoria (\textit{memory leaks}) ante desconexiones no gestionadas de los clientes.\\
-\textbf{Deuda técnica}&Obliga a implementar lógicas manuales de reconexión y ciclos de limpieza (\textit{cleanup}) en el frontend (React).\\
+\textbf{Deuda técnica}&Obliga a implementar lógicas manuales de reconexión y ciclos de limpieza (\textit{cleanup}) en el \textit{frontend} (React).\\
 \end{coolTable}
 \caption{Análisis de valor aportado sobre la arquitectura de comunicación mediante WebSockets. \label{tab:ws_analisis}}
 \end{table}

@@ -15,13 +15,13 @@ Dada la naturaleza interactiva de un juego multijugador, la sincronización en t
 
 Como alternativa a una API REST, se decidió utilizar el protocolo \textit{WebSocket} como núcleo de las comunicaciones de la partida. Como define el estándar oficial de la IETF \cite{rfc6455}, esta tecnología proporciona un canal de comunicación bidireccional sobre una única conexión TCP persistente. Esto permite el envío de eventos asíncronos (\textit{server-push}) en el mismo instante en el que se modifica el estado, validando las jugadas y actualizando instantáneamente la interfaz de todos los clientes conectados, reduciendo a su vez el coste computacional y garantizando una sincronización  fluida.
 
-\subsection{Tecnologías de \textit{Backend} y Ecosistema de Desarrollo}
+\subsection{Tecnologías de \textit{backend} y Ecosistema de Desarrollo}
 
 El alto volumen de conexiones concurrentes que presenta un juego multijugador exige un entorno de ejecución capaz de gestionar con eficiencia el consumo elevado de recursos que se produce al mantener las conexiones abiertas en un estado de sincronización permanente. En el caso de los servidores web tradicionales, el modelo de concurrencia basado en hilos (\textit{thread-per-request}) se ve afectado por el cambio de contexto (\textit{context switching}) \cite{tilkov_node}, provocando un rápido agotamiento de la memoria y cuellos de botella. Por otro lado, la mantenibilidad del código y el uso de lenguajes unificados constituyó un factor determinante a la hora de decantarse por una arquitectura de servidor. 
 
 Por estos motivos, se adoptó \textit{Node.js}. Su arquitectura basada en un bucle de eventos (\textit{Event Loop}) procesa las solicitudes de red de forma asíncrona, evitando bloquear el hilo principal durante la espera de respuestas de la base de datos o de los clientes. Este diseño arquitectónico permite al sistema mantener activas miles de conexiones bidireccionales de manera simultánea con un consumo residual de recursos. Sumado a las ventajas arquitectónicas de emplear un lenguaje isomórfico, la elección de esta pila tecnológica se sustenta fuertemente en la experiencia previa del equipo de desarrollo. Contar con un conocimiento previo de este entorno reduce de forma drástica la curva de aprendizaje, minimiza la sobrecarga cognitiva y supone una ventaja estratégica para agilizar el ciclo de implementación del proyecto.
 
-\subsection{Tecnologías de Frontend Reactividad de Interfaz}
+\subsection{Tecnologías de \textit{frontend} Reactividad de Interfaz}
 
 La implementación de un juego de mesa en un entorno digital multijugador requiere elementos como un tablero interactivo, el cual, en términos de ingeniería, no es más que la proyección visual de una compleja máquina de estados. Sin embargo, se plantea una serie de retos técnicos a la hora de diseñar este componente. 
 
@@ -56,9 +56,9 @@ El diseño de la arquitectura del sistema constituye el núcleo estructural del 
   
 En lugar de segregar el cliente y el servidor en repositorios de control de versiones independientes (polirepositorio), se toma la decisión arquitectónica de utilizar un Monorepositorio gestionado de forma nativa mediante \textit{npm workspaces}. 
 
-Esta alternativa se elige principalmente por su capacidad para unificar y simplificar la gestión del ciclo de vida del desarrollo. Al agrupar los módulos de \textit{client} y \textit{server} en un único entorno, se facilita la configuración de la infraestructura local (bases de datos en Docker) y se centraliza la orquestación de comandos. Esto permite que procesos como la instalación de dependencias, la ejecución de pruebas (\textit{testing}) y el despliegue local de toda la pila tecnológica (Frontend, Backend, MariaDB y Redis) se realicen con un solo comando desde el directorio raíz, reduciendo la fricción en el entorno de desarrollo y en los flujos de Integración Continua (CI/CD).
+Esta alternativa se elige principalmente por su capacidad para unificar y simplificar la gestión del ciclo de vida del desarrollo. Al agrupar los módulos de \textit{client} y \textit{server} en un único entorno, se facilita la configuración de la infraestructura local (bases de datos en Docker) y se centraliza la orquestación de comandos. Esto permite que procesos como la instalación de dependencias, la ejecución de pruebas (\textit{testing}) y el despliegue local de toda la pila tecnológica (\textit{frontend}, \textit{backend}, MariaDB y Redis) se realicen con un solo comando desde el directorio raíz, reduciendo la fricción en el entorno de desarrollo y en los flujos de Integración Continua (CI/CD).
 
-\subsection{Arquitectura del Servidor (Backend)}
+\subsection{Arquitectura del Servidor (\textit{backend})}
 
 El servidor se diseña huyendo del patrón de monolito tradicional, apostando por una Arquitectura por Capas estricta. Esta decisión fomenta el principio de responsabilidad única y facilita la creación de pruebas unitarias al aislar el enrutamiento de la lógica funcional. El flujo se divide en:
 
@@ -71,7 +71,7 @@ El servidor se diseña huyendo del patrón de monolito tradicional, apostando po
 \paragraph{Paradigma de Comunicación Bidireccional:}
 Para el ecosistema de juego, se descartan alternativas arquitectónicas como \textit{Short Polling} o \textit{Server-Sent Events} (SSE). El \textit{Polling} tradicional generaría una sobrecarga HTTP inasumible y latencia en un juego por turnos. Por ello, se justifica el uso exclusivo de WebSockets (\textit{Socket.io}), estableciendo un canal persistente, bidireccional y de muy baja latencia, crítico para sincronizar eventos como el robo de cartas o las notificaciones del chat en milisegundos.
 
-\subsection{Arquitectura del Cliente (Frontend)}
+\subsection{Arquitectura del Cliente (\textit{frontend})}
 
 El cliente se modela como una \textit{Single Page Application} (SPA) desarrollada en \textit{React}. En lugar de acoplar la lógica de negocio a la capa de vista, se opta por una arquitectura de componentes funcionales apoyada en Custom Hooks. 
 
@@ -118,7 +118,7 @@ Este objeto almacena propiedades persistentes durante el encuentro (como el turn
 
 Transmitir el \textit{gameState} crudo a los clientes supondría una vulnerabilidad crítica, ya que un jugador podría inspeccionar el tráfico de \textit{WebSockets} mediante las herramientas de desarrollador del navegador y descubrir las cartas ocultas de su oponente.
 
-Para mitigar este riesgo desde el diseño de la arquitectura, se implementa el patrón \textbf{Data Transfer Object (DTO)}. El backend nunca expone el estado original de \textit{Redis}. En su lugar, el servicio de juego clona el estado y ejecuta una función de transformación que genera dos vistas asimétricas: \texttt{dtoKing} y \texttt{dtoPeasant} (Figura \ref{fig:dto_pattern}).
+Para mitigar este riesgo desde el diseño de la arquitectura, se implementa el patrón \textbf{Data Transfer Object (DTO)}. El \textit{backend} nunca expone el estado original de \textit{Redis}. En su lugar, el servicio de juego clona el estado y ejecuta una función de transformación que genera dos vistas asimétricas: \texttt{dtoKing} y \texttt{dtoPeasant} (Figura \ref{fig:dto_pattern}).
 
 \begin{figure}[H]
     \centering

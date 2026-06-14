@@ -36,13 +36,13 @@ Dada la naturaleza interactiva de un juego multijugador, la sincronización en t
 
 Como alternativa a una API REST, se decidió utilizar el protocolo \textit{WebSocket} como núcleo de las comunicaciones de la partida. Como define el estándar oficial de la IETF \cite{rfc6455}, esta tecnología proporciona un canal de comunicación bidireccional sobre una única conexión TCP persistente. Esto permite el envío de eventos asíncronos (\textit{server-push}) en el mismo instante en el que se modifica el estado, validando las jugadas y actualizando instantáneamente la interfaz de todos los clientes conectados, reduciendo a su vez el coste computacional y garantizando una sincronización  fluida.
 
-\section{Tecnologías de \textit{Backend} y Ecosistema de Desarrollo}
+\section{Tecnologías de \textit{backend} y Ecosistema de Desarrollo}
 
 El alto volumen de conexiones concurrentes que presenta un juego multijugador exige un entorno de ejecución capaz de gestionar con eficiencia el consumo elevado de recursos que se produce al mantener las conexiones abiertas en un estado de sincronización permanente. En el caso de los servidores web tradicionales, el modelo de concurrencia basado en hilos (\textit{thread-per-request}) se ve afectado por el cambio de contexto (\textit{context switching}) \cite{tilkov_node}, provocando un rápido agotamiento de la memoria y cuellos de botella. Por otro lado, la mantenibilidad del código y el uso de lenguajes unificados constituyó un factor determinante a la hora de decantarse por una arquitectura de servidor. 
 
 Por estos motivos, se adoptó \textit{Node.js}. Su arquitectura basada en un bucle de eventos (\textit{Event Loop}) procesa las solicitudes de red de forma asíncrona, evitando bloquear el hilo principal durante la espera de respuestas de la base de datos o de los clientes. Este diseño arquitectónico permite al sistema mantener activas miles de conexiones bidireccionales de manera simultánea con un consumo residual de recursos. Sumado a las ventajas arquitectónicas de emplear un lenguaje isomórfico, la elección de esta pila tecnológica se sustenta fuertemente en la experiencia previa del equipo de desarrollo. Contar con un conocimiento previo de este entorno reduce de forma drástica la curva de aprendizaje, minimiza la sobrecarga cognitiva y supone una ventaja estratégica para agilizar el ciclo de implementación del proyecto.
 
-\section{Tecnologías de Frontend Reactividad de Interfaz}
+\section{Tecnologías de \textit{frontend} Reactividad de Interfaz}
 
 La implementación de un juego de mesa en un entorno digital multijugador requiere elementos como un tablero interactivo, el cual, en términos de ingeniería, no es más que la proyección visual de una compleja máquina de estados. Sin embargo, se plantea una serie de retos técnicos a la hora de diseñar este componente. 
 
