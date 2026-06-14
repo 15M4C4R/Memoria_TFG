@@ -37,13 +37,13 @@ Por otro lado, el estado del tablero interactivo se convierte en un dato efímer
 
 \subsection{Contenedorización y automatización de pruebas}
 
-El complejo funcionamiento intrínsico del motor de reglas asimétrico requería mecanismos rigurosos para garantizar la calidad y la estabilidad del software. El mal funcionamiento de las validaciones de estado o de las transiciones de la partida degradaría la experiencia de juego. En respuesta, haciendo uso de los marcos de trabajo \textit{Jest} y \textit{Vitest}, se implementó una batería de pruebas automatizadas que aseguraban el correcto comportamiento del motor de validación ante cualquier escenario \cite{myers_testing}. Dichas herramientas han permitido aislar y testear unitariamente la lógica del \textit{backend} y los componentes del \textit{frontend}.
+El complejo funcionamiento intrínseco del motor de reglas asimétrico requería mecanismos rigurosos para garantizar la calidad y la estabilidad del software. El mal funcionamiento de las validaciones de estado o de las transiciones de la partida degradaría la experiencia de juego. En respuesta, haciendo uso de los marcos de trabajo \textit{Jest} y \textit{Vitest}, se implementó una batería de pruebas automatizadas que aseguraban el correcto comportamiento del motor de validación ante cualquier escenario \cite{myers_testing}. Dichas herramientas han permitido aislar y testear unitariamente la lógica del \textit{backend} y los componentes del \textit{frontend}.
 
 De forma paralela, la gestión de la infraestructura se apoyó en la tecnología de contenedores \textit{Docker} \cite{turnbull_docker}. El principal problema que se buscó mitigar con esta adopción fue la inconsistencia de entornos al tratarse de un desarrollo colaborativo entre dos personas. Resultaba necesario aislar los servicios para evitar fallos derivados de las diferencias de \textit{hardware} o configuración del sistema operativo. Por este motivo, se estableció una arquitectura de ejecución híbrida. Por un lado, los servicios de bases de datos (\textit{MariaDB} y \textit{Redis}) se ejecutan exclusivamente mediante contenedores, garantizando que el equipo opere siempre sobre versiones idénticas de estos sistemas. Por otro lado, la capa de aplicación (\textit{frontend} y \textit{backend}) se implementó con un modelo flexible que permite su lanzamiento en local para agilizar la iteración de código, o bien su ejecución contenedorizada. A su vez, esta estandarización de los servicios resulta idónea para simplificar y asegurar el futuro despliegue de la plataforma en entornos de producción.
 
 \section{Diseño de la Arquitectura Global}
 
-El diseño de la arquitectura del sistema constituye el núcleo estructural del proyecto. Se basa en un modelo cliente-servidor fuertemente desacoplado pero integrado bajo un mismo flujo de desarrollo. En la Figura \ref{fig:arquitectura} se ilustra el esquema general del sistema y sus flujos de comunicación físicos.
+El diseño de la arquitectura del sistema constituye el núcleo estructural del proyecto. Se basa en un modelo cliente-servidor fuertemente desacoplado pero integrado bajo un mismo flujo de desarrollo. En la Fig.~\ref{fig:arquitectura} se ilustra el esquema general del sistema y sus flujos de comunicación físicos.
 
 \begin{figure}[H]
     \centering
@@ -79,7 +79,7 @@ Para la propagación del estado de sesión y de la partida, se descarta el enví
 
 \subsection{Arquitectura de Persistencia Híbrida}
 
-Para la persistencia de la información del sistema se diseña un modelo de datos relacional robusto, gestionado a través de \textit{Prisma ORM}. Este modelo soporta la lógica de negocio subyacente, garantizando la integridad referencial y facilitando las consultas complejas. El esquema de la base de datos (\textit{MariaDB}) gravita en torno a cinco entidades principales y sus relaciones, tal y como se ilustra en el diagrama Entidad-Relación de la Figura \ref{fig:modelo_er}.
+Para la persistencia de la información del sistema se diseña un modelo de datos relacional robusto, gestionado a través de \textit{Prisma ORM}. Este modelo soporta la lógica de negocio subyacente, garantizando la integridad referencial y facilitando las consultas complejas. El esquema de la base de datos (\textit{MariaDB}) gravita en torno a cinco entidades principales y sus relaciones, tal y como se ilustra en el diagrama Entidad-Relación de la Fig.~\ref{fig:modelo_er}.
 
 \begin{figure}[H]
     \centering
@@ -118,7 +118,7 @@ Este objeto almacena propiedades persistentes durante el encuentro (como el turn
 
 Transmitir el \textit{gameState} crudo a los clientes supondría una vulnerabilidad crítica, ya que un jugador podría inspeccionar el tráfico de \textit{WebSockets} mediante las herramientas de desarrollador del navegador y descubrir las cartas ocultas de su oponente.
 
-Para mitigar este riesgo desde el diseño de la arquitectura, se implementa el patrón \textbf{Data Transfer Object (DTO)}. El \textit{backend} nunca expone el estado original de \textit{Redis}. En su lugar, el servicio de juego clona el estado y ejecuta una función de transformación que genera dos vistas asimétricas: \texttt{dtoKing} y \texttt{dtoPeasant} (Figura \ref{fig:dto_pattern}).
+Para mitigar este riesgo desde el diseño de la arquitectura, se implementa el patrón \textbf{Data Transfer Object (DTO)}. El \textit{backend} nunca expone el estado original de \textit{Redis}. En su lugar, el servicio de juego clona el estado y ejecuta una función de transformación que genera dos vistas asimétricas: \texttt{dtoKing} y \texttt{dtoPeasant} (Fig.~\ref{fig:dto_pattern}).
 
 \begin{figure}[H]
     \centering

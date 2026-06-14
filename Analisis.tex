@@ -32,7 +32,7 @@ Para representar gráficamente la estructura y las interacciones del sistema, se
 
 \subsection{Modelo de Dominio Conceptual}
 
-Antes de definir los flujos de interacción de los usuarios, es imperativo establecer el esqueleto estructural del problema y el vocabulario del dominio de \textit{King and Peasant}. En la Figura \ref{fig:modelo_dominio} se presenta el Modelo de Dominio Conceptual, el cual abstrae las entidades principales y las reglas de negocio estáticas que rigen el sistema.
+Antes de definir los flujos de interacción de los usuarios, es imperativo establecer el esqueleto estructural del problema y el vocabulario del dominio de \textit{King and Peasant}. En la Fig.~\ref{fig:modelo_dominio} se presenta el Modelo de Dominio Conceptual, el cual abstrae las entidades principales y las reglas de negocio estáticas que rigen el sistema.
 
 El diagrama ilustra una clara separación lógica entre el ecosistema externo de la plataforma y el motor interno del juego. En la capa del sistema, un \textit{Usuario} puede mantener relaciones de amistad con otros y unirse a una \textit{Sala} de espera. Una vez que la \textit{Sala} aloja una \textit{Partida}, el usuario transiciona para actuar bajo la entidad \textit{Jugador}.
 
@@ -47,7 +47,7 @@ Dentro del motor lógico, el modelo refleja de forma rigurosa las asimetrías y 
 
 \subsection{Diagrama de Casos de Uso}
 
-Una vez definida la estructura estática de la información, en la Figura \ref{fig:casos_uso} se detalla el comportamiento dinámico del sistema desde el punto de vista de las funcionalidades ofrecidas. Se observa cómo el \textit{Jugador} tiene la capacidad de acceder al ecosistema central dado que tiene una sesión activa. 
+Una vez definida la estructura estática de la información, en la Fig.~\ref{fig:casos_uso} se detalla el comportamiento dinámico del sistema desde el punto de vista de las funcionalidades ofrecidas. Se observa cómo el \textit{Jugador} tiene la capacidad de acceder al ecosistema central dado que tiene una sesión activa. 
 
 Destaca la modularidad del caso de uso principal (``Jugar Partida''), el cual incluye (\textit{<<include>>}) obligatoriamente la mecánica fundamental de jugar cartas, y se extiende (\textit{<<extend>>}) de forma opcional con acciones accesorias como el chat en vivo o la rendición voluntaria durante el transcurso de la era.
 
@@ -61,13 +61,3 @@ Destaca la modularidad del caso de uso principal (``Jugar Partida''), el cual in
 %
 %\subsection{Comportamiento Dinámico Conceptual: Flujo de Ejecución}
 
-%Dado que los casos de uso estáticos no muestran el orden cronológico de las operaciones, se elabora un Diagrama de Secuencia Lógico (Figura \ref{fig:secuencia_juego}) que ilustra la travesía completa de un usuario desde una perspectiva puramente conceptual: desde que no tiene cuenta hasta que juega una carta.
-
-%El diagrama describe las transiciones de estado del negocio y el intercambio de información entre los actores y los subsistemas lógicos (módulos de Autenticación, Gestión de Salas y Motor de Reglas). Al tratarse de un modelo de análisis, el flujo se centra en las interacciones conceptuales de la partida, omitiendo la definición de protocolos de red, componentes de software específicos o tecnologías de almacenamiento físicas, resolviendo la separación conceptual requerida.
-
-%\begin{figure}[H]
-%    \centering
-%    \includegraphics[width=0.9\textwidth]{figures/secuencia.png}
-%    \caption{Diagrama de Secuencia Lógico: Flujo conceptual de registro, preparación de sala y ciclo de partida.}
-%    \label{fig:secuencia_juego}
-%\end{figure}

@@ -51,7 +51,7 @@ El diseño estructural requiere abstraer la asimetría del juego a un modelo de 
 A su vez, se desarrolla la interfaz de usuario asegurando la fidelidad visual con los diseños previos. Se implementan los sistemas de rutas internas para dejar preparados los accesos a funcionalidades que se desarrollan en fases posteriores.
 
 \section{Seguimiento, Control y Replanificación}
-El seguimiento de este \textit{sprint} arroja resultados óptimos. Los objetivos de modelado de datos y flujos lógicos se alcanzan con éxito, sin registrarse desviaciones temporales ni bloqueos técnicos que obliguen a replanificar. El diseño queda certificado y listo para ser trasladado al ORM en la siguiente iteración.
+El seguimiento de este \textit{sprint} arroja resultados óptimos. Los objetivos de modelado de datos y flujos lógicos se alcanzan con éxito, sin registrarse desviaciones temporales ni bloqueos técnicos que obliguen a replanificar. El diseño queda certificado y listo para ser trasladado al ORM en la siguiente iteración. A nivel de trazabilidad funcional, el progreso alcanza los hitos previstos sin requerir sobreesfuerzo, dando por finalizada la tarea 2.1 (Modelado de la arquitectura de la información) de la EDT.
 
 
 \chapter{Iteración 4: Implementación del Modelo Estructural, Gestión de Usuarios y Listado de Salas}
@@ -87,7 +87,7 @@ La estructura de la sala en la base de datos se define bajo los siguientes requi
 \end{enumerate}
 
 \section{Seguimiento, Control y Replanificación}
-Durante el control de calidad de la iteración no se reportaron fallos en las transacciones de las migraciones. El modelo de datos se materializó en los contenedores locales sin desviaciones, cerrando la iteración en el tiempo estipulado y permitiendo continuar con la capa de seguridad.
+Durante el control de calidad de la iteración no se reportaron fallos en las transacciones de las migraciones. El modelo de datos se materializó en los contenedores locales sin desviaciones, cerrando la iteración en el tiempo estipulado y permitiendo continuar con la capa de seguridad. El avance se reporta completo según la planificación original, oficializando el cierre de la tarea 2.2 (Implementación de esquemas mediante Prisma ORM) detallada en la EDT.
 
 
 \chapter{Iteración 5: Gestión de Identidad, Perfiles y Lógica Interna de Salas de Espera}
@@ -110,4 +110,4 @@ Se desarrolla la interfaz de usuario de la sala siguiendo fielmente los diseños
 Debido a que la configuración de \textit{Socket.io} no se pudo completar durante esta fase, la actualización visual del estado de los jugadores se resuelve mediante una solución técnica provisional de \textit{polling} en el \textit{frontend}. Se utiliza un \texttt{useEffect()} configurado para realizar consultas automáticas a la API cada 2 segundos, garantizando que la información se vea reflejada periódicamente a la espera de la integración definitiva de WebSockets.
 
 \section{Seguimiento, Control y Replanificación}
-El seguimiento de la integración detecta desviaciones severas en el cliente y el servidor. En el \textit{frontend}, surgen dificultades con la persistencia del estado de sesión; se replanifica implementando un \textit{AuthContext} en \textit{React}. En el \textit{backend}, el diseño inicial de los controladores mezclaba validaciones con persistencia. Se aplica una refactorización correctiva orientada a la separación de responsabilidades. Tras estas acciones de control, la iteración concluye satisfactoriamente unificando los flujos de acceso.
+El seguimiento de la integración detecta desviaciones severas en el cliente y el servidor. En el \textit{frontend}, surgen dificultades con la persistencia del estado de sesión; se replanifica implementando un \textit{AuthContext} en \textit{React}. En el \textit{backend}, el diseño inicial de los controladores mezclaba validaciones con persistencia. Se aplica una refactorización correctiva orientada a la separación de responsabilidades. Tras estas acciones de control, la iteración concluye satisfactoriamente unificando los flujos de acceso. Esta refactorización crítica requirió aplicar técnicas de compresión de cronograma para no desplazar el calendario general. Finalmente, el ciclo logró absorber el desvío y certificó el cierre de las tareas 2.3 (Sistema de autenticación segura) y 2.4 (Interfaces reactivas) estipuladas en la EDT.

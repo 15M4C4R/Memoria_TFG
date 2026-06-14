@@ -163,7 +163,7 @@ Con base en la arquitectura y los requisitos, el esfuerzo técnico se estructura
 
 \end{itemize} 
 
-Para facilitar la comprensión visual de esta jerarquía operativa, la Figura \ref{fig:edt_diagrama} ilustra el desglose de tareas y su distribución por módulos.
+Para facilitar la comprensión visual de esta jerarquía operativa, la Fig.~\ref{fig:edt_diagrama} ilustra el desglose de tareas y su distribución por módulos.
 
 \begin{figure}[H]
     \centering
@@ -252,7 +252,7 @@ Al finalizar cada ciclo (sprint), se genera un informe de estado que evalúa el 
 \section{Gestión del Cronograma}
 
 \subsection{Calendario del proyecto (Visión Global)}
-El cronograma se inicia con la definición de un calendario global que abarca un periodo de desarrollo de cinco meses. En la Tabla \ref{tab:resumen_temporal} se exponen los parámetros temporales fundamentales que rigen el proyecto.
+El cronograma se inicia con la definición de un calendario global que abarca un periodo de desarrollo de cinco meses. En la Tab.~\ref{tab:resumen_temporal} se exponen los parámetros temporales fundamentales que rigen el proyecto.
 
 \begin{table*}[htb]
     \centering
@@ -290,7 +290,7 @@ Para materializar la planificación temporal, el trabajo se fragmenta en \textit
 
 Se utiliza un tablero Kanban para visualizar este flujo y garantizar que el tiempo dedicado a la arquitectura, el desarrollo y la redacción de la memoria esté cubierto. Con el fin de optimizar el espacio, en la columna de responsables se utilizan las siglas \textbf{I} (Ismael), \textbf{G} (Guillermo) y \textbf{A} (Ambos).
 
-Para ilustrar la disposición temporal del proyecto, la Figura \ref{fig:gantt_planificacion} presenta el cronograma visual del desarrollo mediante un Diagrama de Gantt. Esta representación temporal mapea la ejecución de las tareas a lo largo de los meses, evidenciando el paralelismo de las fases de trabajo y diferenciando mediante un código de colores la asignación de responsabilidades.
+Para ilustrar la disposición temporal del proyecto, la Fig.~\ref{fig:gantt_planificacion} presenta el cronograma visual del desarrollo mediante un Diagrama de Gantt. Esta representación temporal mapea la ejecución de las tareas a lo largo de los meses, evidenciando el paralelismo de las fases de trabajo y diferenciando mediante un código de colores la asignación de responsabilidades.
 
 \begin{figure}[H]
     \centering
@@ -299,7 +299,7 @@ Para ilustrar la disposición temporal del proyecto, la Figura \ref{fig:gantt_pl
     \label{fig:gantt_planificacion}
 \end{figure}
 
-Complementando la perspectiva visual, la Tabla \ref{tab:tabla_tiempos} actúa como una tabla de tiempos y esfuerzo. En este desglose analítico se especifican los objetivos técnicos exactos de cada iteración, el responsable principal de su ejecución y la cuantificación en horas de cada tarea, demostrando de forma transparente la trazabilidad de las 600 horas totales requeridas para la culminación del sistema.
+Complementando la perspectiva visual, la Tab.~\ref{tab:tabla_tiempos} actúa como una tabla de tiempos y esfuerzo. En este desglose analítico se especifican los objetivos técnicos exactos de cada iteración, el responsable principal de su ejecución y la cuantificación en horas de cada tarea, demostrando de forma transparente la trazabilidad de las 600 horas totales requeridas para la culminación del sistema.
 
 \renewcommand{\arraystretch}{1.3}
 \small
@@ -368,6 +368,19 @@ Complementando la perspectiva visual, la Tabla \ref{tab:tabla_tiempos} actúa co
     \footnotesize
     \textbf{Leyenda de Responsables:} \textbf{I}: Ismael Carrasco | \textbf{G}: Guillermo | \textbf{A}: Ambos integrantes (Trabajo conjunto)
 \end{center}
+
+\section{Análisis del Desvío y Trazabilidad del Progreso}
+
+Dadas las dimensiones del equipo de desarrollo y la rigidez inamovible del calendario académico, la estrategia de control del cronograma se fundamenta en garantizar la entrega final sin comprometer las fechas estipuladas. Por tanto, el progreso del proyecto no se monitoriza mediante una cuantificación hipergranular de horas consumidas, sino a través de la consecución cualitativa de hitos funcionales directamente vinculados a la \textbf{Estructura de Desglose del Trabajo (EDT)}.
+
+\subsection{Métricas de avance}
+Al cierre de cada iteración, el estado del proyecto se actualiza oficializando qué paquetes de trabajo y tareas específicas de la EDT se dan por finalizadas. Esta trazabilidad permite conocer el nivel de desarrollo de los distintos módulos del sistema (Gestión e Infraestructura, Capa de Datos, Ecosistema Social y Motor de Juego) garantizando que el avance funcional sea transparente y verificable.
+
+\subsection{Política de absorción de desvíos temporales}
+A lo largo de la ejecución técnica, es habitual que surjan incidencias, fallos de integración o complejidades arquitectónicas no previstas que generan desviaciones respecto a la estimación temporal de la Tab.~\ref{tab:tabla_tiempos}. Para evitar que un error técnico produzca un efecto dominó que desplace el resto de tareas en el Diagrama de Gantt, se establece una política de mitigación basada en el incremento del esfuerzo semanal.
+
+Cuando el seguimiento de la iteración detecta un desvío que amenaza el cierre del hito previsto, el equipo asume un incremento de la carga de trabajo personal durante ese mismo ciclo (técnica conocida como \textit{Crashing} o compresión de cronograma). Mediante esta absorción inmediata del retraso, se asegura el cierre de los paquetes de trabajo de la EDT correspondientes, permitiendo que la iteración concluya exitosamente y blindando la planificación global frente a desplazamientos temporales, tal y como quedará reflejado en las secciones de seguimiento de la fase de ejecución.
+
 \section{Gestión de Costes}
 
 Como parte de la fase de planificación del proyecto, se define una política de gestión financiera basada en las directrices de la disciplina de Gestión de Proyectos. El objetivo de este plan es establecer el marco de trabajo sobre el cual se valora económicamente el producto, cuantificando su valor real en el mercado actual.
@@ -384,7 +397,7 @@ La planificación económica se fundamenta en los siguientes supuestos y limitac
 
 \subsection{Resumen del Presupuesto}
 
-Aplicando las directrices anteriores, a continuación en la Tabla \ref{tabla:resumen_costes}, se presenta el desglose general de los costes del proyecto, estructurados en tres categorías fundamentales: costes de personal, costes materiales y costes indirectos.
+Aplicando las directrices anteriores, a continuación en la Tab.~\ref{tabla:resumen_costes}, se presenta el desglose general de los costes del proyecto, estructurados en tres categorías fundamentales: costes de personal, costes materiales y costes indirectos.
 
 \begin{table*}[h!]
     \centering
@@ -475,7 +488,7 @@ Para asegurar la viabilidad del proyecto frente a eventos imprevistos, se lleva 
 
 \subsection{Matriz Resumen de Riesgos}
 
-Para facilitar la monitorización de las amenazas descritas, la Tabla \ref{tab:matriz_riesgos} sintetiza el nivel de criticidad final y la acción de control preferente asignada a cada riesgo.
+Para facilitar la monitorización de las amenazas descritas, la Tab.~\ref{tab:matriz_riesgos} sintetiza el nivel de criticidad final y la acción de control preferente asignada a cada riesgo.
 
 \begin{table}[H]
     \centering

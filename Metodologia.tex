@@ -10,38 +10,36 @@ En este capítulo se define el marco de trabajo y los procedimientos organizativ
 
 \section{Elección de la Metodología de Desarrollo}
 
-Para determinar el modelo de ciclo de vida más adecuado para la naturaleza de \textit{King and Peasant}, se realizó un análisis previo de las metodologías de ingeniería del software más consolidadas en la industria. A continuación, se exponen las alternativas tradicionales evaluadas y la justificación técnica detras de la elección de un marco iterativo e incremental.
+Para determinar la metodología y el modelo de ciclo de vida más adecuados para el desarrollo de \textit{King and Peasant}, es necesario establecer primero las necesidades del proyecto, evaluar las alternativas existentes en la ingeniería del software y, finalmente, tomar una decisión técnica justificada.
 
-\subsection{Análisis de alternativas tradicionales}
+\subsection{Necesidades y Restricciones del Proyecto}
+El desarrollo de este TFG cuenta con particularidades que condicionan el marco de trabajo. En primer lugar, el núcleo del proyecto consiste en la traducción técnica de un reglamento asimétrico físico a un motor digital, lo que implica una incertidumbre inherente respecto a la complejidad de programar validaciones de estado concurrentes. En segundo lugar, el proyecto cuenta con una limitación estricta de recursos humanos (un equipo de únicamente dos desarrolladores) y un marco temporal inamovible determinado por el calendario académico. 
 
-\subsubsection{Modelo en Cascada (\textit{Waterfall})}
-Este enfoque predictivo clásico propone una secuencia puramente lineal de fases (Requisitos, Análisis, Diseño, Implementación, Pruebas y Mantenimiento). Bajo este paradigma, cada etapa debe finalizarse antes de poder comenzar la siguiente.
+Estas restricciones exigen un entorno de trabajo que facilite la entrega temprana de valor y permita pivotar técnicamente si una mecánica no funciona en red tras las primeras pruebas empíricas. Además, dado el contexto académico, es imperativo que los procesos burocráticos y documentales exigidos se integren y se adapten orgánicamente al desarrollo diario, evitando que se conviertan en un bloqueador para la programación funcional.
 
-\textbf{Motivo del descarte:} El desarrollo de un motor de juego conlleva una incertidumbre inherente respecto al balanceo y la experiencia final del usuario. El modelo en cascada resulta excesivamente rígido ante esta realidad; si durante la fase de pruebas se detecta que una mecánica asimétrica presenta fallos de diseño, el coste temporal de retroceder a la fase de análisis resulta inasumible. Este proyecto requería de una estructura que permitiera pivotar y ajustar requisitos sobre la marcha basándose en el \textit{feedback} interactivo.
+\subsection{Análisis de Alternativas}
+Atendiendo a las necesidades descritas, se evalúan dos grandes familias de ciclos de vida:
 
-\subsubsection{Modelo en Espiral}
-Este modelo evolutivo se centra en la evaluación continua y la mitigación de riesgos mediante iteraciones concéntricas que combinan planificación, análisis de viabilidad y prototipado.
+Por un lado, se consideran los \textbf{modelos predictivos y lineales}, como el clásico Modelo en Cascada (\textit{Waterfall}). En este paradigma, cada fase (Análisis, Diseño, Implementación y Pruebas) debe cerrarse estrictamente antes de comenzar la siguiente. Esta alternativa se descarta debido a su rigidez; si durante la fase de pruebas se detecta que la lógica asimétrica presenta fallos de integración, el coste temporal de retroceder a la fase de análisis resulta inasumible.
 
-\textbf{Motivo del descarte:} Aunque soluciona la rigidez del modelo lineal, el modelo en espiral introduce una carga de gestión burocrática y de documentación (\textit{overhead}) desproporcionada para un equipo compuesto por solo dos personas. El tiempo invertido en la evaluación formal de riesgos en cada iteración restaría demasiados recursos a la fase de implementación efectiva de la lógica de negocio.
+Por otro lado, se evalúan los \textbf{modelos evolutivos}, como el Modelo en Espiral. Aunque este enfoque soluciona la falta de flexibilidad al iterar continuamente evaluando riesgos, el volumen de documentación y evaluación formal que exige cada bucle resulta desproporcionado para un equipo de dos personas, dificultando la adaptación ágil de la burocracia a la programación real.
 
-\subsection{Adopción: Marco Iterativo e Incremental}
+\subsection{Adopción y Adaptación del Marco de Trabajo Scrum}
+En virtud del análisis previo, se toma la decisión de descartar los ciclos de vida tradicionales en favor de un \textbf{Modelo Iterativo e Incremental}. Y para orquestar la planificación de dicho modelo, se adopta una \textbf{Metodología Ágil híbrida fuertemente inspirada en el marco de trabajo Scrum}.
 
-Tras descartar los modelos predictivos y evolutivos pesados, el presente proyecto se ha desarrollado utilizando una metodología basada en \textit{Scrum}. Este marco de trabajo iterativo e incremental está diseñado específicamente para optimizar la colaboración estrecha del equipo y permitir una adaptación constante a las necesidades técnicas emergentes. Dicha metodología se articula en torno a ciclos de trabajo semanales orientados a la entrega continua de valor.
-
-Esta aproximación metodológica proporciona dos ventajas clave que justifican su elección:
+Esta aproximación proporciona dos ventajas clave que justifican su elección frente a las alternativas analizadas:
 
 \begin{enumerate}
-    \item \textbf{Entrega temprana de valor:} Trabajar mediante incrementos funcionales permite consolidar una visión clara del estado del producto desde las primeras semanas. Esto resulta vital en arquitecturas complejas, ya que ha permitido validar técnicamente la integración bidireccional entre cliente y servidor sin tener que esperar a las fases finales de integración.
-    \item \textbf{Adaptabilidad y tolerancia al cambio:} Facilita la experimentación continua. Permite comprobar empíricamente las reglas del juego, reestructurar la interfaz de usuario o alterar mecánicas complejas tras las pruebas de cada iteración, asimilando los cambios sin desestabilizar el cronograma global.
+    \item \textbf{Entrega temprana de valor:} Trabajar mediante incrementos funcionales permite consolidar una visión clara del estado del producto desde las primeras semanas. Esto resulta vital en arquitecturas complejas, ya que permite validar técnicamente la integración bidireccional entre cliente y servidor sin tener que esperar a las fases finales.
+    \item \textbf{Adaptabilidad y tolerancia al error:} Facilita la experimentación continua. Permite reestructurar la interfaz de usuario o alterar el enfoque de las mecánicas complejas tras las pruebas de cada iteración, asimilando los cambios sin desestabilizar el cronograma global.
 \end{enumerate}
 
 \subsection{Elementos adoptados del marco Scrum}
-
-Para evitar la sobrecarga burocrática en un equipo de dimensiones reducidas, se ha realizado una adopción selectiva del marco de trabajo \textit{Scrum}, extrayendo y adaptando únicamente los artefactos y ceremonias que agilizan el desarrollo:
+Dado que Scrum puro exige perfiles dedicados (\textit{Scrum Master}, \textit{Product Owner}) y un equipo mayor, se realiza una adopción selectiva, extrayendo y adaptando únicamente los artefactos y ceremonias que agilizan el desarrollo de este TFG:
 
 \begin{itemize}
     \item \textbf{\textit{Sprints} (Ciclos de desarrollo):} Iteraciones acotadas a un periodo de tiempo de una semana. Cada ciclo se diseña para culminar en un incremento funcional y testeable.
-    \item \textbf{Ceremonias ágiles:} Se han instaurado reuniones de sincronización táctica enfocadas en la identificación de bloqueos técnicos, junto con una retrospectiva de ciclo (\textit{Sprint Retrospective}) destinada a evaluar el rendimiento y ajustar la planificación de la siguiente iteración.
+    \item \textbf{Ceremonias ágiles:} Se instauran reuniones de sincronización táctica enfocadas en la identificación de bloqueos técnicos, junto con una retrospectiva de ciclo (\textit{Sprint Retrospective}) destinada a evaluar el rendimiento y ajustar la planificación de la siguiente iteración.
     \item \textbf{Gestión de Artefactos:} La totalidad del trabajo se centraliza en una pila de producto (\textit{Product Backlog}) priorizada. A su vez, se aplica un riguroso \textit{Definition of Done} (DoD) que exige revisión por pares y ausencia de conflictos antes de considerar cualquier tarea como finalizada.
     \item \textbf{Autoorganización de Roles:} Las responsabilidades asociadas tradicionalmente al \textit{Scrum Master} y al \textit{Product Owner} convergen de manera orgánica en el equipo de desarrollo, fomentando una toma de decisiones puramente técnica y horizontal.
 \end{itemize}

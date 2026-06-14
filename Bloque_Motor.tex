@@ -37,7 +37,7 @@ Al paralizar el desarrollo de nuevas características, el diseño se centra en e
 Durante este periodo, la ejecución técnica se limita a tareas de inspección de código estático y análisis de tráfico de red. Se identifican vulnerabilidades estructurales en la serialización de datos enviados por \textit{WebSockets} y un alto nivel de acoplamiento en los componentes de \textit{React}, documentando exhaustivamente cada hallazgo en el sistema de control de versiones (\textit{Issues}).
 
 \section{Seguimiento, Control y Replanificación}
-El control de este \textit{sprint} representa un punto de inflexión crítico. La auditoría demuestra que es inasumible continuar el desarrollo sin sanear el núcleo del sistema debido al incremento de la deuda técnica por la asimetría del código (\textbf{RT-04}). Como medida de replanificación, el equipo modifica la lista de tareas, arrastrando el desarrollo del chat y priorizando una refactorización masiva para el siguiente ciclo. Se asume el riesgo consciente de que ciertas características menores queden fuera del alcance del proyecto a cambio de garantizar la integridad de la arquitectura central.
+El control de este \textit{sprint} representa un punto de inflexión crítico. La auditoría demuestra que es inasumible continuar el desarrollo sin sanear el núcleo del sistema debido al incremento de la deuda técnica por la asimetría del código (\textbf{RT-04}). Como medida de replanificación, el equipo modifica la lista de tareas, arrastrando el desarrollo del chat y priorizando una refactorización masiva para el siguiente ciclo. Se asume el riesgo consciente de que ciertas características menores queden fuera del alcance del proyecto a cambio de garantizar la integridad de la arquitectura central. A nivel de avance cualitativo, este ciclo no cierra paquetes funcionales, sino que reestructura la deuda técnica y estabiliza el código para salvaguardar la viabilidad y futura ejecución del Paquete 4 de la EDT.
 
 
 \chapter{Iteración 8: Refactorización, Estado Inicial de Partida y Chat en Tiempo Real}
@@ -64,7 +64,7 @@ De cara al despliegue, se reescribe íntegramente el flujo de trabajo en GitHub 
 En cuanto al chat, se desarrolla la interfaz de usuario integrada visualmente en la pantalla de partida del \textit{frontend}. En el \textit{backend}, se configuran los eventos de WebSockets para el envío y recepción de mensajes, asegurando que la comunicación sea instantánea y esté confinada al canal específico de la sesión activa en Redis.
 
 \section{Seguimiento, Control y Replanificación}
-Durante la validación de la refactorización, el seguimiento revela brechas en el filtrado de datos, que siguen exponiendo información privada. El control de calidad fuerza a replanificar la serialización JSON, introduciendo validadores estrictos en los \textit{mappers}. Tras superar este reto, la base de código queda notablemente robusta y lista para iniciar el sistema funcional de cartas.
+Durante la validación de la refactorización, el seguimiento revela brechas en el filtrado de datos, que siguen exponiendo información privada. El control de calidad fuerza a replanificar la serialización JSON, introduciendo validadores estrictos en los \textit{mappers}. Tras superar este reto, la base de código queda notablemente robusta y lista para iniciar el sistema funcional de cartas. La codificación de estos validadores supuso una carga operativa imprevista que fue absorbida mediante la compresión del cronograma en la misma semana. Se certifica el avance con el cierre de la tarea 3.4 (Implementación del chat) y de la 4.4 (Integración del patrón DTO) correspondientes a la EDT.
 
 
 \chapter{Iteración 9: Desarrollo del Motor de Juego, UX Dinámica y Sincronización de Salas}
@@ -84,8 +84,23 @@ El diseño de la solución aborda la creación de los servicios (\textit{Game Se
 
 Para la interfaz de las cartas, se diseña un componente reactivo (\texttt{ActionCard}) parametrizable, capaz de recibir la descripción, el texto del botón y la ruta de redirección como propiedades, adaptándose al contexto de la partida. En cuanto a la gestión de salas, se diseña un sistema estricto de redirección sincronizada emitido desde el servidor. Para el control de presencia, se diseña un mecanismo de tolerancia a desconexiones breves: si un cliente pierde conexión o navega fuera de la vista, se inicia una cuenta atrás de 5 segundos antes de considerar el abandono como definitivo y proceder a la expulsión.
 
+Tras diseñar las bases del motor de juego en esta iteración, resulta imperativo establecer cómo este nuevo sistema hereda el contexto de las iteraciones anteriores. A modo de ejemplo, se toma como referencia el caso de uso general de un usuario no logueado que accede a la plataforma para disputar un encuentro. El diagrama conceptual de la Fig.~\ref{fig:secuencia_juego} ilustra cómo queda el flujo de comunicación y la transición de responsabilidades lógicas entre todos los subsistemas del proyecto:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/secuencia.png}
+    \caption{Diagrama de Secuencia Lógico: Flujo integrado de módulos desde el acceso hasta el ciclo de partida.}
+    \label{fig:secuencia_juego}
+\end{figure}
+
+\begin{enumerate}
+    \item \textbf{Dominio de Autenticación y Acceso:} El usuario interactúa inicialmente con el módulo de gestión de identidad. El sistema procesa el registro o inicio de sesión y, tras autorizar el acceso, genera una identidad válida que permitirá trazar sus acciones.
+    \item \textbf{Dominio Social y de Organización (\textit{Lobbies}):} Una vez cuenta con identidad, la responsabilidad se delega al módulo gestor de salas. Este componente actúa como una antesala funcional, orquestando la formación de los encuentros y manteniendo el estado de preparación de ambos contendientes.
+    \item \textbf{Dominio del Motor de Reglas:} Cuando las condiciones de la sala se cumplen, el control del flujo se transfiere definitivamente al motor del juego desarrollado en el presente bloque. A partir de este momento, las decisiones estratégicas de los jugadores (como jugar una carta) son procesadas exclusivamente por este módulo, el cual altera el estado de la partida y retransmite las consecuencias a la interfaz gráfica.
+\end{enumerate}
+
 \section{Detalles de Implementación}
-El problema computacional reside en congelar el estado del motor de forma segura delegando el contexto a \textit{Redis}. El sistema de cola de acciones (\textit{Pending Actions}) se implementa generando un objeto \texttt{pendingAction} que bloquea algorítmicamente el turno global. Cuando el cliente envía la resolución, un despachador dinámico invoca la función específica requerida, aplica las mutaciones, purga la acción y reactiva el turno, tal y como se formaliza en la Tabla \ref{tab:pending_actions}.
+El problema computacional reside en congelar el estado del motor de forma segura delegando el contexto a \textit{Redis}. El sistema de cola de acciones (\textit{Pending Actions}) se implementa generando un objeto \texttt{pendingAction} que bloquea algorítmicamente el turno global. Cuando el cliente envía la resolución, un despachador dinámico invoca la función específica requerida, aplica las mutaciones, purga la acción y reactiva el turno, tal y como se formaliza en la Tab.~\ref{tab:pending_actions}.
 
 \begin{table}[htbp]
 \centering
@@ -105,7 +120,7 @@ En el cliente, el componente \texttt{ActionCard} se implementa utilizando el \te
 Cuando ocurre una desconexión no controlada, se ejecuta una función auxiliar que establece un \texttt{setTimeout} de 5000 milisegundos. Si el usuario no se reconecta cancelando dicho temporizador, se ejecuta el borrado en base de datos mediante \texttt{lobbyService.leaveLobby} y se emite la actualización al resto de clientes.
 
 \section{Seguimiento, Control y Replanificación}
-El control de la implementación reporta complicaciones severas al sincronizar las mecánicas asíncronas del servidor con la vista. Al aplicar reglas estrictas (\textbf{RN-03}), se originan bloqueos en la selección de cartas. La desviación obliga a replanificar el control de flujo en \textit{React}, aislando la resolución de las promesas del ciclo de vida de los modales. Solventado esto, el hito crítico se alcanza, permitiendo la interactividad en mesa.
+El control de la implementación reporta complicaciones severas al sincronizar las mecánicas asíncronas del servidor con la vista. Al aplicar reglas estrictas (\textbf{RN-03}), se originan bloqueos en la selección de cartas. La desviación obliga a replanificar el control de flujo en \textit{React}, aislando la resolución de las promesas del ciclo de vida de los modales. Tras aislar la resolución de las promesas mediante esfuerzo elástico, el ciclo logra mitigar el impacto temporal, cerrando definitivamente la tarea 3.3 (Infraestructura de salas de espera) y sentando las bases operativas de las acciones lógicas definidas en el Paquete 4 de la EDT.
 
 
 \chapter{Iteración 10: Lógica Base de Turnos, Interacciones de Cartas y Condiciones de Victoria}
@@ -137,4 +152,4 @@ En el \texttt{gameService.js}, se sustituye la lógica genérica por funciones e
 Se implementa el método \texttt{peasantDrawCard} utilizando la función \texttt{pop()} sobre el mazo almacenado en Redis para añadir la carta a la mano del campesino. En contraste, se configura que el Rey robe automáticamente al finalizar su turno. Para la acción \texttt{condemnRebel()}, se desarrolla una lógica que evalúa si la carta seleccionada (del pueblo rival o del mazo) coincide con el objetivo de victoria, permitiendo al bando real finalizar la partida con éxito.
 
 \section{Seguimiento, Control y Replanificación}
-Durante las pruebas de transición final, el equipo de control detecta errores de concurrencia que desencadenaban un Error 500 en el servidor al intentar actualizar el estado y destruir el hilo simultáneamente. LaFranklin la corrección requiere replanificar el \texttt{GameController}, encapsulando las sentencias en un barra transaccional \textit{try/catch} con \textit{await}. Tras la corrección, el motor logró determinar a un ganador de forma robusta.
+Durante las pruebas de transición final, el equipo de control detecta errores de concurrencia que desencadenaban un Error 500 en el servidor al intentar actualizar el estado y destruir el hilo simultáneamente. LaFranklin la corrección requiere replanificar el \texttt{GameController}, encapsulando las sentencias en un barra transaccional \textit{try/catch} con \textit{await}. Tras la corrección, el motor logró determinar a un ganador de forma robusta. La implementación de estas barras transaccionales demandó una alta inversión de horas que fue absorbida para evitar desplazamientos en el calendario. El éxito de la operación permitió certificar el avance de la tarea 4.1 (Gestión del estado en memoria y flujos transaccionales) de la EDT.
