@@ -1,14 +1,14 @@
-\glsdefs@newdocentry{pl}%
+\glsdefs@newdocentry{api}%
 {%
-name={PL},%
-sort={PL},%
+name={API},%
+sort={API},%
 type={acronym},%
-first={Product Line\glsspace (PL)},%
-firstplural={Product Line\acrpluralsuffix \glsspace (PL\acrpluralsuffix )},%
-text={PL},%
-plural={PL\acrpluralsuffix },%
-description={Product Line},%
-descriptionplural={Product Line\acrpluralsuffix },%
+first={Application Programming Interface\glsspace (API)},%
+firstplural={Application Programming Interface\acrpluralsuffix \glsspace (API\acrpluralsuffix )},%
+text={API},%
+plural={API\acrpluralsuffix },%
+description={Application Programming Interface},%
+descriptionplural={Application Programming Interface\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -17,26 +17,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Product Line},%
-longplural={Product Lines},%
-short={PL},%
-shortplural={PLs},%
+long={Application Programming Interface},%
+longplural={Application Programming Interfaces},%
+short={API},%
+shortplural={APIs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{spl}%
+\glsdefs@newdocentry{ci}%
 {%
-name={SPL},%
-sort={SPL},%
+name={CI},%
+sort={CI},%
 type={acronym},%
-first={Software Product Line\glsspace (SPL)},%
-firstplural={Software Product Line\acrpluralsuffix \glsspace (SPL\acrpluralsuffix )},%
-text={SPL},%
-plural={SPL\acrpluralsuffix },%
-description={Software Product Line},%
-descriptionplural={Software Product Line\acrpluralsuffix },%
+first={Continuous Integration\glsspace (CI)},%
+firstplural={Continuous Integration\acrpluralsuffix \glsspace (CI\acrpluralsuffix )},%
+text={CI},%
+plural={CI\acrpluralsuffix },%
+description={Continuous Integration},%
+descriptionplural={Continuous Integration\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -45,26 +45,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Software Product Line},%
-longplural={Software Product Lines},%
-short={SPL},%
-shortplural={SPLs},%
+long={Continuous Integration},%
+longplural={Continuous Integrations},%
+short={CI},%
+shortplural={CIs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{aafm}%
+\glsdefs@newdocentry{cd}%
 {%
-name={AAFM},%
-sort={AAFM},%
+name={CD},%
+sort={CD},%
 type={acronym},%
-first={Automated Analysis of Feature Models\glsspace (AAFM)},%
-firstplural={Automated Analysis of Feature Models\acrpluralsuffix \glsspace (AAFM\acrpluralsuffix )},%
-text={AAFM},%
-plural={AAFM\acrpluralsuffix },%
-description={Automated Analysis of Feature Models},%
-descriptionplural={Automated Analysis of Feature Models\acrpluralsuffix },%
+first={Continuous Deployment\glsspace (CD)},%
+firstplural={Continuous Deployment\acrpluralsuffix \glsspace (CD\acrpluralsuffix )},%
+text={CD},%
+plural={CD\acrpluralsuffix },%
+description={Continuous Deployment},%
+descriptionplural={Continuous Deployment\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -73,26 +73,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Automated Analysis of Feature Models},%
-longplural={Automated Analysis of Feature Modelss},%
-short={AAFM},%
-shortplural={AAFMs},%
+long={Continuous Deployment},%
+longplural={Continuous Deployments},%
+short={CD},%
+shortplural={CDs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{aasfm}%
+\glsdefs@newdocentry{dto}%
 {%
-name={AASFM},%
-sort={AASFM},%
+name={DTO},%
+sort={DTO},%
 type={acronym},%
-first={Automated Analysis of Stateful Feature Models\glsspace (AASFM)},%
-firstplural={Automated Analysis of Stateful Feature Models\acrpluralsuffix \glsspace (AASFM\acrpluralsuffix )},%
-text={AASFM},%
-plural={AASFM\acrpluralsuffix },%
-description={Automated Analysis of Stateful Feature Models},%
-descriptionplural={Automated Analysis of Stateful Feature Models\acrpluralsuffix },%
+first={Data Transfer Object\glsspace (DTO)},%
+firstplural={Data Transfer Object\acrpluralsuffix \glsspace (DTO\acrpluralsuffix )},%
+text={DTO},%
+plural={DTO\acrpluralsuffix },%
+description={Data Transfer Object},%
+descriptionplural={Data Transfer Object\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -101,26 +101,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Automated Analysis of Stateful Feature Models},%
-longplural={Automated Analysis of Stateful Feature Modelss},%
-short={AASFM},%
-shortplural={AASFMs},%
+long={Data Transfer Object},%
+longplural={Data Transfer Objects},%
+short={DTO},%
+shortplural={DTOs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{fm}%
+\glsdefs@newdocentry{http}%
 {%
-name={FM},%
-sort={FM},%
+name={HTTP},%
+sort={HTTP},%
 type={acronym},%
-first={Feature Model\glsspace (FM)},%
-firstplural={Feature Model\acrpluralsuffix \glsspace (FM\acrpluralsuffix )},%
-text={FM},%
-plural={FM\acrpluralsuffix },%
-description={Feature Model},%
-descriptionplural={Feature Model\acrpluralsuffix },%
+first={Hypertext Transfer Protocol\glsspace (HTTP)},%
+firstplural={Hypertext Transfer Protocol\acrpluralsuffix \glsspace (HTTP\acrpluralsuffix )},%
+text={HTTP},%
+plural={HTTP\acrpluralsuffix },%
+description={Hypertext Transfer Protocol},%
+descriptionplural={Hypertext Transfer Protocol\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -129,26 +129,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Feature Model},%
-longplural={Feature Models},%
-short={FM},%
-shortplural={FMs},%
+long={Hypertext Transfer Protocol},%
+longplural={Hypertext Transfer Protocols},%
+short={HTTP},%
+shortplural={HTTPs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{efm}%
+\glsdefs@newdocentry{json}%
 {%
-name={EFM},%
-sort={EFM},%
+name={JSON},%
+sort={JSON},%
 type={acronym},%
-first={Extended Feature Model\glsspace (EFM)},%
-firstplural={Extended Feature Model\acrpluralsuffix \glsspace (EFM\acrpluralsuffix )},%
-text={EFM},%
-plural={EFM\acrpluralsuffix },%
-description={Extended Feature Model},%
-descriptionplural={Extended Feature Model\acrpluralsuffix },%
+first={JavaScript Object Notation\glsspace (JSON)},%
+firstplural={JavaScript Object Notation\acrpluralsuffix \glsspace (JSON\acrpluralsuffix )},%
+text={JSON},%
+plural={JSON\acrpluralsuffix },%
+description={JavaScript Object Notation},%
+descriptionplural={JavaScript Object Notation\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -157,26 +157,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Extended Feature Model},%
-longplural={Extended Feature Models},%
-short={EFM},%
-shortplural={EFMs},%
+long={JavaScript Object Notation},%
+longplural={JavaScript Object Notations},%
+short={JSON},%
+shortplural={JSONs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{cbfm}%
+\glsdefs@newdocentry{jwt}%
 {%
-name={CBFM},%
-sort={CBFM},%
+name={JWT},%
+sort={JWT},%
 type={acronym},%
-first={Cardinality-Based Feature Model\glsspace (CBFM)},%
-firstplural={Cardinality-Based Feature Model\acrpluralsuffix \glsspace (CBFM\acrpluralsuffix )},%
-text={CBFM},%
-plural={CBFM\acrpluralsuffix },%
-description={Cardinality-Based Feature Model},%
-descriptionplural={Cardinality-Based Feature Model\acrpluralsuffix },%
+first={JSON Web Token\glsspace (JWT)},%
+firstplural={JSON Web Token\acrpluralsuffix \glsspace (JWT\acrpluralsuffix )},%
+text={JWT},%
+plural={JWT\acrpluralsuffix },%
+description={JSON Web Token},%
+descriptionplural={JSON Web Token\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -185,26 +185,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Cardinality-Based Feature Model},%
-longplural={Cardinality-Based Feature Models},%
-short={CBFM},%
-shortplural={CBFMs},%
+long={JSON Web Token},%
+longplural={JSON Web Tokens},%
+short={JWT},%
+shortplural={JWTs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{dspl}%
+\glsdefs@newdocentry{mvc}%
 {%
-name={DSPL},%
-sort={DSPL},%
+name={MVC},%
+sort={MVC},%
 type={acronym},%
-first={Dynamic Software Product Line\glsspace (DSPL)},%
-firstplural={Dynamic Software Product Line\acrpluralsuffix \glsspace (DSPL\acrpluralsuffix )},%
-text={DSPL},%
-plural={DSPL\acrpluralsuffix },%
-description={Dynamic Software Product Line},%
-descriptionplural={Dynamic Software Product Line\acrpluralsuffix },%
+first={Model-View-Controller\glsspace (MVC)},%
+firstplural={Model-View-Controller\acrpluralsuffix \glsspace (MVC\acrpluralsuffix )},%
+text={MVC},%
+plural={MVC\acrpluralsuffix },%
+description={Model-View-Controller},%
+descriptionplural={Model-View-Controller\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -213,26 +213,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Dynamic Software Product Line},%
-longplural={Dynamic Software Product Lines},%
-short={DSPL},%
-shortplural={DSPLs},%
+long={Model-View-Controller},%
+longplural={Model-View-Controllers},%
+short={MVC},%
+shortplural={MVCs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{AI}%
+\glsdefs@newdocentry{orm}%
 {%
-name={AI},%
-sort={AI},%
+name={ORM},%
+sort={ORM},%
 type={acronym},%
-first={Artificial Intelligence\glsspace (AI)},%
-firstplural={Artificial Intelligence\acrpluralsuffix \glsspace (AI\acrpluralsuffix )},%
-text={AI},%
-plural={AI\acrpluralsuffix },%
-description={Artificial Intelligence},%
-descriptionplural={Artificial Intelligence\acrpluralsuffix },%
+first={Object-Relational Mapping\glsspace (ORM)},%
+firstplural={Object-Relational Mapping\acrpluralsuffix \glsspace (ORM\acrpluralsuffix )},%
+text={ORM},%
+plural={ORM\acrpluralsuffix },%
+description={Object-Relational Mapping},%
+descriptionplural={Object-Relational Mapping\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -241,26 +241,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Artificial Intelligence},%
-longplural={Artificial Intelligences},%
-short={AI},%
-shortplural={AIs},%
+long={Object-Relational Mapping},%
+longplural={Object-Relational Mappings},%
+short={ORM},%
+shortplural={ORMs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{csp}%
+\glsdefs@newdocentry{ui}%
 {%
-name={CSP},%
-sort={CSP},%
+name={UI},%
+sort={UI},%
 type={acronym},%
-first={Constraint Satisfaction Problem\glsspace (CSP)},%
-firstplural={Constraint Satisfaction Problem\acrpluralsuffix \glsspace (CSP\acrpluralsuffix )},%
-text={CSP},%
-plural={CSP\acrpluralsuffix },%
-description={Constraint Satisfaction Problem},%
-descriptionplural={Constraint Satisfaction Problem\acrpluralsuffix },%
+first={User Interface\glsspace (UI)},%
+firstplural={User Interface\acrpluralsuffix \glsspace (UI\acrpluralsuffix )},%
+text={UI},%
+plural={UI\acrpluralsuffix },%
+description={User Interface},%
+descriptionplural={User Interface\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -269,26 +269,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Constraint Satisfaction Problem},%
-longplural={Constraint Satisfaction Problems},%
-short={CSP},%
-shortplural={CSPs},%
+long={User Interface},%
+longplural={User Interfaces},%
+short={UI},%
+shortplural={UIs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{cop}%
+\glsdefs@newdocentry{ux}%
 {%
-name={COP},%
-sort={COP},%
+name={UX},%
+sort={UX},%
 type={acronym},%
-first={Constraint Optimisation Problem\glsspace (COP)},%
-firstplural={Constraint Optimisation Problem\acrpluralsuffix \glsspace (COP\acrpluralsuffix )},%
-text={COP},%
-plural={COP\acrpluralsuffix },%
-description={Constraint Optimisation Problem},%
-descriptionplural={Constraint Optimisation Problem\acrpluralsuffix },%
+first={User Experience\glsspace (UX)},%
+firstplural={User Experience\acrpluralsuffix \glsspace (UX\acrpluralsuffix )},%
+text={UX},%
+plural={UX\acrpluralsuffix },%
+description={User Experience},%
+descriptionplural={User Experience\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -297,26 +297,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Constraint Optimisation Problem},%
-longplural={Constraint Optimisation Problems},%
-short={COP},%
-shortplural={COPs},%
+long={User Experience},%
+longplural={User Experiences},%
+short={UX},%
+shortplural={UXs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{sla}%
+\glsdefs@newdocentry{ws}%
 {%
-name={SLA},%
-sort={SLA},%
+name={WS},%
+sort={WS},%
 type={acronym},%
-first={Service-Level Agreement\glsspace (SLA)},%
-firstplural={Service-Level Agreement\acrpluralsuffix \glsspace (SLA\acrpluralsuffix )},%
-text={SLA},%
-plural={SLA\acrpluralsuffix },%
-description={Service-Level Agreement},%
-descriptionplural={Service-Level Agreement\acrpluralsuffix },%
+first={WebSockets\glsspace (WS)},%
+firstplural={WebSockets\acrpluralsuffix \glsspace (WS\acrpluralsuffix )},%
+text={WS},%
+plural={WS\acrpluralsuffix },%
+description={WebSockets},%
+descriptionplural={WebSockets\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -325,26 +325,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Service-Level Agreement},%
-longplural={Service-Level Agreements},%
-short={SLA},%
-shortplural={SLAs},%
+long={WebSockets},%
+longplural={WebSocketss},%
+short={WS},%
+shortplural={WSs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{mas}%
+\glsdefs@newdocentry{dom}%
 {%
-name={MAS},%
-sort={MAS},%
+name={DOM},%
+sort={DOM},%
 type={acronym},%
-first={Multi-Agent System\glsspace (MAS)},%
-firstplural={Multi-Agent System\acrpluralsuffix \glsspace (MAS\acrpluralsuffix )},%
-text={MAS},%
-plural={MAS\acrpluralsuffix },%
-description={Multi-Agent System},%
-descriptionplural={Multi-Agent System\acrpluralsuffix },%
+first={Document Object Model\glsspace (DOM)},%
+firstplural={Document Object Model\acrpluralsuffix \glsspace (DOM\acrpluralsuffix )},%
+text={DOM},%
+plural={DOM\acrpluralsuffix },%
+description={Document Object Model},%
+descriptionplural={Document Object Model\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -353,26 +353,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Multi-Agent System},%
-longplural={Multi-Agent Systems},%
-short={MAS},%
-shortplural={MASs},%
+long={Document Object Model},%
+longplural={Document Object Models},%
+short={DOM},%
+shortplural={DOMs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{eo}%
+\glsdefs@newdocentry{sql}%
 {%
-name={EO},%
-sort={EO},%
+name={SQL},%
+sort={SQL},%
 type={acronym},%
-first={Explanatory Operation\glsspace (EO)},%
-firstplural={Explanatory Operation\acrpluralsuffix \glsspace (EO\acrpluralsuffix )},%
-text={EO},%
-plural={EO\acrpluralsuffix },%
-description={Explanatory Operation},%
-descriptionplural={Explanatory Operation\acrpluralsuffix },%
+first={Structured Query Language\glsspace (SQL)},%
+firstplural={Structured Query Language\acrpluralsuffix \glsspace (SQL\acrpluralsuffix )},%
+text={SQL},%
+plural={SQL\acrpluralsuffix },%
+description={Structured Query Language},%
+descriptionplural={Structured Query Language\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -381,26 +381,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Explanatory Operation},%
-longplural={Explanatory Operations},%
-short={EO},%
-shortplural={EOs},%
+long={Structured Query Language},%
+longplural={Structured Query Languages},%
+short={SQL},%
+shortplural={SQLs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{fol}%
+\glsdefs@newdocentry{pve}%
 {%
-name={FOL},%
-sort={FOL},%
+name={PvE},%
+sort={PvE},%
 type={acronym},%
-first={First Order Logic\glsspace (FOL)},%
-firstplural={First Order Logic\acrpluralsuffix \glsspace (FOL\acrpluralsuffix )},%
-text={FOL},%
-plural={FOL\acrpluralsuffix },%
-description={First Order Logic},%
-descriptionplural={First Order Logic\acrpluralsuffix },%
+first={Player vs Environment\glsspace (PvE)},%
+firstplural={Player vs Environment\acrpluralsuffix \glsspace (PvE\acrpluralsuffix )},%
+text={PvE},%
+plural={PvE\acrpluralsuffix },%
+description={Player vs Environment},%
+descriptionplural={Player vs Environment\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -409,26 +409,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={First Order Logic},%
-longplural={First Order Logics},%
-short={FOL},%
-shortplural={FOLs},%
+long={Player vs Environment},%
+longplural={Player vs Environments},%
+short={PvE},%
+shortplural={PvEs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{kb}%
+\glsdefs@newdocentry{pvp}%
 {%
-name={KB},%
-sort={KB},%
+name={PvP},%
+sort={PvP},%
 type={acronym},%
-first={Knowledge Base\glsspace (KB)},%
-firstplural={Knowledge Base\acrpluralsuffix \glsspace (KB\acrpluralsuffix )},%
-text={KB},%
-plural={KB\acrpluralsuffix },%
-description={Knowledge Base},%
-descriptionplural={Knowledge Base\acrpluralsuffix },%
+first={Player vs Player\glsspace (PvP)},%
+firstplural={Player vs Player\acrpluralsuffix \glsspace (PvP\acrpluralsuffix )},%
+text={PvP},%
+plural={PvP\acrpluralsuffix },%
+description={Player vs Player},%
+descriptionplural={Player vs Player\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -437,26 +437,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Knowledge Base},%
-longplural={Knowledge Bases},%
-short={KB},%
-shortplural={KBs},%
+long={Player vs Player},%
+longplural={Player vs Players},%
+short={PvP},%
+shortplural={PvPs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{cwa}%
+\glsdefs@newdocentry{acid}%
 {%
-name={CWA},%
-sort={CWA},%
+name={ACID},%
+sort={ACID},%
 type={acronym},%
-first={Closed World Assumption\glsspace (CWA)},%
-firstplural={Closed World Assumption\acrpluralsuffix \glsspace (CWA\acrpluralsuffix )},%
-text={CWA},%
-plural={CWA\acrpluralsuffix },%
-description={Closed World Assumption},%
-descriptionplural={Closed World Assumption\acrpluralsuffix },%
+first={Atomicity, Consistency, Isolation, Durability\glsspace (ACID)},%
+firstplural={Atomicity, Consistency, Isolation, Durability\acrpluralsuffix \glsspace (ACID\acrpluralsuffix )},%
+text={ACID},%
+plural={ACID\acrpluralsuffix },%
+description={Atomicity, Consistency, Isolation, Durability},%
+descriptionplural={Atomicity, Consistency, Isolation, Durability\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -465,26 +465,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Closed World Assumption},%
-longplural={Closed World Assumptions},%
-short={CWA},%
-shortplural={CWAs},%
+long={Atomicity, Consistency, Isolation, Durability},%
+longplural={Atomicity, Consistency, Isolation, Durabilitys},%
+short={ACID},%
+shortplural={ACIDs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{atl}%
+\glsdefs@newdocentry{spa}%
 {%
-name={ATL},%
-sort={ATL},%
+name={SPA},%
+sort={SPA},%
 type={acronym},%
-first={Atlas Transformation Language\glsspace (ATL)},%
-firstplural={Atlas Transformation Language\acrpluralsuffix \glsspace (ATL\acrpluralsuffix )},%
-text={ATL},%
-plural={ATL\acrpluralsuffix },%
-description={Atlas Transformation Language},%
-descriptionplural={Atlas Transformation Language\acrpluralsuffix },%
+first={Single Page Application\glsspace (SPA)},%
+firstplural={Single Page Application\acrpluralsuffix \glsspace (SPA\acrpluralsuffix )},%
+text={SPA},%
+plural={SPA\acrpluralsuffix },%
+description={Single Page Application},%
+descriptionplural={Single Page Application\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -493,26 +493,26 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Atlas Transformation Language},%
-longplural={Atlas Transformation Languages},%
-short={ATL},%
-shortplural={ATLs},%
+long={Single Page Application},%
+longplural={Single Page Applications},%
+short={SPA},%
+shortplural={SPAs},%
 counter={page},%
 parent={},%
 %
 }%
 
-\glsdefs@newdocentry{mde}%
+\glsdefs@newdocentry{edt}%
 {%
-name={MDE},%
-sort={MDE},%
+name={EDT},%
+sort={EDT},%
 type={acronym},%
-first={Model-driven Engineering\glsspace (MDE)},%
-firstplural={Model-driven Engineering\acrpluralsuffix \glsspace (MDE\acrpluralsuffix )},%
-text={MDE},%
-plural={MDE\acrpluralsuffix },%
-description={Model-driven Engineering},%
-descriptionplural={Model-driven Engineering\acrpluralsuffix },%
+first={Estructura de Desglose del Trabajo\glsspace (EDT)},%
+firstplural={Estructura de Desglose del Trabajo\acrpluralsuffix \glsspace (EDT\acrpluralsuffix )},%
+text={EDT},%
+plural={EDT\acrpluralsuffix },%
+description={Estructura de Desglose del Trabajo},%
+descriptionplural={Estructura de Desglose del Trabajo\acrpluralsuffix },%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -521,94 +521,10 @@ user3={},%
 user4={},%
 user5={},%
 user6={},%
-long={Model-driven Engineering},%
-longplural={Model-driven Engineerings},%
-short={MDE},%
-shortplural={MDEs},%
-counter={page},%
-parent={},%
-%
-}%
-
-\glsdefs@newdocentry{sfmm}%
-{%
-name={SFMM},%
-sort={SFMM},%
-type={acronym},%
-first={Stateful Feature Metamodel\glsspace (SFMM)},%
-firstplural={Stateful Feature Metamodel\acrpluralsuffix \glsspace (SFMM\acrpluralsuffix )},%
-text={SFMM},%
-plural={SFMM\acrpluralsuffix },%
-description={Stateful Feature Metamodel},%
-descriptionplural={Stateful Feature Metamodel\acrpluralsuffix },%
-symbol={\relax },%
-symbolplural={\relax },%
-user1={},%
-user2={},%
-user3={},%
-user4={},%
-user5={},%
-user6={},%
-long={Stateful Feature Metamodel},%
-longplural={Stateful Feature Metamodels},%
-short={SFMM},%
-shortplural={SFMMs},%
-counter={page},%
-parent={},%
-%
-}%
-
-\glsdefs@newdocentry{sfm}%
-{%
-name={SFM},%
-sort={SFM},%
-type={acronym},%
-first={Stateful Feature Model\glsspace (SFM)},%
-firstplural={Stateful Feature Model\acrpluralsuffix \glsspace (SFM\acrpluralsuffix )},%
-text={SFM},%
-plural={SFM\acrpluralsuffix },%
-description={Stateful Feature Model},%
-descriptionplural={Stateful Feature Model\acrpluralsuffix },%
-symbol={\relax },%
-symbolplural={\relax },%
-user1={},%
-user2={},%
-user3={},%
-user4={},%
-user5={},%
-user6={},%
-long={Stateful Feature Model},%
-longplural={Stateful Feature Models},%
-short={SFM},%
-shortplural={SFMs},%
-counter={page},%
-parent={},%
-%
-}%
-
-\glsdefs@newdocentry{steam}%
-{%
-name={STEAm},%
-sort={STEAm},%
-type={acronym},%
-first={STateful fEature model Analyser\glsspace (STEAm)},%
-firstplural={STateful fEature model Analyser\acrpluralsuffix \glsspace (STEAm\acrpluralsuffix )},%
-text={STEAm},%
-plural={STEAm\acrpluralsuffix },%
-description={STateful fEature model Analyser},%
-descriptionplural={STateful fEature model Analyser\acrpluralsuffix },%
-symbol={\relax },%
-symbolplural={\relax },%
-user1={},%
-user2={},%
-user3={},%
-user4={},%
-user5={},%
-user6={},%
-long={STateful fEature model Analyser},%
-longplural={STateful fEature model Analysers},%
-short={STEAm},%
-shortplural={STEAms},%
+long={Estructura de Desglose del Trabajo},%
+longplural={Estructura de Desglose del Trabajos},%
+short={EDT},%
+shortplural={EDTs},%
 counter={page},%
 parent={},%
 %
