@@ -18,7 +18,7 @@ KingAndPeasant/
 +-- package.json
 \end{verbatim}
 
-\chapter{Iteración 1: Configuración de Entornos, Planificación Inicial y Metodología Base}
+\chapter[Iteración 1: Configuración de Entornos y Metodología]{Iteración 1: Configuración de Entornos, Planificación Inicial y Metodología Base}
 
 \section{Definición de Características}
 El objetivo primordial de esta primera iteración consiste en establecer los cimientos arquitectónicos e infraestructurales del proyecto \textit{King and Peasant}. A su vez, otro de los principales objetivo es establecer los cimientos organizativos del proyecto, preparando las herramientas de planificación e inicializando las metodologías de trabajo colaborativo. Las tareas principales consisten en la configuración inicial del entorno de trabajo del proyecto, la creación del calendario inicial de desarrollo y la redacción del documento de metodología para el uso de GitHub. A continuación, se detalla el contenido y el propósito de cada elemento:
@@ -35,7 +35,7 @@ El objetivo primordial de esta primera iteración consiste en establecer los cim
 \end{itemize}
 
 \section{Diseño de la Solución}
-Para abordar estas características, el diseño se articula en torno a la orquestación inicial del entorno. A nivel de equipo, se diseña una estructura de monorepositorio y se redacta el documento de metodología en Markdown para estandarizar el flujo de trabajo (ramas, \textit{commits} y seguimiento de \textit{issues}). A nivel técnico, para satisfacer el requisito de arquitectura (\textbf{RNF-ARQ}), el diseño contempla el uso de \textit{Docker} y \textit{Docker Compose}. La creación de los archivos \texttt{Dockerfile} permitió plantear un despliegue aislado de los entornos de ejecución base (véase la Fig.~\ref{fig:docker_topology}).
+Para abordar estas características, el diseño se articula en torno a la orquestación inicial del entorno. A nivel de equipo, se diseña una estructura de monorepositorio y se redacta el documento de metodología en Markdown para estandarizar el flujo de trabajo (ramas, \textit{commits} y seguimiento de \textit{issues}). A nivel técnico, para satisfacer el requisito de arquitectura (\textbf{RNF-01}), el diseño contempla el uso de \textit{Docker} y \textit{Docker Compose}. La creación de los archivos \texttt{Dockerfile} permitió plantear un despliegue aislado de los entornos de ejecución base (véase la Fig.~\ref{fig:docker_topology}).
 
 \begin{figure}[H]
 \centering
@@ -79,7 +79,7 @@ Durante el seguimiento de la orquestación inicial, se detecta una desviación: 
 Además, el establecimiento de las bases metodológicas y el cronograma visual permite un arranque fluido del desarrollo técnico, reduciendo la fricción organizativa en las siguientes iteraciones.
 
 
-\chapter{Iteración 2: Diseño de Interfaces, Orquestación de Datos y Configuración de Testing y CD}
+\chapter[Iteración 2: Interfaces, Orquestación y CI/CD]{Iteración 2: Diseño de Interfaces, Orquestación de Datos y Configuración de Testing y CD}
 
 \section{Definición de Características}
 El objetivo establecido para este ciclo se centra en sentar las bases conceptuales y de almacenamiento necesarias para el desarrollo del proyecto, así como automatizar los procesos de verificación y publicación del código para asegurar la estabilidad del sistema a lo largo de todo su desarrollo. A continuación, se detalla el contenido y el propósito de cada elemento:
@@ -92,7 +92,7 @@ El objetivo establecido para este ciclo se centra en sentar las bases conceptual
 \end{itemize}
 
 \section{Diseño de la Solución}
-El diseño de la solución arranca con la elaboración de los \textit{mock-ups} completos de las pantallas clave del ecosistema, incluyendo los flujos de autenticación (Login/Registro), las salas de espera (\textit{Lobbies}), el perfil del usuario, el menu principal y el tablero de la partida asimétrica. Esta labor proporciona una visión estructural clara para el desarrollo en cliente, como se ilustra en la Fig.~\ref{fig:ui_gameboard}. A nivel de infraestructura, y en cumplimiento del requisito de rendimiento (\textbf{RNF-REN}), el diseño amplía la configuración de \textit{Docker Compose} para incluir el despliegue aislado de los servicios de \textit{MariaDB} y \textit{Redis}.
+El diseño de la solución arranca con la elaboración de los \textit{mock-ups} completos de las pantallas clave del ecosistema, incluyendo los flujos de autenticación (Login/Registro), las salas de espera (\textit{Lobbies}), el perfil del usuario, el menu principal y el tablero de la partida asimétrica. Esta labor proporciona una visión estructural clara para el desarrollo en cliente, como se ilustra en la Fig.~\ref{fig:ui_gameboard}. A nivel de infraestructura, y en cumplimiento del requisito de rendimiento (\textbf{RNF-02}), el diseño amplía la configuración de \textit{Docker Compose} para incluir el despliegue aislado de los servicios de \textit{MariaDB} y \textit{Redis}.
 
 \begin{figure}[H]
 \begin{center}

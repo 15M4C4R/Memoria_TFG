@@ -1,11 +1,7 @@
 \chapter{Planificación}
 
-\begin{quotation}[Novelist]{Ernest Hemingway (1899--1961)}
-The good parts of a book may be only something a writer is lucky enough to overhear or it may be the wreck of his whole damn life -- and one is as good as the other.
-\end{quotation}
-
 \begin{abstract}
-En este capítulo se expone la planificación temporal del proyecto, estructurada mediante la metodología ágil definida previamente. Se detalla el cronograma de ejecución a través de hitos mensuales y \textit{Sprints} semanales, abarcando desde la configuración inicial de la arquitectura hasta el despliegue final del sistema. Asimismo, se documentan las desviaciones surgidas durante el ciclo de vida del desarrollo y se analizan las medidas correctivas adoptadas por el equipo para garantizar el cumplimiento de los plazos.
+En este capítulo se expone la planificación temporal del proyecto, estructurada mediante la metodología ágil definida previamente. Se detalla el cronograma de ejecución a través de hitos mensuales y \textit{Sprints} semanales, abarcando desde la configuración inicial de la arquitectura hasta el despliegue final del sistema. Asimismo, se establecen las métricas de trazabilidad y las políticas de mitigación adoptadas por el equipo para absorber futuras desviaciones y garantizar el cumplimiento de los plazos.
 \end{abstract}
 
 Para estructurar la gestión de este proyecto se ha tomado como referencia la Guía de los Fundamentos para la Dirección de Proyectos (PMBOK), cuyos principios han sido estudiados a lo largo del Grado en Ingeniería Informática del Software. Dado que este estándar propone un marco de trabajo exhaustivo pensado para proyectos de gran envergadura empresarial, se ha realizado una adaptación a las necesidades y dimensiones de un equipo de desarrollo reducido que opera bajo un ciclo de vida iterativo.
@@ -55,6 +51,7 @@ Dada la naturaleza interactiva del proyecto, los requisitos no funcionales resul
     \item \textbf{RNF-02. Rendimiento y Concurrencia:} El sistema exige latencia casi nula. Las acciones deben procesarse en tiempo real utilizando \textit{WebSockets} (\textit{Socket.io}) y apoyándose en \textit{Redis} para el estado volátil. 
     \item \textbf{RNF-03. Seguridad:} La autenticación se basará en \textit{JSON Web Tokens} (JWT) y las credenciales se protegerán mediante algoritmos de \textit{hashing} (\texttt{bcryptjs}).
     \item \textbf{RNF-04. Fiabilidad, Despliegue y QA:} Todo el entorno debe estar contenedorizado con \textit{Docker} y alojado en un servicio en la nube. Se requiere un flujo automatizado mediante \textit{GitHub Actions} y calidad de código garantizada por pruebas unitarias (\textit{Jest} y \textit{Vitest}).
+    \item \textbf{RNF-05. Mantenibilidad:} La base de código debe someterse a refactorización y auditoría continua, aplicando patrones de diseño para aislar la lógica de negocio y mitigar la deuda técnica generada por la asimetría del juego.
 \end{itemize}
 
 \subsubsection{Reglas de Negocio (RN)}

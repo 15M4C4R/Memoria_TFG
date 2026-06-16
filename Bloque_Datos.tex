@@ -29,7 +29,7 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 \end{lstlisting}
 
-\chapter{Iteración 3: Modelado Estructural, Flujo de Negocio y Pantalla de Inicio}
+\chapter[Iteración 3: Modelado Estructural y Pantalla Inicio]{Iteración 3: Modelado Estructural, Flujo de Negocio y Pantalla de Inicio}
 
 \section{Definición de Características}
 El objetivo principal de esta iteración consiste en el diseño estructural de la información, en la definición lógica del ciclo de vida de las partidas y la implementación de la página de inicio (\textit{Landing Page}). A continuación, se detalla el propósito y el sentido de este elemento:
@@ -54,7 +54,7 @@ A su vez, se desarrolla la interfaz de usuario asegurando la fidelidad visual co
 El seguimiento de este \textit{sprint} arroja resultados óptimos. Los objetivos de modelado de datos y flujos lógicos se alcanzan con éxito, sin registrarse desviaciones temporales ni bloqueos técnicos que obliguen a replanificar. El diseño queda certificado y listo para ser trasladado al ORM en la siguiente iteración. A nivel de trazabilidad funcional, el progreso alcanza los hitos previstos sin requerir sobreesfuerzo, dando por finalizada la tarea 2.1 (Modelado de la arquitectura de la información) de la EDT.
 
 
-\chapter{Iteración 4: Implementación del Modelo Estructural, Gestión de Usuarios y Listado de Salas}
+\chapter[Iteración 4: Modelo Estructural y Gestión de Usuarios]{Iteración 4: Implementación del Modelo Estructural, Gestión de Usuarios y Listado de Salas}
 
 \section{Definición de Características}
 El objetivo primordial de esta iteración consiste en la implementación funcional del listado de salas y materializar el diseño estructural del sistema en una arquitectura de datos técnica y funcional. Se busca trasladar los modelos conceptuales de la base de datos relacional al entorno de desarrollo, asegurando que el esquema físico sea capaz de soportar las relaciones complejas de usuarios y amistades mediante un sistema de gestión automatizado. Asimismo, se pretende integrar una capa de abstracción que facilite la interacción segura con la persistencia, garantizando la integridad de los datos y permitiendo que la infraestructura de contenedores esté en perfecta sincronía con la definición lógica de las entidades del proyecto.
@@ -66,7 +66,7 @@ A continuación, se detalla el propósito y el sentido de cada elemento:
 \end{itemize}
 
 \section{Diseño de la Solución}
-En cumplimiento con el requisito de arquitectura (\textbf{RNF-ARQ}), el diseño de la solución dictamina que este modelo conceptual se traslade al entorno de desarrollo utilizando \textit{Prisma ORM}. Se diseña una estrategia basada en migraciones secuenciales sobre el despliegue aislado de \textit{MariaDB}, garantizando que el esquema de la base de datos esté en sincronía con el contenedor de Docker.
+En cumplimiento con el requisito de arquitectura (\textbf{RNF-01}), el diseño de la solución dictamina que este modelo conceptual se traslade al entorno de desarrollo utilizando \textit{Prisma ORM}. Se diseña una estrategia basada en migraciones secuenciales sobre el despliegue aislado de \textit{MariaDB}, garantizando que el esquema de la base de datos esté en sincronía con el contenedor de Docker.
 
 Para garantizar la integridad y el correcto funcionamiento de las salas, se diseña un modelo de datos robusto. Se determina que la entidad encargada de las salas debe poseer atributos específicos, priorizando la unicidad del nombre para evitar duplicidades en los lobbys y la obligatoriedad de un jugador líder (Jugador 1), garantizando que no existan salas vacías sin un administrador de partida.
 
@@ -90,7 +90,7 @@ La estructura de la sala en la base de datos se define bajo los siguientes requi
 Durante el control de calidad de la iteración no se reportaron fallos en las transacciones de las migraciones. El modelo de datos se materializó en los contenedores locales sin desviaciones, cerrando la iteración en el tiempo estipulado y permitiendo continuar con la capa de seguridad. El avance se reporta completo según la planificación original, oficializando el cierre de la tarea 2.2 (Implementación de esquemas mediante Prisma ORM) detallada en la EDT.
 
 
-\chapter{Iteración 5: Gestión de Identidad, Perfiles y Lógica Interna de Salas de Espera}
+\chapter[Iteración 5: Gestión de Identidad y Salas (Lobbies)]{Iteración 5: Gestión de Identidad, Perfiles y Lógica Interna de Salas de Espera}
 
 \section{Definición de Características}
 El primer propósito de este ciclo es desarrollar el sistema de gestión de identidad que permite a los usuarios acceder de forma segura y personalizada al ecosistema de \textit{King and Peasant}. Se busca establecer los mecanismos para la creación de cuentas y el reconocimiento de usuarios mediante procesos de validación de identidad robustos que garanticen la protección de la información sensible. Asimismo, se pretende dotar al jugador de un espacio personal donde pueda administrar su información de perfil y consultar su progreso individual dentro de la plataforma. Esta etapa busca integrar la seguridad como un componente transversal, asegurando que tanto el acceso inicial como la navegación por las zonas privadas del sistema se realicen bajo un entorno de confianza y con una arquitectura que asegure la integridad de las sesiones.
@@ -98,7 +98,7 @@ El primer propósito de este ciclo es desarrollar el sistema de gestión de iden
 El segundo objetivo de esta iteración es la implementación de la vista de detalle y la interactividad de la sala de espera (\textit{Lobby Room}). El objetivo es dotar a los usuarios de las herramientas necesarias para gestionar su participación en los instantes previos al inicio de la partida, resolviendo en paralelo las dependencias técnicas con otros módulos del sistema. Esta tarea consiste en la programación de la interfaz y las comunicaciones en tiempo real que operan dentro de una sala específica una vez que el jugador ha accedido a ella. Los requisitos funcionales abarcan la sincronización de la entrada de los usuarios, la capacidad de alternar el estado de preparación (listo/no listo) y la opción de abandonar la estancia.
 
 \section{Diseño de la Solución}
-El diseño de la solución aborda la construcción de las vistas operativas de \textit{Login}, \textit{Register} y el panel de \textit{Profile}. Dando cumplimiento al requisito de seguridad (\textbf{RNF-SEG}), el diseño de la lógica del servidor se basa en la emisión y validación de \textit{JSON Web Tokens} (JWT), asegurando el encriptado unidireccional de contraseñas. Para el cliente, se diseñan formularios reactivos integrados con un contexto global de autenticación para gobernar las rutas privadas.
+El diseño de la solución aborda la construcción de las vistas operativas de \textit{Login}, \textit{Register} y el panel de \textit{Profile}. Dando cumplimiento al requisito de seguridad (\textbf{RNF-03}), el diseño de la lógica del servidor se basa en la emisión y validación de \textit{JSON Web Tokens} (JWT), asegurando el encriptado unidireccional de contraseñas. Para el cliente, se diseñan formularios reactivos integrados con un contexto global de autenticación para gobernar las rutas privadas.
 
 De cara a la pantalla de sala, se diseña un sistema dinámico de gestión de estados para las salas para asegurar una experiencia de usuario coherente. La lógica principal contempla que el sistema reaccione de forma autónoma ante la salida de un jugador: si el líder abandona la sala pero existe un segundo jugador, este hereda automáticamente el liderazgo de la partida; en caso de que la sala quede vacía, se procede a su eliminación definitiva de la base de datos para optimizar los recursos. Asimismo, se plantea la necesidad de sincronización en tiempo real para visualizar la información de ambos participantes, aunque su implementación técnica definitiva se ve condicionada por la disponibilidad de las herramientas de comunicación bidireccional.
 
