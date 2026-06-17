@@ -130,3 +130,28 @@ Cada vez que se realiza un \textit{push} a las ramas \texttt{main} o \texttt{tru
 \end{enumerate}
 
 Si alguna aserción falla, el pipeline se detiene inmediatamente, bloqueando el despliegue automático hacia Render. Esto asegura que solo las versiones de código que superan satisfactoriamente todas las pruebas de validación lleguen a los entornos de pre-producción y producción, protegiendo así la integridad de la rama principal.
+
+\section{Resultados Cuantitativos de las Pruebas}
+
+Tras la ejecución de la \textit{suite} completa de pruebas automatizadas sobre el servidor, se obtienen las siguientes métricas que certifican la robustez y calidad del código desarrollado. La Tabla \ref{tab:testing_results} resume los resultados finales.
+
+\begin{table}[H]
+    \centering
+    \begin{coolTable}{lr}{2}
+        {Métricas de Validación del Servidor}
+        \textbf{Concepto} & \textbf{Valor} \\
+        \midrule
+        Número total de Casos de Prueba & 116 \\
+        Porcentaje de Éxito & 100\% \\
+        \midrule
+        \multicolumn{2}{c}{\textbf{Cobertura de Código (Code Coverage)}} \\
+        \midrule
+        Cobertura General del Servidor & 73.05\% \\
+        Cobertura del Game Service (Motor) & 81.13\% \\
+        Cobertura del Lobby Service & 85.36\% \\
+    \end{coolTable}
+    \caption{Tabla resumen de los resultados cuantitativos obtenidos tras la ejecución de la suite de pruebas automatizadas del \textit{backend}.}
+    \label{tab:testing_results}
+\end{table}
+
+Estos resultados demuestran que los módulos más críticos del sistema, responsables de la lógica de negocio y la gestión de estado (el motor de juego y las salas), superan el umbral del 80\% de cobertura, garantizando una alta fiabilidad y un bajo riesgo de regresiones.

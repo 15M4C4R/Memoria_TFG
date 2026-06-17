@@ -1,4 +1,6 @@
 \chapter{Diseño de la Arquitectura y del Sistema}
+
+\sloppy
 \label{sec:arquitectura}
 
 \begin{abstract}
@@ -79,12 +81,12 @@ Para la propagación del estado de sesión y de la partida, se descarta el enví
 
 \subsection{Arquitectura de Persistencia Híbrida}
 
-Para la persistencia de la información del sistema se diseña un modelo de datos relacional robusto, gestionado a través de \textit{Prisma ORM}. Este modelo soporta la lógica de negocio subyacente, garantizando la integridad referencial y facilitando las consultas complejas. El esquema de la base de datos (\textit{MariaDB}) gravita en torno a cinco entidades principales y sus relaciones, tal y como se ilustra en el diagrama Entidad-Relación de la Fig.~\ref{fig:modelo_er}.
+Para la persistencia de la información del sistema se diseña un modelo de datos relacional robusto, gestionado a través de \textit{Prisma ORM}. Este modelo soporta la lógica de negocio subyacente, garantizando la integridad referencial y facilitando las consultas complejas. El esquema de la base de datos (\textit{MariaDB}) gravita en torno a cinco entidades principales y sus relaciones, tal y como se ilustra en el Modelo Lógico de Datos de la Fig.~\ref{fig:modelo_er}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/ER.png}
-    \caption{Diagrama Entidad-Relación del sistema.}
+    \caption{Modelo Lógico de Datos del sistema, representado con notación UML.}
     \label{fig:modelo_er}
 \end{figure}
 

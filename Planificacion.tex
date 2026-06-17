@@ -1,5 +1,7 @@
 \chapter{Planificación}
 
+\sloppy
+
 \begin{abstract}
 En este capítulo se expone la planificación temporal del proyecto, estructurada mediante la metodología ágil definida previamente. Se detalla el cronograma de ejecución a través de hitos mensuales y \textit{Sprints} semanales, abarcando desde la configuración inicial de la arquitectura hasta el despliegue final del sistema. Asimismo, se establecen las métricas de trazabilidad y las políticas de mitigación adoptadas por el equipo para absorber futuras desviaciones y garantizar el cumplimiento de los plazos.
 \end{abstract}
@@ -454,7 +456,7 @@ Para asegurar la viabilidad del proyecto frente a eventos imprevistos, se lleva 
     \textbf{Mitigación (Probabilidad: Baja | Impacto: Alto):} Se diseña una arquitectura de persistencia híbrida. El estado volátil y los eventos en tiempo real se gestionan exclusivamente en la memoria de \textit{Redis}, limitando el uso de la base de datos relacional (\textit{MariaDB}) a operaciones en frío (perfiles e históricos), lo que previene la saturación del servidor.
     
     \item \textbf{RT-02. Pérdida de estado por desconexión abrupta:} Las microcortes en la conectividad a internet de los clientes pueden corromper el flujo de la partida o forzar cierres inesperados si el servidor pierde el rastro del socket. \\
-    \textbf{Mitigación (Probabilidad: Alta | Impacto: Alto):} Se implementa un sistema de persistencia de sesión acoplado a tokens JWT almacenados de forma temporal en \textit{Redis}. Al reconectarse, el cliente envía su token y el servidor le reasigna de manera automática el socket activo en el \textit{Lobby} correspondiente, restaurando su vista de juego sin penalizaciones.
+    \textbf{Mitigación (Probabilidad: Alta | Impacto: Alto):} Se implementa un sistema de reconexión de sesión. Al desconectarse, el estado de la partida del usuario persiste temporalmente en \textit{Redis}. Al reconectarse, el cliente presenta su token JWT; si es válido, el servidor extrae el identificador del usuario, busca su partida activa en \textit{Redis} y le reasigna automáticamente el nuevo socket a la sala correspondiente, restaurando su vista de juego sin penalizaciones.
     
     \item \textbf{RT-03. Inyección de trampas y alteración de la lógica en el cliente:} Al tratarse de un entorno web abierto, un usuario avanzado podría inspeccionar el tráfico de red o modificar el estado local de \textit{React} para visualizar las cartas ocultas del rival. \\
     \textbf{Mitigación (Probabilidad: Alta | Impacto: Alto):} Se aplica un patrón de Servidor Autoritativo. El cliente de \textit{React} actúa como una mera capa de representación visual sin poder de decisión lógica. Adicionalmente, el \textit{backend} filtra toda la información sensible mediante el patrón DTO antes de transmitir el estado, garantizando que el emisor reciba únicamente los datos visibles para su facción.
@@ -496,7 +498,7 @@ Para facilitar la monitorización de las amenazas descritas, la Tab.~\ref{tab:ma
         \textbf{ID} & \textbf{Categoría} & \textbf{Prob.} & \textbf{Imp.} & \textbf{Criticidad} & \textbf{Acción de Mitigación Principal} \\
         \hline
         \textbf{RT-01} & Tecnológico & Baja & Alto & \textbf{Medio} & Arquitectura híbrida en memoria con \textit{Redis}. \\ \hline
-        \textbf{RT-02} & Tecnológico & Alta & Alto & \textbf{Crítico} & Control de sesión mediante JWT en \textit{Redis}. \\ \hline
+        \textbf{RT-02} & Tecnológico & Alta & Alto & \textbf{Crítico} & Control de sesión mediante estado en \textit{Redis} validado por JWT. \\ \hline
         \textbf{RT-03} & Tecnológico & Alta & Alto & \textbf{Crítico} & Servidor autoritativo y filtrado asimétrico DTO. \\ \hline
         \textbf{RT-04} & Tecnológico & Alta & Medio & \textbf{Alto} & Bloqueo del \textit{Sprint} 8 para refactorización. \\ \hline
         \textbf{RO-01} & Organizativo & Alta & Alto & \textbf{Crítico} & Amortiguación de carga en periodos de examen. \\ \hline
